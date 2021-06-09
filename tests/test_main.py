@@ -204,7 +204,7 @@ class TestEntrypoint:
         mock_stats_api.boxscore_data.return_value = request.param.mock_boxscore_return
         mock_player_stats.return_value = request.param.mock_player_stats_return
 
-        entrypoint()
+        entrypoint(event=Mock(), context=Mock())
 
         return TestEntrypoint.Fixture(
             mock_stats_api=mock_stats_api,
