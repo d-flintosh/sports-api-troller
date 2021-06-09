@@ -14,10 +14,10 @@ def publish_message(message: str):
     future.result()
 
 
-def is_fsu(school: str):
+def is_fsu(school: dict):
     _fsu = ['florida state', 'fsu', 'florida state university']
-
-    if school and any(list(map(lambda x: x == school.lower(), _fsu))):
+    school_name = school.get('name', None)
+    if school and school_name and any(list(map(lambda x: x == school_name.lower(), _fsu))):
         return True
     return False
 
@@ -33,7 +33,7 @@ def get_fsu_players() -> List:
 
         for round in draft.get('drafts').get('rounds'):
             for pick in round.get('picks'):
-                if is_fsu(pick.get('school', None)):
+                if is_fsu(pick.get('school', {})):
                     output.append(pick.get('person').get('id'))
     return output
 
@@ -80,4 +80,3 @@ def entrypoint(event, context):
 
     if fsu_player_boxscores:
         publish_message(message=tweet_message)
-

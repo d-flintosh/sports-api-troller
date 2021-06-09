@@ -47,7 +47,7 @@ class TestIsFsu:
         ('fSu', True)
     ])
     def test_is_fsu(self, school, expected):
-        assert is_fsu(school=school) == expected
+        assert is_fsu(school={'name': school}) == expected
 
 
 class TestGetFsuPlayers:
@@ -65,7 +65,7 @@ class TestGetFsuPlayers:
                     {
                         'picks': [
                             {
-                                'school': 'fsu',
+                                'school': {'name': 'fsu'},
                                 'person': {
                                     'id': 123
                                 }
@@ -226,4 +226,3 @@ class TestEntrypoint:
 
     def test_publish_message_called(self, setup: Fixture):
         setup.mock_publish.assert_has_calls(setup.expected_publish_calls)
-
