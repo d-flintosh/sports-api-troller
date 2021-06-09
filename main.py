@@ -134,7 +134,6 @@ def get_basketball(date_to_run, league_id: str) -> MessageObject:
             tweet_message = tweet_message + f'{fsu_player.get("PLAYER_NAME")} {"/".join(stat_line)}'
 
     if fsu_player_boxscores:
-        print(tweet_message)
         publish_message(message=tweet_message)
 
     return MessageObject(raw_data=fsu_player_boxscores, message=tweet_message)
