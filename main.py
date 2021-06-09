@@ -9,7 +9,7 @@ from google.cloud import pubsub_v1
 def publish_message(message: str):
     publisher = pubsub_v1.PublisherClient()
     topic_id = 'projects/sports-data-service/topics/twitter-message-service-pubsub'
-    logging.info(f'Publishing message: {message}')
+    print(f'Publishing message: {message}')
     future = publisher.publish(topic_id, str.encode(message))
     future.result()
 
@@ -28,7 +28,7 @@ def get_fsu_players() -> List:
         params = {
             'year': str(year)
         }
-        logging.info(f'Making Draft Call for the Year {year}')
+        print(f'Making Draft Call for the Year {year}')
         draft = statsapi.get('draft', params=params)
 
         for round in draft.get('drafts').get('rounds'):
@@ -65,7 +65,7 @@ def entrypoint(event, context):
     yesterday = date.today() - timedelta(1)
 
     formatted_date = yesterday.strftime('%m/%d/%Y')
-    logging.info(f'Getting games played for date: {formatted_date}')
+    print(f'Getting games played for date: {formatted_date}')
     schedule = statsapi.schedule(date=formatted_date)
     fsu_player_boxscores = []
 
@@ -80,3 +80,4 @@ def entrypoint(event, context):
 
     if fsu_player_boxscores:
         publish_message(message=tweet_message)
+
