@@ -3,8 +3,7 @@ from typing import List
 
 import statsapi
 
-from main import publish_message, MessageObject
-from src.universal import is_fsu
+from src.universal import is_fsu, publish_message, MessageObject
 
 
 def get_mlb(date_to_run) -> MessageObject:
