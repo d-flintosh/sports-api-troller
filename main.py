@@ -9,7 +9,7 @@ from google.cloud import pubsub_v1
 from nba_api.stats.endpoints import commonplayerinfo, scoreboard, boxscoretraditionalv2
 from nba_api.stats.library.parameters import LeagueID
 
-from src.mlb import get_mlb
+from mlb import get_mlb
 
 
 @dataclass
