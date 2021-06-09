@@ -1,12 +1,13 @@
-from datetime import date
 from dataclasses import dataclass
+from datetime import date
 from typing import List
 from unittest.mock import Mock, patch, call
 
 import pytest
+from nba_api.stats.library.parameters import LeagueID
 
 from main import publish_message, is_fsu, get_fsu_players, is_a_decent_day, player_stats_iterator, entrypoint, \
-    fsu_player_ids
+    mlb_fsu_player_ids, get_mlb, get_basketball
 
 
 class TestPublishMessage:
@@ -47,7 +48,7 @@ class TestIsFsu:
         ('fSu', True)
     ])
     def test_is_fsu(self, school, expected):
-        assert is_fsu(school={'name': school}) == expected
+        assert is_fsu(school=school) == expected
 
 
 class TestGetFsuPlayers:
@@ -131,10 +132,40 @@ class TestPlayerStatsIterator:
     @patch('main.is_a_decent_day', autospec=True)
     def test_player_stats_iterator(self, mock_decent_day, team, is_decent_day, expected):
         mock_decent_day.return_value = is_decent_day
-        assert player_stats_iterator(team=team, fsu_player_ids=[123]) == expected
+        assert player_stats_iterator(team=team, player_ids=[123]) == expected
 
 
 class TestEntrypoint:
+    @dataclass
+    class Fixture:
+        mock_basketball: Mock
+        mock_mlb: Mock
+
+    @pytest.fixture
+    @patch('main.date', autospec=True)
+    @patch('main.get_mlb', autospec=True)
+    @patch('main.get_basketball', autospec=True)
+    def setup(self, mock_basketball, mock_mlb, mock_date):
+        mock_date.today.return_value = date(2020, 1, 2)
+
+        entrypoint(event=Mock(), context=Mock())
+
+        return TestEntrypoint.Fixture(
+            mock_basketball=mock_basketball,
+            mock_mlb=mock_mlb
+        )
+
+    def test_get_mlb_called(self, setup: Fixture):
+        setup.mock_mlb.assert_called_once_with(date_to_run=date(2020, 1, 1))
+
+    def test_get_basketball_called(self, setup: Fixture):
+        setup.mock_basketball.assert_has_calls([
+            call(date_to_run=date(2020, 1, 1), league_id=LeagueID.nba),
+            call(date_to_run=date(2020, 1, 1), league_id=LeagueID.wnba)
+        ])
+
+
+class TestGetMlb:
     @dataclass
     class Params:
         mock_schedule_return: List
@@ -174,13 +205,14 @@ class TestEntrypoint:
                     'home': {'bar': 'foo'}
                 },
                 expected_player_stats_calls=[
-                    call(team={'foo': 'bar'}, fsu_player_ids=fsu_player_ids),
-                    call(team={'bar': 'foo'}, fsu_player_ids=fsu_player_ids)
+                    call(team={'foo': 'bar'}, player_ids=mlb_fsu_player_ids),
+                    call(team={'bar': 'foo'}, player_ids=mlb_fsu_player_ids)
                 ]
             ),
             Params(
                 mock_schedule_return=[{'game_id': 1}],
-                mock_player_stats_return=[{'person': {'fullName': 'Bo'}, 'stats': {'batting': {'hits': 1, 'atBats': 2}}}],
+                mock_player_stats_return=[
+                    {'person': {'fullName': 'Bo'}, 'stats': {'batting': {'hits': 1, 'atBats': 2}}}],
                 expected_publish_calls=[call(message='Bo went 1-2. Bo went 1-2. ')],
                 expected_boxscore_calls=[call(gamePk=1)],
                 mock_boxscore_return={
@@ -188,25 +220,23 @@ class TestEntrypoint:
                     'home': {'bar': 'foo'}
                 },
                 expected_player_stats_calls=[
-                    call(team={'foo': 'bar'}, fsu_player_ids=fsu_player_ids),
-                    call(team={'bar': 'foo'}, fsu_player_ids=fsu_player_ids)
+                    call(team={'foo': 'bar'}, player_ids=mlb_fsu_player_ids),
+                    call(team={'bar': 'foo'}, player_ids=mlb_fsu_player_ids)
                 ]
             )
         ]
     )
-    @patch('main.date', autospec=True)
     @patch('main.publish_message', autospec=True)
     @patch('main.player_stats_iterator', autospec=True)
     @patch('main.statsapi', autospec=True)
-    def setup(self, mock_stats_api, mock_player_stats, mock_publish, mock_date, request):
-        mock_date.today.return_value = date(2020, 1, 2)
+    def setup(self, mock_stats_api, mock_player_stats, mock_publish, request):
         mock_stats_api.schedule.return_value = request.param.mock_schedule_return
         mock_stats_api.boxscore_data.return_value = request.param.mock_boxscore_return
         mock_player_stats.return_value = request.param.mock_player_stats_return
 
-        entrypoint(event=Mock(), context=Mock())
+        get_mlb(date_to_run=date(2020, 1, 1))
 
-        return TestEntrypoint.Fixture(
+        return TestGetMlb.Fixture(
             mock_stats_api=mock_stats_api,
             mock_player_stats=mock_player_stats,
             mock_publish=mock_publish,
@@ -226,3 +256,99 @@ class TestEntrypoint:
 
     def test_publish_message_called(self, setup: Fixture):
         setup.mock_publish.assert_has_calls(setup.expected_publish_calls)
+
+
+class TestBasketball:
+    @dataclass
+    class Params:
+        mock_schedule_return: List
+        mock_player_stats_return: List
+        expected_publish_calls: List
+        expected_boxscore_calls: List
+        expected_player_stats_calls: List
+        expected_player_info_calls: List
+        mock_school: str
+
+    @dataclass
+    class Fixture:
+        mock_boxscore: Mock
+        mock_scoreboard: Mock
+        mock_player_info: Mock
+        mock_publish: Mock
+        expected_boxscore_calls: List
+        expected_player_info_calls: List
+
+    @pytest.fixture(
+        ids=['No games found', 'Game Found, No Players', 'Game and Players Found'],
+        params=[
+            Params(
+                mock_schedule_return=[],
+                mock_player_stats_return=[],
+                expected_publish_calls=[],
+                expected_boxscore_calls=[],
+                expected_player_stats_calls=[],
+                expected_player_info_calls=[],
+                mock_school=''
+            ),
+            Params(
+                mock_schedule_return=[{'GAME_ID': 1}],
+                mock_player_stats_return=[{'PLAYER_ID': 5}],
+                expected_publish_calls=[],
+                expected_boxscore_calls=[call(game_id=1)],
+                expected_player_stats_calls=[],
+                expected_player_info_calls=[call(player_id=5)],
+                mock_school='notFSU'
+            ),
+            Params(
+                mock_schedule_return=[{'GAME_ID': 1}],
+                mock_player_stats_return=[{'PLAYER_ID': 5, 'PTS': 1, 'REB': 5, 'AST': None, 'PLAYER_NAME': 'Dragon'}],
+                expected_publish_calls=[call(message='Dragon 1 pts/5 reb')],
+                expected_boxscore_calls=[call(game_id=1)],
+                expected_player_stats_calls=[],
+                expected_player_info_calls=[call(player_id=5)],
+                mock_school='FSU'
+            )
+        ]
+    )
+    @patch('main.publish_message', autospec=True)
+    @patch('main.commonplayerinfo', autospec=True)
+    @patch('main.scoreboard', autospec=True)
+    @patch('main.boxscoretraditionalv2', autospec=True)
+    def setup(self, mock_boxscore, mock_scoreboard, mock_player_info, mock_publish, request):
+        mock_schedule = Mock()
+        mock_schedule.get_normalized_dict.return_value = {
+            'GameHeader': request.param.mock_schedule_return
+        }
+
+        mock_scoreboard.Scoreboard.return_value = mock_schedule
+
+        mock_player_stats = Mock()
+        mock_player_stats.get_normalized_dict.return_value = {
+            'PlayerStats': request.param.mock_player_stats_return
+        }
+        mock_boxscore.BoxScoreTraditionalV2.return_value = mock_player_stats
+
+        mock_player = Mock()
+        mock_player.get_normalized_dict.return_value = {
+            'CommonPlayerInfo': [{'SCHOOL': request.param.mock_school}]
+        }
+        mock_player_info.CommonPlayerInfo.return_value = mock_player
+
+        get_basketball(date_to_run=date(2020, 1, 1), league_id=LeagueID.nba)
+        return TestBasketball.Fixture(
+            mock_boxscore=mock_boxscore,
+            mock_scoreboard=mock_scoreboard,
+            mock_player_info=mock_player_info,
+            mock_publish=mock_publish,
+            expected_boxscore_calls=request.param.expected_boxscore_calls,
+            expected_player_info_calls=request.param.expected_player_info_calls
+        )
+
+    def test_scoreboard_called(self, setup: Fixture):
+        setup.mock_scoreboard.Scoreboard.assert_called_once_with(game_date='01/01/2020', league_id=LeagueID.nba)
+
+    def test_boxscore_called(self, setup: Fixture):
+        setup.mock_boxscore.BoxScoreTraditionalV2.assert_has_calls(setup.expected_boxscore_calls)
+
+    def test_player_info_called(self, setup: Fixture):
+        setup.mock_player_info.CommonPlayerInfo.assert_has_calls(setup.expected_player_info_calls)
