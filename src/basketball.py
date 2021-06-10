@@ -2,11 +2,10 @@ import time
 
 from nba_api.stats.endpoints import scoreboard, commonplayerinfo, boxscoretraditionalv2
 
-from src.models.MessageObject import MessageObject
 from src.universal import is_fsu, publish_message
 
 
-def get_basketball(date_to_run, league_id: str) -> MessageObject:
+def get_basketball(date_to_run, league_id: str):
     fsu_player_boxscores = []
     formatted_date = date_to_run.strftime('%m/%d/%Y')
     print(f'Getting games played for date: {formatted_date}')
@@ -41,5 +40,3 @@ def get_basketball(date_to_run, league_id: str) -> MessageObject:
 
     if fsu_player_boxscores:
         publish_message(message=tweet_message)
-
-    return MessageObject(raw_data=fsu_player_boxscores, message=tweet_message)

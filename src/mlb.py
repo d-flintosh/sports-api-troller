@@ -5,11 +5,10 @@ import statsapi
 from src.college.mlb import get_fsu_baseball_players
 from src.models.BaseballPlayer import BaseballPlayer, baseball_player_from_dict
 from src.models.Emojis import Emojis
-from src.models.MessageObject import MessageObject
 from src.universal import publish_message
 
 
-def get_mlb(date_to_run) -> MessageObject:
+def get_mlb(date_to_run):
     player_ids_to_check = get_fsu_baseball_players(use_static_list=True)
     fsu_player_boxscores: [BaseballPlayer] = []
     formatted_date = date_to_run.strftime('%m/%d/%Y')
@@ -28,8 +27,6 @@ def get_mlb(date_to_run) -> MessageObject:
     if fsu_player_boxscores:
         message_prefix = f'{Emojis.FSU_SPEAR.value}{Emojis.BASEBALL.value} @FSUBaseball {Emojis.BASEBALL.value}{Emojis.FSU_SPEAR.value}\n'
         publish_message(message=message_prefix + tweet_message)
-
-    return MessageObject(raw_data=fsu_player_boxscores, message=tweet_message)
 
 
 def player_stats_iterator(team: dict, player_ids: Set[int]) -> List[BaseballPlayer]:
