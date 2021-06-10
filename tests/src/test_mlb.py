@@ -7,6 +7,7 @@ import pytest
 
 from src.college.mlb import mlb_fsu_player_ids
 from src.mlb import get_mlb, player_stats_iterator, is_a_decent_day
+from src.models.BaseballPlayer import BaseballPlayer
 
 
 class TestGetMlb:
@@ -55,8 +56,7 @@ class TestGetMlb:
             ),
             Params(
                 mock_schedule_return=[{'game_id': 1}],
-                mock_player_stats_return=[
-                    {'person': {'fullName': 'Bo'}, 'stats': {'batting': {'hits': 1, 'atBats': 2}}}],
+                mock_player_stats_return=[BaseballPlayer(id=1, full_name='Bo', hits=1, at_bats=2, home_runs=0)],
                 expected_publish_calls=[call(message='Bo went 1-2. Bo went 1-2. ')],
                 expected_boxscore_calls=[call(gamePk=1)],
                 mock_boxscore_return={
@@ -104,26 +104,17 @@ class TestGetMlb:
 
 class TestPlayerStatsIterator:
     @pytest.mark.parametrize("team,is_decent_day,expected", [
-        ({}, False, []),
-        ({'players': {'ID123': {'person': {'id': 123}}}}, False, []),
-        ({'players': {'ID123': {'person': {'id': 123}}}}, True, [{'person': {'id': 123}}]),
+        ({'players': {'foo': 'bar'}}, False, []),
+        ({'players': {'foo': 'bar'}}, True, [BaseballPlayer(id=123, full_name='Bo', hits=1, at_bats=1, home_runs=1)]),
     ])
-    @patch('src.mlb.is_a_decent_day', autospec=True)
-    def test_player_stats_iterator(self, mock_decent_day, team, is_decent_day, expected):
-        mock_decent_day.return_value = is_decent_day
-        assert player_stats_iterator(team=team, player_ids=[123]) == expected
-
-
-class TestIsADecentDay:
-    @pytest.mark.parametrize("player,expected", [
-        ({}, False),
-        ({'stats': {}}, False),
-        ({'stats': {'batting': {}}}, False),
-        ({'stats': {'batting': {'hits': None}}}, False),
-        ({'stats': {'batting': {'hits': 0}}}, False),
-        ({'stats': {'batting': {'hits': 1}}}, True)
-    ])
-    def test_is_a_decent_day(self, player, expected):
-        assert is_a_decent_day(player=player) == expected
-
+    @patch('src.mlb.baseball_player_from_dict', autospec=True)
+    def test_player_stats_iterator(self, mock_baseball_player, team, is_decent_day, expected):
+        mock_baseball_player.return_value = BaseballPlayer(
+            id=123,
+            full_name='Bo',
+            hits=1 if is_decent_day else 0,
+            at_bats=1,
+            home_runs=1
+        )
+        assert player_stats_iterator(team=team, player_ids={123}) == expected
 

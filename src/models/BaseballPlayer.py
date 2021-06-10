@@ -1,0 +1,23 @@
+from dataclasses import dataclass
+
+
+@dataclass
+class BaseballPlayer:
+    id: int
+    full_name: str
+    hits: int
+    at_bats: int
+    home_runs: int
+
+    def is_decent_day(self):
+        return self.hits > 0
+
+
+def baseball_player_from_dict(player: dict):
+    return BaseballPlayer(
+        id=player.get('person').get('id'),
+        full_name=player.get('person').get('fullName'),
+        hits=player.get('stats', {}).get('batting', {}).get('hits', 0),
+        at_bats=player.get('stats', {}).get('batting', {}).get('atBats', 0),
+        home_runs=player.get('stats', {}).get('batting', {}).get('homeRuns', 0)
+    )
