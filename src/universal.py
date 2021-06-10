@@ -1,13 +1,4 @@
-from dataclasses import dataclass
-from typing import List
-
 from google.cloud import pubsub_v1
-
-
-@dataclass
-class MessageObject:
-    raw_data: List
-    message: str
 
 
 def is_fsu(school: str):

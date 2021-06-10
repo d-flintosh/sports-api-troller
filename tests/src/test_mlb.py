@@ -1,11 +1,12 @@
 from dataclasses import dataclass
+from datetime import date
 from typing import List
 from unittest.mock import Mock, call, patch
 
 import pytest
 
-from src.mlb import get_mlb, mlb_fsu_player_ids, player_stats_iterator, is_a_decent_day, get_fsu_baseball_players
-from datetime import date
+from src.college.mlb import mlb_fsu_player_ids
+from src.mlb import get_mlb, player_stats_iterator, is_a_decent_day
 
 
 class TestGetMlb:
@@ -126,83 +127,3 @@ class TestIsADecentDay:
         assert is_a_decent_day(player=player) == expected
 
 
-class TestGetFsuPlayers:
-    @dataclass
-    class Params:
-        expected: List
-        use_static_list: bool
-        expected_api_calls: List
-
-    @dataclass
-    class Fixture:
-        mock_stats_api: Mock
-        actual: List
-        expected: List
-        expected_api_calls: List
-
-    @pytest.fixture(
-        ids=['Static List', 'Dynamic List'],
-        params=[
-            Params(
-                use_static_list=True,
-                expected=mlb_fsu_player_ids,
-                expected_api_calls=[]
-            ),
-            Params(
-                use_static_list=False,
-                expected=[123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123, 123,
-                          123],
-                expected_api_calls=[
-                    call('draft', params={'year': '2000'}),
-                    call('draft', params={'year': '2001'}),
-                    call('draft', params={'year': '2002'}),
-                    call('draft', params={'year': '2003'}),
-                    call('draft', params={'year': '2004'}),
-                    call('draft', params={'year': '2005'}),
-                    call('draft', params={'year': '2006'}),
-                    call('draft', params={'year': '2007'}),
-                    call('draft', params={'year': '2008'}),
-                    call('draft', params={'year': '2009'}),
-                    call('draft', params={'year': '2010'}),
-                    call('draft', params={'year': '2011'}),
-                    call('draft', params={'year': '2012'}),
-                    call('draft', params={'year': '2013'}),
-                    call('draft', params={'year': '2014'}),
-                    call('draft', params={'year': '2015'}),
-                    call('draft', params={'year': '2016'}),
-                    call('draft', params={'year': '2017'}),
-                    call('draft', params={'year': '2018'}),
-                    call('draft', params={'year': '2019'})
-                ]
-            )
-        ])
-    @patch('src.mlb.statsapi')
-    def setup(self, mock_stats_api, request):
-        mock_stats_api.get.return_value = {
-            'drafts': {
-                'rounds': [
-                    {
-                        'picks': [
-                            {
-                                'school': {'name': 'fsu'},
-                                'person': {
-                                    'id': 123
-                                }
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-        return TestGetFsuPlayers.Fixture(
-            mock_stats_api=mock_stats_api,
-            actual=get_fsu_baseball_players(use_static_list=request.param.use_static_list),
-            expected=request.param.expected,
-            expected_api_calls=request.param.expected_api_calls
-        )
-
-    def test_stats_api_called(self, setup: Fixture):
-        setup.mock_stats_api.get.assert_has_calls(setup.expected_api_calls)
-
-    def test_output_correct(self, setup: Fixture):
-        assert setup.actual == setup.expected

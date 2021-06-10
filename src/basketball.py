@@ -2,7 +2,8 @@ import time
 
 from nba_api.stats.endpoints import scoreboard, commonplayerinfo, boxscoretraditionalv2
 
-from src.universal import MessageObject, is_fsu, publish_message
+from src.models.MessageObject import MessageObject
+from src.universal import is_fsu, publish_message
 
 
 def get_basketball(date_to_run, league_id: str) -> MessageObject:
