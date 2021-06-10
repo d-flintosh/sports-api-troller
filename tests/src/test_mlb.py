@@ -6,8 +6,9 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from src.college.mlb import mlb_fsu_player_ids
-from src.mlb import get_mlb, player_stats_iterator, is_a_decent_day
+from src.mlb import get_mlb, player_stats_iterator
 from src.models.BaseballPlayer import BaseballPlayer
+from src.models.Emojis import Emojis
 
 
 class TestGetMlb:
@@ -57,7 +58,9 @@ class TestGetMlb:
             Params(
                 mock_schedule_return=[{'game_id': 1}],
                 mock_player_stats_return=[BaseballPlayer(id=1, full_name='Bo', hits=1, at_bats=2, home_runs=0)],
-                expected_publish_calls=[call(message='Bo went 1-2. Bo went 1-2. ')],
+                expected_publish_calls=[
+                    call(message=f'{Emojis.FSU_SPEAR.value}{Emojis.BASEBALL.value} @FSUBaseball {Emojis.BASEBALL.value}{Emojis.FSU_SPEAR.value}\nBo went 1-2. Bo went 1-2.')
+                ],
                 expected_boxscore_calls=[call(gamePk=1)],
                 mock_boxscore_return={
                     'away': {'foo': 'bar'},

@@ -4,6 +4,7 @@ import statsapi
 
 from src.college.mlb import get_fsu_baseball_players
 from src.models.BaseballPlayer import BaseballPlayer, baseball_player_from_dict
+from src.models.Emojis import Emojis
 from src.models.MessageObject import MessageObject
 from src.universal import publish_message
 
@@ -21,12 +22,12 @@ def get_mlb(date_to_run) -> MessageObject:
                                                                             player_ids=player_ids_to_check)
         fsu_player_boxscores = fsu_player_boxscores + player_stats_iterator(team=boxscore.get('home'),
                                                                             player_ids=player_ids_to_check)
-    tweet_message = ''
-    for fsu_player in fsu_player_boxscores:
-        tweet_message = tweet_message + f'{fsu_player.full_name} went {fsu_player.hits}-{fsu_player.at_bats}. '
+
+    tweet_message = '. '.join(list(map(lambda x: x.convert_to_tweet(), fsu_player_boxscores))) + '.'
 
     if fsu_player_boxscores:
-        publish_message(message=tweet_message)
+        message_prefix = f'{Emojis.FSU_SPEAR.value}{Emojis.BASEBALL.value} @FSUBaseball {Emojis.BASEBALL.value}{Emojis.FSU_SPEAR.value}\n'
+        publish_message(message=message_prefix + tweet_message)
 
     return MessageObject(raw_data=fsu_player_boxscores, message=tweet_message)
 

@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import pytest
 
 from src.models.BaseballPlayer import BaseballPlayer, baseball_player_from_dict
+from src.models.Emojis import Emojis
 
 
 class TestBaseballPlayer:
@@ -11,12 +12,14 @@ class TestBaseballPlayer:
         input: dict
         expected: BaseballPlayer
         expected_is_decent_day: bool
+        expected_tweet: str
 
     @dataclass
     class Fixture:
         actual: BaseballPlayer
         expected: BaseballPlayer
         expected_is_decent_day: bool
+        expected_tweet: str
 
     @pytest.fixture(
         ids=['Missing Batting Stats', 'W/ stats bad day', 'Decent Day'],
@@ -38,7 +41,8 @@ class TestBaseballPlayer:
                     at_bats=0,
                     home_runs=0
                 ),
-                expected_is_decent_day=False
+                expected_is_decent_day=False,
+                expected_tweet='Bo went 0-0'
             ),
             Params(
                 input={
@@ -61,7 +65,8 @@ class TestBaseballPlayer:
                     at_bats=4,
                     home_runs=0
                 ),
-                expected_is_decent_day=False
+                expected_is_decent_day=False,
+                expected_tweet='Bo went 0-4'
             ),
             Params(
                 input={
@@ -84,7 +89,8 @@ class TestBaseballPlayer:
                     at_bats=4,
                     home_runs=1
                 ),
-                expected_is_decent_day=True
+                expected_is_decent_day=True,
+                expected_tweet=f'Bo went 1-4 1 {Emojis.TATER.value}'
             )
         ]
     )
@@ -92,7 +98,8 @@ class TestBaseballPlayer:
         return TestBaseballPlayer.Fixture(
             actual=baseball_player_from_dict(request.param.input),
             expected=request.param.expected,
-            expected_is_decent_day=request.param.expected_is_decent_day
+            expected_is_decent_day=request.param.expected_is_decent_day,
+            expected_tweet=request.param.expected_tweet
         )
 
     def test_object_correct(self, setup: Fixture):
@@ -100,3 +107,6 @@ class TestBaseballPlayer:
 
     def test_is_decent_day(self, setup: Fixture):
         assert setup.actual.is_decent_day() == setup.expected_is_decent_day
+
+    def test_convert_to_tweet(self, setup: Fixture):
+        assert setup.actual.convert_to_tweet() == setup.expected_tweet
