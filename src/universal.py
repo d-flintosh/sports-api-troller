@@ -13,5 +13,5 @@ def publish_message(message: str):
     publisher = pubsub_v1.PublisherClient()
     topic_id = 'projects/sports-data-service/topics/twitter-message-service-pubsub'
     print(f'Publishing message: {message}')
-    future = publisher.publish(topic_id, str.encode(message))
+    future = publisher.publish(topic_id, str.encode(message), school='fsu')
     future.result()

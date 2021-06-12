@@ -40,7 +40,8 @@ class TestPublishMessage:
     def test_publish_called(self, setup: Fixture):
         setup.mock_publisher.publish.assert_called_once_with(
             'projects/sports-data-service/topics/twitter-message-service-pubsub',
-            str.encode('shoot and score')
+            str.encode('shoot and score'),
+            school='fsu'
         )
 
     def test_future_result_called(self, setup: Fixture):
