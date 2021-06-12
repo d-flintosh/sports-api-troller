@@ -29,7 +29,7 @@ class TestBasketball:
         expected_player_info_calls: List
 
     @pytest.fixture(
-        ids=['No games found', 'Game Found, No Players', 'Game and Players Found'],
+        ids=['No games found', 'Game Found, No Players', 'Game and Players Found', 'Game and Player Found, No Stats'],
         params=[
             Params(
                 mock_schedule_return=[],
@@ -51,6 +51,14 @@ class TestBasketball:
                 mock_schedule_return=[{'GAME_ID': 1}],
                 mock_player_stats_return=[{'PLAYER_ID': 5, 'PTS': 1, 'REB': 5, 'AST': None, 'PLAYER_NAME': 'Dragon'}],
                 expected_publish_calls=[call(message='Dragon 1 pts/5 reb')],
+                expected_boxscore_calls=[call(game_id=1)],
+                expected_player_info_calls=[call(player_id=5)],
+                mock_school='FSU'
+            ),
+            Params(
+                mock_schedule_return=[{'GAME_ID': 1}],
+                mock_player_stats_return=[{'PLAYER_ID': 5, 'PTS': 0, 'REB': 0, 'AST': 0, 'PLAYER_NAME': 'Dragon'}],
+                expected_publish_calls=[],
                 expected_boxscore_calls=[call(game_id=1)],
                 expected_player_info_calls=[call(player_id=5)],
                 mock_school='FSU'

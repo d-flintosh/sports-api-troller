@@ -36,7 +36,3 @@ class TestEntrypoint:
             call(date_to_run=date(2020, 1, 1), league_id=LeagueID.nba),
             call(date_to_run=date(2020, 1, 1), league_id=LeagueID.wnba)
         ])
-
-
-
-

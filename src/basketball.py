@@ -23,6 +23,8 @@ def get_basketball(date_to_run, league_id: str):
                 fsu_player_boxscores.append(player)
 
     tweet_message = ''
+    should_publish_message = False
+
     for fsu_player in fsu_player_boxscores:
         stat_line = []
         player_points = fsu_player.get('PTS', 0)
@@ -36,7 +38,10 @@ def get_basketball(date_to_run, league_id: str):
             if player_assists and player_assists > 0:
                 stat_line.append(f'{player_assists} ast')
 
+            if stat_line:
+                should_publish_message = True
+
             tweet_message = tweet_message + f'{fsu_player.get("PLAYER_NAME")} {"/".join(stat_line)}'
 
-    if fsu_player_boxscores:
+    if should_publish_message:
         publish_message(message=tweet_message)
