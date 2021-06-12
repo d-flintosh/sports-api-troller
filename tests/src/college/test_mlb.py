@@ -4,7 +4,7 @@ from unittest.mock import patch, Mock, call, mock_open
 
 import pytest
 
-from src.college.mlb import get_fsu_baseball_players, mlb_fsu_player_ids, extract_all_baseball_players_draft_info, \
+from src.college.mlb import extract_all_baseball_players_draft_info, \
     write_to_file_readable_for_computers
 from src.models.PlayerDraft import PlayerDraft
 
@@ -83,55 +83,6 @@ class TestExtractAllBaseballPlayersDraftInfo:
 
     def test_stats_api_called(self, setup: Fixture):
         setup.mock_stats_api.get.assert_has_calls(setup.expected_api_calls)
-
-    def test_output_correct(self, setup: Fixture):
-        assert setup.actual == setup.expected
-
-
-class TestGetFsuPlayers:
-    @dataclass
-    class Params:
-        expected: Set
-        use_static_list: bool
-        expected_extract_players_calls: List
-
-    @dataclass
-    class Fixture:
-        mock_extract_all_baseball_players_draft_info: Mock
-        actual: Set
-        expected: Set
-        expected_extract_players_calls: List
-
-    @pytest.fixture(
-        ids=['Static List', 'Dynamic List'],
-        params=[
-            Params(
-                use_static_list=True,
-                expected=mlb_fsu_player_ids,
-                expected_extract_players_calls=[]
-            ),
-            Params(
-                use_static_list=False,
-                expected={123},
-                expected_extract_players_calls=[call()]
-            )
-        ])
-    @patch('src.college.mlb.extract_all_baseball_players_draft_info', autospec=True)
-    def setup(self, mock_extract_players, request):
-        mock_extract_players.return_value = {PlayerDraft(
-            id=123,
-            college='fsu',
-            full_name=''
-        )}
-        return TestGetFsuPlayers.Fixture(
-            actual=get_fsu_baseball_players(use_static_list=request.param.use_static_list),
-            expected=request.param.expected,
-            mock_extract_all_baseball_players_draft_info=mock_extract_players,
-            expected_extract_players_calls=request.param.expected_extract_players_calls
-        )
-
-    def test_stats_api_called(self, setup: Fixture):
-        setup.mock_extract_all_baseball_players_draft_info.assert_has_calls(setup.expected_extract_players_calls)
 
     def test_output_correct(self, setup: Fixture):
         assert setup.actual == setup.expected

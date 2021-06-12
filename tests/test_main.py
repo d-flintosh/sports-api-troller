@@ -29,10 +29,10 @@ class TestEntrypoint:
         )
 
     def test_get_mlb_called(self, setup: Fixture):
-        setup.mock_mlb.assert_called_once_with(date_to_run=date(2020, 1, 1))
+        setup.mock_mlb.assert_called_once_with(date_to_run=date(2020, 1, 1), send_message=True)
 
     def test_get_basketball_called(self, setup: Fixture):
         setup.mock_basketball.assert_has_calls([
-            call(date_to_run=date(2020, 1, 1), league_id=LeagueID.nba),
-            call(date_to_run=date(2020, 1, 1), league_id=LeagueID.wnba)
+            call(date_to_run=date(2020, 1, 1), league_id=LeagueID.nba, send_message=True),
+            call(date_to_run=date(2020, 1, 1), league_id=LeagueID.wnba, send_message=True)
         ])

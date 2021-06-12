@@ -90,7 +90,7 @@ class TestBasketball:
         }
         mock_player_info.CommonPlayerInfo.return_value = mock_player
 
-        get_basketball(date_to_run=date(2020, 1, 1), league_id=LeagueID.nba)
+        get_basketball(date_to_run=date(2020, 1, 1), league_id=LeagueID.nba, send_message=True)
         return TestBasketball.Fixture(
             mock_boxscore=mock_boxscore,
             mock_scoreboard=mock_scoreboard,

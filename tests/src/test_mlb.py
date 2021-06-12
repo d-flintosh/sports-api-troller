@@ -5,10 +5,8 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from src.college.mlb import mlb_fsu_player_ids
 from src.mlb import get_mlb, player_stats_iterator
 from src.models.BaseballPlayer import BaseballPlayer
-from src.models.Emojis import Emojis
 
 
 class TestGetMlb:
@@ -17,7 +15,7 @@ class TestGetMlb:
         mock_schedule_return: List
         mock_boxscore_return: dict
         mock_player_stats_return: List
-        expected_publish_calls: List
+        expected_send_tweet_calls: List
         expected_boxscore_calls: List
         expected_player_stats_calls: List
 
@@ -25,10 +23,11 @@ class TestGetMlb:
     class Fixture:
         mock_stats_api: Mock
         mock_player_stats: Mock
-        mock_publish: Mock
-        expected_publish_calls: List
+        mock_send_tweet: Mock
+        expected_send_tweet_calls: List
         expected_boxscore_calls: List
         expected_player_stats_calls: List
+        mock_gcs: Mock
 
     @pytest.fixture(
         ids=['No games found', 'Game Found, No Players', 'Game and Players Found'],
@@ -36,7 +35,7 @@ class TestGetMlb:
             Params(
                 mock_schedule_return=[],
                 mock_player_stats_return=[],
-                expected_publish_calls=[],
+                expected_send_tweet_calls=[],
                 expected_boxscore_calls=[],
                 mock_boxscore_return={},
                 expected_player_stats_calls=[]
@@ -44,22 +43,25 @@ class TestGetMlb:
             Params(
                 mock_schedule_return=[{'game_id': 1}],
                 mock_player_stats_return=[],
-                expected_publish_calls=[],
+                expected_send_tweet_calls=[],
                 expected_boxscore_calls=[call(gamePk=1)],
                 mock_boxscore_return={
                     'away': {'foo': 'bar'},
                     'home': {'bar': 'foo'}
                 },
                 expected_player_stats_calls=[
-                    call(team={'foo': 'bar'}, player_ids=mlb_fsu_player_ids),
-                    call(team={'bar': 'foo'}, player_ids=mlb_fsu_player_ids)
+                    call(team={'foo': 'bar'}, college_by_player={"123": {"id": 123}}),
+                    call(team={'bar': 'foo'}, college_by_player={"123": {"id": 123}})
                 ]
             ),
             Params(
                 mock_schedule_return=[{'game_id': 1}],
-                mock_player_stats_return=[BaseballPlayer(id=1, full_name='Bo', hits=1, at_bats=2, home_runs=0)],
-                expected_publish_calls=[
-                    call(message=f'{Emojis.FSU_SPEAR.value}{Emojis.BASEBALL.value} @FSUBaseball {Emojis.BASEBALL.value}{Emojis.FSU_SPEAR.value}\nBo went 1-2. Bo went 1-2.')
+                mock_player_stats_return=[BaseballPlayer(id=1, full_name='Bo', college='FSU', hits=1, at_bats=2, home_runs=0)],
+                expected_send_tweet_calls=[
+                    call(school='fsu', player_stats=[
+                        BaseballPlayer(id=1, full_name='Bo', college='FSU', hits=1, at_bats=2, home_runs=0),
+                        BaseballPlayer(id=1, full_name='Bo', college='FSU', hits=1, at_bats=2, home_runs=0)
+                    ])
                 ],
                 expected_boxscore_calls=[call(gamePk=1)],
                 mock_boxscore_return={
@@ -67,16 +69,19 @@ class TestGetMlb:
                     'home': {'bar': 'foo'}
                 },
                 expected_player_stats_calls=[
-                    call(team={'foo': 'bar'}, player_ids=mlb_fsu_player_ids),
-                    call(team={'bar': 'foo'}, player_ids=mlb_fsu_player_ids)
+                    call(team={'foo': 'bar'}, college_by_player={"123": {"id": 123}}),
+                    call(team={'bar': 'foo'}, college_by_player={"123": {"id": 123}})
                 ]
             )
         ]
     )
-    @patch('src.mlb.publish_message', autospec=True)
+    @patch('src.mlb.Gcs', autospec=True)
+    @patch('src.mlb.SendTweetForSchool', autospec=True)
     @patch('src.mlb.player_stats_iterator', autospec=True)
     @patch('src.mlb.statsapi', autospec=True)
-    def setup(self, mock_stats_api, mock_player_stats, mock_publish, request):
+    def setup(self, mock_stats_api, mock_player_stats, mock_send_tweet, mock_gcs, request):
+        mock_send_tweet.reset_mock()
+        mock_gcs.return_value.read_as_dict.return_value = {"123": {"id": 123}}
         mock_stats_api.schedule.return_value = request.param.mock_schedule_return
         mock_stats_api.boxscore_data.return_value = request.param.mock_boxscore_return
         mock_player_stats.return_value = request.param.mock_player_stats_return
@@ -86,11 +91,15 @@ class TestGetMlb:
         return TestGetMlb.Fixture(
             mock_stats_api=mock_stats_api,
             mock_player_stats=mock_player_stats,
-            mock_publish=mock_publish,
-            expected_publish_calls=request.param.expected_publish_calls,
+            mock_send_tweet=mock_send_tweet,
+            expected_send_tweet_calls=request.param.expected_send_tweet_calls,
             expected_boxscore_calls=request.param.expected_boxscore_calls,
-            expected_player_stats_calls=request.param.expected_player_stats_calls
+            expected_player_stats_calls=request.param.expected_player_stats_calls,
+            mock_gcs=mock_gcs
         )
+
+    def test_read_as_dict_called(self, setup: Fixture):
+        setup.mock_gcs.return_value.read_as_dict.assert_called_once_with(url='mlb/MLBPlayerDraft.json')
 
     def test_mock_schedule_called(self, setup: Fixture):
         setup.mock_stats_api.schedule.assert_called_once_with(date='01/01/2020')
@@ -101,23 +110,81 @@ class TestGetMlb:
     def test_player_stats_iterator_called(self, setup: Fixture):
         setup.mock_player_stats.assert_has_calls(setup.expected_player_stats_calls)
 
-    def test_publish_message_called(self, setup: Fixture):
-        setup.mock_publish.assert_has_calls(setup.expected_publish_calls)
+    def test_send_tweet_constructor_called(self, setup: Fixture):
+        setup.mock_send_tweet.assert_has_calls(setup.expected_send_tweet_calls)
+
+    def test_send_tweet_called(self, setup: Fixture):
+        if setup.expected_send_tweet_calls:
+            setup.mock_send_tweet.return_value.publish.assert_called_once_with(
+                send_message=True,
+                sport='baseball'
+            )
+        else:
+            setup.mock_send_tweet.return_value.publish.assert_not_called()
 
 
 class TestPlayerStatsIterator:
-    @pytest.mark.parametrize("team,is_decent_day,expected", [
-        ({'players': {'foo': 'bar'}}, False, []),
-        ({'players': {'foo': 'bar'}}, True, [BaseballPlayer(id=123, full_name='Bo', hits=1, at_bats=1, home_runs=1)]),
-    ])
+    @dataclass
+    class Params:
+        expected: List
+        is_decent_day: bool
+        team: dict
+        expected_baseball_player_from_dict_calls: List
+
+    @dataclass
+    class Fixture:
+        actual: List
+        expected: List
+        mock_baseball_player_from_dict: Mock
+        expected_baseball_player_from_dict_calls: List
+
+    @pytest.fixture(
+        ids=['Not Decent Day', 'Is Decent Day', 'Player not in College Map'],
+        params=[
+            Params(
+                team={'players': {'123': {'person': {'id': 123}}}},
+                is_decent_day=False,
+                expected=[],
+                expected_baseball_player_from_dict_calls=[call(player={'person': {'id': 123}}, college={'id': 123, 'college': 'FSU'})]
+            ),
+            Params(
+                team={'players': {'123': {'person': {'id': 123}}}},
+                is_decent_day=True,
+                expected=[BaseballPlayer(id=123, full_name='Bo', college='FSU', hits=1, at_bats=1, home_runs=1)],
+                expected_baseball_player_from_dict_calls=[call(player={'person': {'id': 123}}, college={'id': 123, 'college': 'FSU'})]
+            ),
+            Params(
+                team={'players': {'123': {'person': {'id': 0}}}},
+                is_decent_day=True,
+                expected=[],
+                expected_baseball_player_from_dict_calls=[]
+            ),
+        ]
+    )
     @patch('src.mlb.baseball_player_from_dict', autospec=True)
-    def test_player_stats_iterator(self, mock_baseball_player, team, is_decent_day, expected):
+    def setup(self, mock_baseball_player, request):
         mock_baseball_player.return_value = BaseballPlayer(
             id=123,
             full_name='Bo',
-            hits=1 if is_decent_day else 0,
+            college='FSU',
+            hits=1 if request.param.is_decent_day else 0,
             at_bats=1,
             home_runs=1
         )
-        assert player_stats_iterator(team=team, player_ids={123}) == expected
+        return TestPlayerStatsIterator.Fixture(
+            expected=request.param.expected,
+            actual=player_stats_iterator(team=request.param.team, college_by_player={'123': {'id': 123, 'college': 'FSU'}}),
+            expected_baseball_player_from_dict_calls=request.param.expected_baseball_player_from_dict_calls,
+            mock_baseball_player_from_dict=mock_baseball_player
+        )
 
+    def test_baseball_player_from_dict_called(self, setup: Fixture):
+        assert setup.mock_baseball_player_from_dict.mock_calls == setup.expected_baseball_player_from_dict_calls
+
+    def test_player_stats_iterator_return(self, setup: Fixture):
+        assert setup.actual == setup.expected
+
+
+@pytest.mark.skip(reason="only run this manually")
+def test_mlb():
+    get_mlb(date(2021, 6, 11), send_message=False)

@@ -37,6 +37,7 @@ class TestBaseballPlayer:
                 expected=BaseballPlayer(
                     id=1,
                     full_name='Bo',
+                    college='someCollege',
                     hits=0,
                     at_bats=0,
                     home_runs=0
@@ -62,6 +63,7 @@ class TestBaseballPlayer:
                     id=1,
                     full_name='Bo',
                     hits=0,
+                    college='someCollege',
                     at_bats=4,
                     home_runs=0
                 ),
@@ -85,6 +87,7 @@ class TestBaseballPlayer:
                 expected=BaseballPlayer(
                     id=1,
                     full_name='Bo',
+                    college='someCollege',
                     hits=1,
                     at_bats=4,
                     home_runs=1
@@ -96,7 +99,7 @@ class TestBaseballPlayer:
     )
     def setup(self, request):
         return TestBaseballPlayer.Fixture(
-            actual=baseball_player_from_dict(request.param.input),
+            actual=baseball_player_from_dict(player=request.param.input, college={'college': 'someCollege'}),
             expected=request.param.expected,
             expected_is_decent_day=request.param.expected_is_decent_day,
             expected_tweet=request.param.expected_tweet

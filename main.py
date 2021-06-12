@@ -9,7 +9,7 @@ from src.mlb import get_mlb
 def entrypoint(event, context):
     yesterday = date.today() - timedelta(1)
 
-    get_mlb(date_to_run=yesterday)
-    get_basketball(date_to_run=yesterday, league_id=LeagueID.nba)
-    get_basketball(date_to_run=yesterday, league_id=LeagueID.wnba)
+    get_mlb(date_to_run=yesterday, send_message=True)
+    get_basketball(date_to_run=yesterday, league_id=LeagueID.nba, send_message=True)
+    get_basketball(date_to_run=yesterday, league_id=LeagueID.wnba, send_message=True)
 

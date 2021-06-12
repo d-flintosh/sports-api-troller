@@ -31,7 +31,7 @@ class TestPublishMessage:
         mock_future = Mock()
         mock_publisher.publish.return_value = mock_future
 
-        publish_message(message='shoot and score')
+        publish_message(message='shoot and score', school='fsu', send_message=True)
         return TestPublishMessage.Fixture(
             mock_publisher=mock_publisher,
             mock_future=mock_future

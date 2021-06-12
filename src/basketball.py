@@ -5,7 +5,7 @@ from nba_api.stats.endpoints import scoreboard, commonplayerinfo, boxscoretradit
 from src.universal import is_fsu, publish_message
 
 
-def get_basketball(date_to_run, league_id: str):
+def get_basketball(date_to_run, league_id: str, send_message: bool):
     fsu_player_boxscores = []
     formatted_date = date_to_run.strftime('%m/%d/%Y')
     print(f'Getting games played for date: {formatted_date}')
@@ -44,4 +44,4 @@ def get_basketball(date_to_run, league_id: str):
             tweet_message = tweet_message + f'{fsu_player.get("PLAYER_NAME")} {"/".join(stat_line)}'
 
     if should_publish_message:
-        publish_message(message=tweet_message)
+        publish_message(message=tweet_message, send_message=send_message, school='fsu')
