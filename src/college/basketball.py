@@ -29,5 +29,9 @@ def write_to_file_readable_for_computers(league_id: LeagueID):
             'id': player.id,
             'college': player.college
         }
-    league_id_string = 'nba' if league_id == LeagueID.nba else 'wnba'
+    league_id_string = convert_league_id_to_string(league_id)
     Gcs().write(url=f'{league_id_string}/players.json', contents=output)
+
+
+def convert_league_id_to_string(league_id: LeagueID):
+    return 'nba' if league_id == LeagueID.nba else 'wnba'

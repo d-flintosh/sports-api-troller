@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
 from src.models.Emojis import Emojis
+from src.models.Player import Player
 
 
 @dataclass
-class BaseballPlayer:
+class BaseballPlayer(Player):
     id: int
     full_name: str
     college: str
@@ -18,6 +19,9 @@ class BaseballPlayer:
     def convert_to_tweet(self):
         had_a_tater = f' {self.home_runs} {Emojis.TATER.value}' if self.home_runs > 0 else ''
         return f'{self.full_name} went {self.hits}-{self.at_bats}{had_a_tater}'
+
+    def get_college(self):
+        return self.college
 
 
 def baseball_player_from_dict(player: dict, college: dict):

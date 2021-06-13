@@ -6,9 +6,7 @@ fsu_school_names = ['florida state', 'fsu', 'florida state university']
 COLLEGES_TO_RUN = {
     'fsu': 'fsu',
     'florida state': 'fsu',
-    'florida state university': 'fsu',
-    'michigan': 'michigan',
-    'notre dame': 'notredame'
+    'florida state university': 'fsu'
 }
 
 
@@ -16,6 +14,9 @@ class Schools(Enum):
     fsu = {
        'baseball': {
            'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASEBALL.value} @FSUBaseball {Emojis.BASEBALL.value}{Emojis.FSU_SPEAR.value}\n'
+       },
+       'basketball': {
+           'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} @FSUHoops {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n'
        }
     }
     michigan = {

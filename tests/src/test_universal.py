@@ -6,18 +6,6 @@ import pytest
 from src.universal import is_fsu, publish_message
 
 
-class TestIsFsu:
-    @pytest.mark.parametrize("school,expected", [
-        ('florida', False),
-        ('florida state university', True),
-        ('florida state', True),
-        ('fsu', True),
-        ('fSu', True)
-    ])
-    def test_is_fsu(self, school, expected):
-        assert is_fsu(school=school) == expected
-
-
 class TestPublishMessage:
     @dataclass
     class Fixture:
