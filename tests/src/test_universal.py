@@ -3,7 +3,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from src.universal import is_fsu, publish_message
+from src.universal import publish_message
 
 
 class TestPublishMessage:

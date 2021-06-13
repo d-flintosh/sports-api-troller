@@ -2,11 +2,11 @@ from enum import Enum
 
 from src.models.Emojis import Emojis
 
-fsu_school_names = ['florida state', 'fsu', 'florida state university']
 COLLEGES_TO_RUN = {
     'fsu': 'fsu',
     'florida state': 'fsu',
-    'florida state university': 'fsu'
+    'florida state university': 'fsu',
+    'michigan': 'michigan'
 }
 
 
@@ -21,11 +21,25 @@ class Schools(Enum):
     }
     michigan = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Michigan {Emojis.BASEBALL.value}\n'
+            'header': f'{Emojis.BASEBALL.value} @umichbaseball {Emojis.BASEBALL.value}\n'
+        },
+        'basketball': {
+            'header': f'{Emojis.BASKETBALL.value} @umichbball {Emojis.BASKETBALL.value}\n'
         }
     }
     notredame = {
         'baseball': {
             'header': f'{Emojis.BASEBALL.value} Notre Dame {Emojis.BASEBALL.value}\n'
+        },
+        'basketball': {
+            'header': f'{Emojis.BASKETBALL.value} Notre Dame {Emojis.BASKETBALL.value}\n'
+        }
+    }
+    illinois = {
+        'baseball': {
+            'header': f'{Emojis.BASEBALL.value} Illinois {Emojis.BASEBALL.value}\n'
+        },
+        'basketball': {
+            'header': f'{Emojis.BASKETBALL.value} Illinois {Emojis.BASKETBALL.value}\n'
         }
     }

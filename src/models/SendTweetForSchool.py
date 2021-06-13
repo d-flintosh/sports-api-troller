@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
-from src.models.BaseballPlayer import BaseballPlayer
+from src.models.Player import Player
 from src.models.Schools import Schools
 from src.universal import publish_message
 
@@ -9,9 +9,9 @@ from src.universal import publish_message
 @dataclass
 class SendTweetForSchool:
     school: str
-    player_stats: List[BaseballPlayer]
+    player_stats: List[Player]
 
-    def __init__(self, school: str, player_stats: [BaseballPlayer]):
+    def __init__(self, school: str, player_stats: [Player]):
         self.school = school
         self.player_stats = player_stats
 

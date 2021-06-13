@@ -1,5 +1,7 @@
 There is a scheduled Cloud Task in GCP that runs every morning at 9am Central time. 
 
+*BY PUSHING TO MASTER YOU WILL TRIGGER A CLOUD BUILD DEPLOYMENT*
+
 *High Level Walk through*
 * That will execute `entrypoint` in `main.py`.
 * Each of MLB, NBA, and WNBA are run sequentially. 

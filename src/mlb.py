@@ -5,6 +5,7 @@ import statsapi
 
 from src.gcp.gcs import Gcs
 from src.models.BaseballPlayer import BaseballPlayer, baseball_player_from_dict
+from src.models.MlbTeams import mlb_team_map
 from src.models.SendTweetForSchool import SendTweetForSchool
 from src.models.TweetObject import TweetObject
 
@@ -36,12 +37,17 @@ def get_mlb(date_to_run, send_message: bool = True):
 
 def player_stats_iterator(team: dict, college_by_player: dict) -> List[BaseballPlayer]:
     output = []
+    team_id = team.get('team', {}).get('id', None)
     players = team.get('players', {})
     for key, player in players.items():
         found_college_for_player = college_by_player.get(str(player.get('person', {}).get('id', None)), None)
 
         if found_college_for_player:
-            player_obj = baseball_player_from_dict(player=player, college=found_college_for_player)
+            player_obj = baseball_player_from_dict(
+                player=player,
+                team_id=team_id,
+                college=found_college_for_player
+            )
             if player_obj.is_decent_day():
                 output.append(player_obj)
 

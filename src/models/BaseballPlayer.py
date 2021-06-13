@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from src.models.Emojis import Emojis
+from src.models.MlbTeams import mlb_team_map
 from src.models.Player import Player
 
 
@@ -8,6 +9,7 @@ from src.models.Player import Player
 class BaseballPlayer(Player):
     id: int
     full_name: str
+    team_id: int
     college: str
     hits: int
     at_bats: int
@@ -17,17 +19,24 @@ class BaseballPlayer(Player):
         return self.hits > 0
 
     def convert_to_tweet(self):
+        team_text = ''
+        if self.team_id:
+            team = mlb_team_map.get(str(self.team_id), None)
+            if team:
+                team_text = f' ({team.get("twitterCode")})'
+
         had_a_tater = f' {self.home_runs} {Emojis.TATER.value}' if self.home_runs > 0 else ''
-        return f'{self.full_name} went {self.hits}-{self.at_bats}{had_a_tater}'
+        return f'{self.full_name}{team_text} went {self.hits}-{self.at_bats}{had_a_tater}'
 
     def get_college(self):
         return self.college
 
 
-def baseball_player_from_dict(player: dict, college: dict):
+def baseball_player_from_dict(player: dict, team_id: int, college: dict):
     return BaseballPlayer(
         id=player.get('person').get('id'),
         full_name=player.get('person').get('fullName'),
+        team_id=team_id,
         college=college.get('college'),
         hits=player.get('stats', {}).get('batting', {}).get('hits', 0),
         at_bats=player.get('stats', {}).get('batting', {}).get('atBats', 0),

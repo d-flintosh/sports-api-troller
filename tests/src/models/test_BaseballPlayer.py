@@ -10,6 +10,7 @@ class TestBaseballPlayer:
     @dataclass
     class Params:
         input: dict
+        team_id: int
         expected: BaseballPlayer
         expected_is_decent_day: bool
         expected_tweet: str
@@ -22,7 +23,7 @@ class TestBaseballPlayer:
         expected_tweet: str
 
     @pytest.fixture(
-        ids=['Missing Batting Stats', 'W/ stats bad day', 'Decent Day'],
+        ids=['Missing Batting Stats', 'W/ stats bad day', 'Decent Day and team lookup'],
         params=[
             Params(
                 input={
@@ -34,9 +35,11 @@ class TestBaseballPlayer:
                         'batting': {}
                     }
                 },
+                team_id=1,
                 expected=BaseballPlayer(
                     id=1,
                     full_name='Bo',
+                    team_id=1,
                     college='someCollege',
                     hits=0,
                     at_bats=0,
@@ -59,9 +62,11 @@ class TestBaseballPlayer:
                         }
                     }
                 },
+                team_id=1,
                 expected=BaseballPlayer(
                     id=1,
                     full_name='Bo',
+                    team_id=1,
                     hits=0,
                     college='someCollege',
                     at_bats=4,
@@ -84,22 +89,28 @@ class TestBaseballPlayer:
                         }
                     }
                 },
+                team_id=135,
                 expected=BaseballPlayer(
                     id=1,
                     full_name='Bo',
+                    team_id=135,
                     college='someCollege',
                     hits=1,
                     at_bats=4,
                     home_runs=1
                 ),
                 expected_is_decent_day=True,
-                expected_tweet=f'Bo went 1-4 1 {Emojis.TATER.value}'
+                expected_tweet=f'Bo (#HungryForMore) went 1-4 1 {Emojis.TATER.value}'
             )
         ]
     )
     def setup(self, request):
         return TestBaseballPlayer.Fixture(
-            actual=baseball_player_from_dict(player=request.param.input, college={'college': 'someCollege'}),
+            actual=baseball_player_from_dict(
+                player=request.param.input,
+                team_id=request.param.team_id,
+                college={'college': 'someCollege'}
+            ),
             expected=request.param.expected,
             expected_is_decent_day=request.param.expected_is_decent_day,
             expected_tweet=request.param.expected_tweet

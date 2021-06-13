@@ -56,11 +56,11 @@ class TestGetMlb:
             ),
             Params(
                 mock_schedule_return=[{'game_id': 1}],
-                mock_player_stats_return=[BaseballPlayer(id=1, full_name='Bo', college='FSU', hits=1, at_bats=2, home_runs=0)],
+                mock_player_stats_return=[BaseballPlayer(id=1, full_name='Bo', team_id=1, college='FSU', hits=1, at_bats=2, home_runs=0)],
                 expected_send_tweet_calls=[
                     call(school='fsu', player_stats=[
-                        BaseballPlayer(id=1, full_name='Bo', college='FSU', hits=1, at_bats=2, home_runs=0),
-                        BaseballPlayer(id=1, full_name='Bo', college='FSU', hits=1, at_bats=2, home_runs=0)
+                        BaseballPlayer(id=1, full_name='Bo', team_id=1, college='FSU', hits=1, at_bats=2, home_runs=0),
+                        BaseballPlayer(id=1, full_name='Bo', team_id=1, college='FSU', hits=1, at_bats=2, home_runs=0)
                     ])
                 ],
                 expected_boxscore_calls=[call(gamePk=1)],
@@ -139,22 +139,22 @@ class TestPlayerStatsIterator:
         expected_baseball_player_from_dict_calls: List
 
     @pytest.fixture(
-        ids=['Not Decent Day', 'Is Decent Day', 'Player not in College Map'],
+        ids=['Not Decent Day', 'Is Decent Batter Day', 'Player not in College Map'],
         params=[
             Params(
-                team={'players': {'123': {'person': {'id': 123}}}},
+                team={'team': {'id': 1}, 'players': {'123': {'person': {'id': 123}}}},
                 is_decent_day=False,
                 expected=[],
-                expected_baseball_player_from_dict_calls=[call(player={'person': {'id': 123}}, college={'id': 123, 'college': 'FSU'})]
+                expected_baseball_player_from_dict_calls=[call(player={'person': {'id': 123}}, team_id=1, college={'id': 123, 'college': 'FSU'})]
             ),
             Params(
-                team={'players': {'123': {'person': {'id': 123}}}},
+                team={'team': {'id': 1}, 'players': {'123': {'person': {'id': 123}}}},
                 is_decent_day=True,
-                expected=[BaseballPlayer(id=123, full_name='Bo', college='FSU', hits=1, at_bats=1, home_runs=1)],
-                expected_baseball_player_from_dict_calls=[call(player={'person': {'id': 123}}, college={'id': 123, 'college': 'FSU'})]
+                expected=[BaseballPlayer(id=123, full_name='Bo', team_id=1, college='FSU', hits=1, at_bats=1, home_runs=1)],
+                expected_baseball_player_from_dict_calls=[call(player={'person': {'id': 123}}, team_id=1, college={'id': 123, 'college': 'FSU'})]
             ),
             Params(
-                team={'players': {'123': {'person': {'id': 0}}}},
+                team={'team': {'id': 1}, 'players': {'123': {'person': {'id': 0}}}},
                 is_decent_day=True,
                 expected=[],
                 expected_baseball_player_from_dict_calls=[]
@@ -167,6 +167,7 @@ class TestPlayerStatsIterator:
             id=123,
             full_name='Bo',
             college='FSU',
+            team_id=1,
             hits=1 if request.param.is_decent_day else 0,
             at_bats=1,
             home_runs=1
@@ -183,8 +184,3 @@ class TestPlayerStatsIterator:
 
     def test_player_stats_iterator_return(self, setup: Fixture):
         assert setup.actual == setup.expected
-
-
-@pytest.mark.skip(reason="only run this manually")
-def test_mlb():
-    get_mlb(date(2021, 6, 12), send_message=False)
