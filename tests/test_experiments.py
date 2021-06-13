@@ -31,7 +31,7 @@ def test_get_basketball_players_from_api():
     ).get_normalized_dict())
 
 
-# @pytest.mark.skip(reason="only run this manually")
+@pytest.mark.skip(reason="only run this manually")
 def test_get_basketball_teams_from_api():
     all_players = commonallplayers.CommonAllPlayers(
         is_only_current_season=1,

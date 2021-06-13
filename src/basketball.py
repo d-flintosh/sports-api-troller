@@ -1,5 +1,3 @@
-import time
-
 import pandas
 from nba_api.stats.endpoints import scoreboard, boxscoretraditionalv2
 from nba_api.stats.library.parameters import LeagueID
@@ -27,7 +25,7 @@ def get_basketball(date_to_run, league_id: LeagueID, send_message: bool):
 
         for player in boxscore.get_normalized_dict().get('PlayerStats'):
             player_id = player.get('PLAYER_ID')
-            basketball_player = basketball_player_from_dict(
+            basketball_player: BasketballPlayer = basketball_player_from_dict(
                 player=player,
                 league_id=league_id,
                 college=college_by_player.get(str(player_id))

@@ -41,6 +41,8 @@ class TestBasketball:
                 mock_schedule_return=[{'GAME_ID': 1}],
                 mock_player_stats_return=BasketballPlayer(
                     id=5,
+                    league_id=LeagueID.nba,
+                    team_id=1,
                     full_name='Dragon',
                     college='FSU',
                     points=1,
@@ -48,7 +50,13 @@ class TestBasketball:
                     assists=0
                 ),
                 expected_boxscore_calls=[call(game_id=1)],
-                expected_basketball_player_from_dict=[call(player={'PLAYER_ID': 123}, college={"id": 123, "college": "someSchool"})]
+                expected_basketball_player_from_dict=[
+                    call(
+                        player={'PLAYER_ID': 123},
+                        league_id=LeagueID.nba,
+                        college={"id": 123, "college": "someSchool"}
+                    )
+                ]
             )
         ]
     )
@@ -104,6 +112,8 @@ class TestBasketball:
         if setup.expected_basketball_player_from_dict:
             setup.mock_send_tweet.assert_called_once_with(school='fsu', player_stats=[BasketballPlayer(
                 id=5,
+                league_id=LeagueID.nba,
+                team_id=1,
                 full_name='Dragon',
                 college='FSU',
                 points=1,
