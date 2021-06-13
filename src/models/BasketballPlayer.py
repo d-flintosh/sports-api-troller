@@ -4,6 +4,7 @@ from nba_api.stats.library.parameters import LeagueID
 
 from src.models.NbaTeams import nba_team_map
 from src.models.Player import Player
+from src.models.WnbaTeams import wnba_team_map
 from src.universal import get_team_text
 
 
@@ -29,7 +30,7 @@ class BasketballPlayer(Player):
             stat_line.append(f'{self.rebounds} reb')
         if self.assists > 0:
             stat_line.append(f'{self.assists} ast')
-        team_map_to_use = nba_team_map
+        team_map_to_use = nba_team_map if self.league_id == LeagueID.nba else wnba_team_map
 
         team_text = get_team_text(team_map=team_map_to_use, team_id=self.team_id)
         return f'{self.full_name}{team_text} {"/".join(stat_line)}'
