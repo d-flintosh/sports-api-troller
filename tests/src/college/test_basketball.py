@@ -54,8 +54,3 @@ class TestExtractAllBasketballPlayersDraftInfo:
     def test_output_correct(self, setup: Fixture):
         assert setup.actual == setup.expected
 
-
-@pytest.mark.skip(reason="only run this manually")
-def test_extract_basketball_draft_info():
-    print(write_to_file_readable_for_computers(league_id=LeagueID.nba))
-    print(write_to_file_readable_for_computers(league_id=LeagueID.wnba))

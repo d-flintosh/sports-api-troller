@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from src.models.Emojis import Emojis
 from src.models.MlbTeams import mlb_team_map
 from src.models.Player import Player
+from src.universal import get_team_text
 
 
 @dataclass
@@ -19,11 +20,7 @@ class BaseballPlayer(Player):
         return self.hits > 0
 
     def convert_to_tweet(self):
-        team_text = ''
-        if self.team_id:
-            team = mlb_team_map.get(str(self.team_id), None)
-            if team:
-                team_text = f' ({team.get("twitterCode")})'
+        team_text = get_team_text(team_map=mlb_team_map, team_id=self.team_id)
 
         had_a_tater = f' {self.home_runs} {Emojis.TATER.value}' if self.home_runs > 0 else ''
         return f'{self.full_name}{team_text} went {self.hits}-{self.at_bats}{had_a_tater}'

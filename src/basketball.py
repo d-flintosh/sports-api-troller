@@ -27,7 +27,11 @@ def get_basketball(date_to_run, league_id: LeagueID, send_message: bool):
 
         for player in boxscore.get_normalized_dict().get('PlayerStats'):
             player_id = player.get('PLAYER_ID')
-            basketball_player = basketball_player_from_dict(player=player, college=college_by_player.get(str(player_id)))
+            basketball_player = basketball_player_from_dict(
+                player=player,
+                league_id=league_id,
+                college=college_by_player.get(str(player_id))
+            )
             if basketball_player.is_decent_day():
                 tweetable_objects.append(TweetObject(player_object=basketball_player))
 

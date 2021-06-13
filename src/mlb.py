@@ -5,7 +5,6 @@ import statsapi
 
 from src.gcp.gcs import Gcs
 from src.models.BaseballPlayer import BaseballPlayer, baseball_player_from_dict
-from src.models.MlbTeams import mlb_team_map
 from src.models.SendTweetForSchool import SendTweetForSchool
 from src.models.TweetObject import TweetObject
 
