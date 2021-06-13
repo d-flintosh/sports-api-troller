@@ -120,6 +120,6 @@ class TestBasketball:
             setup.mock_send_tweet.return_value.publish.assert_not_called()
 
 
-# @pytest.mark.skip(reason="only run this manually")
+@pytest.mark.skip(reason="only run this manually")
 def test_get_basketball():
     get_basketball(date(2021, 6, 12), send_message=False, league_id=LeagueID.nba)

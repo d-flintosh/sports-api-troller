@@ -187,4 +187,4 @@ class TestPlayerStatsIterator:
 
 @pytest.mark.skip(reason="only run this manually")
 def test_mlb():
-    get_mlb(date(2021, 6, 11), send_message=False)
+    get_mlb(date(2021, 6, 12), send_message=False)
