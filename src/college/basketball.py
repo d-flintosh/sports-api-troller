@@ -1,6 +1,7 @@
+import time
 from typing import Set
 
-from nba_api.stats.endpoints import drafthistory
+from nba_api.stats.endpoints import commonallplayers, commonplayerinfo
 from nba_api.stats.library.parameters import LeagueID
 
 from src.gcp.gcs import Gcs
@@ -8,16 +9,26 @@ from src.models.PlayerDraft import PlayerDraft
 
 
 def extract_all_basketball_players_draft_info(league_id: LeagueID) -> Set[PlayerDraft]:
-    draft_history = drafthistory.DraftHistory(league_id=league_id)
+    all_players = commonallplayers.CommonAllPlayers(
+        is_only_current_season=1,
+        league_id=league_id
+    ).get_normalized_dict().get('CommonAllPlayers')
 
     players_to_return = []
-    for key, players in draft_history.get_normalized_dict().items():
-        for player in players:
+    for player in all_players:
+        try:
+            player_info = commonplayerinfo.CommonPlayerInfo(player_id=player.get('PERSON_ID'))\
+                .get_normalized_dict().get('CommonPlayerInfo')[0]
             players_to_return.append(PlayerDraft(
-                id=player.get('PERSON_ID'),
-                full_name=player.get('PLAYER_NAME'),
-                college=player.get('ORGANIZATION')
+                id=player_info.get('PERSON_ID'),
+                full_name=player_info.get('DISPLAY_FIRST_LAST'),
+                college=player_info.get('SCHOOL')
             ))
+        except:
+            print(f'Failed for player {player}')
+
+        time.sleep(2)
+
     return set(players_to_return)
 
 

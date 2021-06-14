@@ -9,7 +9,7 @@ steps:
       - --source=.
       - --runtime=python39
       - --entry-point=entrypoint
-      - --memory=128MB
+      - --memory=256MB
       - --timeout=500s
       - --service-account=twitter-message-service@sports-data-service.iam.gserviceaccount.com
       - --trigger-topic=sports-api-troller-pubsub

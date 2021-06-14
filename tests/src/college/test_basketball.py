@@ -1,11 +1,11 @@
 from dataclasses import dataclass
-from typing import Set, List
-from unittest.mock import patch, call, Mock
+from typing import Set
+from unittest.mock import patch, Mock
 
 import pytest
 from nba_api.stats.library.parameters import LeagueID
 
-from src.college.basketball import extract_all_basketball_players_draft_info, write_to_file_readable_for_computers
+from src.college.basketball import extract_all_basketball_players_draft_info
 from src.models.PlayerDraft import PlayerDraft
 
 
@@ -53,4 +53,3 @@ class TestExtractAllBasketballPlayersDraftInfo:
 
     def test_output_correct(self, setup: Fixture):
         assert setup.actual == setup.expected
-

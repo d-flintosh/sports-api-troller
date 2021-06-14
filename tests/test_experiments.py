@@ -1,8 +1,10 @@
+from datetime import date
+
 import pytest
 import statsapi
-from nba_api.stats.endpoints import teamdetails, teaminfocommon, commonallplayers
+from nba_api.stats.endpoints import commonallplayers, commonplayerinfo
 from nba_api.stats.library.parameters import LeagueID
-from datetime import date
+
 from src.basketball import get_basketball
 from src.college.basketball import write_to_file_readable_for_computers
 from src.mlb import get_mlb
@@ -10,12 +12,12 @@ from src.mlb import get_mlb
 
 @pytest.mark.skip(reason="only run this manually")
 def test_mlb():
-    get_mlb(date(2021, 6, 11), send_message=False)
+    get_mlb(date(2021, 6, 13), send_message=True)
 
 
 @pytest.mark.skip(reason="only run this manually")
 def test_get_basketball():
-    get_basketball(date(2021, 6, 12), send_message=False, league_id=LeagueID.nba)
+    get_basketball(date(2021, 6, 13), send_message=False, league_id=LeagueID.wnba)
 
 
 @pytest.mark.skip(reason="only run this manually")
@@ -46,6 +48,12 @@ def test_get_basketball_teams_from_api():
         }
 
     print(team_map)
+
+
+@pytest.mark.skip(reason="only run this manually")
+def test_get_basketball_player_from_api():
+    player_info = commonplayerinfo.CommonPlayerInfo(player_id=1630172).get_normalized_dict().get('CommonPlayerInfo')[0]
+    print(player_info)
 
 
 @pytest.mark.skip(reason="only run this manually")

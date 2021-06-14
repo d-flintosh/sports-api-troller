@@ -43,3 +43,11 @@ class Schools(Enum):
             'header': f'{Emojis.BASKETBALL.value} Illinois {Emojis.BASKETBALL.value}\n'
         }
     }
+    connecticut = {
+        'baseball': {
+            'header': f'{Emojis.BASEBALL.value} UConn {Emojis.BASEBALL.value}\n'
+        },
+        'basketball': {
+            'header': f'{Emojis.BASKETBALL.value} UConn {Emojis.BASKETBALL.value}\n'
+        }
+    }
