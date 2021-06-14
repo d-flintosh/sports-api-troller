@@ -16,7 +16,8 @@ class TestExtractAllBasketballPlayersDraftInfo:
 
     @dataclass
     class Fixture:
-        mock_draft_history: Mock
+        mock_all_players: Mock
+        mock_player_info: Mock
         actual: Set
         expected: Set
 
@@ -31,25 +32,42 @@ class TestExtractAllBasketballPlayersDraftInfo:
                 )}
             )
         ])
-    @patch('src.college.basketball.drafthistory')
-    def setup(self, mock_draft_history, request):
-        mock_draft_history.DraftHistory.return_value.get_normalized_dict.return_value = {
-            'foo': [
+    @patch('time.sleep', return_value=None)
+    @patch('src.college.basketball.commonplayerinfo')
+    @patch('src.college.basketball.commonallplayers')
+    def setup(self, mock_all_players, mock_player_info, mock_sleep, request):
+        mock_all_players.CommonAllPlayers.return_value.get_normalized_dict.return_value = {
+            'CommonAllPlayers': [
+                {
+                    'PERSON_ID': 123
+                }
+            ]
+        }
+
+        mock_player_info.CommonPlayerInfo.return_value.get_normalized_dict.return_value = {
+            'CommonPlayerInfo': [
                 {
                     'PERSON_ID': 123,
-                    'ORGANIZATION': 'someThing',
-                    'PLAYER_NAME': 'Bo'
+                    'DISPLAY_FIRST_LAST': 'Bo',
+                    'SCHOOL': 'someThing'
                 }
             ]
         }
         return TestExtractAllBasketballPlayersDraftInfo.Fixture(
-            mock_draft_history=mock_draft_history,
+            mock_all_players=mock_all_players,
+            mock_player_info=mock_player_info,
             actual=extract_all_basketball_players_draft_info(league_id=LeagueID.nba),
             expected=request.param.expected
         )
 
-    def test_stats_api_called(self, setup: Fixture):
-        setup.mock_draft_history.DraftHistory.assert_called_once_with(league_id=LeagueID.nba)
+    def test_all_players_called(self, setup: Fixture):
+        setup.mock_all_players.CommonAllPlayers.assert_called_once_with(
+            is_only_current_season=1,
+            league_id=LeagueID.nba
+        )
+
+    def test_player_info_called(self, setup: Fixture):
+        setup.mock_player_info.CommonPlayerInfo.assert_called_once_with(player_id=123)
 
     def test_output_correct(self, setup: Fixture):
         assert setup.actual == setup.expected
