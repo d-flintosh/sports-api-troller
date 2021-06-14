@@ -19,7 +19,7 @@ class BasketballPlayer(Player):
     assists: int
     rebounds: int
 
-    def is_decent_day(self):
+    def has_stats(self):
         return self.points > 0 or self.assists > 0 or self.rebounds > 0 and self.college is not None
 
     def convert_to_tweet(self):

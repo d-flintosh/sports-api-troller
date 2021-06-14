@@ -142,7 +142,7 @@ class TestBasketballPlayer:
         assert setup.actual == setup.expected
 
     def test_is_decent_day(self, setup: Fixture):
-        assert setup.actual.is_decent_day() == setup.expected_is_decent_day
+        assert setup.actual.has_stats() == setup.expected_is_decent_day
 
     def test_get_team_text_called(self, setup: Fixture):
         setup.mock_get_team_text.assert_called_once_with(team_map=setup.expected_team_map, team_id=1)

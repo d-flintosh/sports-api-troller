@@ -9,6 +9,14 @@ from src.mlb import get_mlb, player_stats_iterator
 from src.models.BaseballPlayer import BaseballPlayer
 
 
+def _get_mock_baseball_player(id: int, at_bats: int = 1):
+    return BaseballPlayer(
+        id=id, full_name='Bo', team_id=1, college='FSU', hits=1, at_bats=at_bats, home_runs=0,
+        pitching_losses=0, pitching_innings='', pitching_hits=0, pitching_note='', pitching_wins=0,
+        pitching_strikeouts=0, pitching_earned_runs=0
+    )
+
+
 class TestGetMlb:
     @dataclass
     class Params:
@@ -56,11 +64,11 @@ class TestGetMlb:
             ),
             Params(
                 mock_schedule_return=[{'game_id': 1}],
-                mock_player_stats_return=[BaseballPlayer(id=1, full_name='Bo', team_id=1, college='FSU', hits=1, at_bats=2, home_runs=0)],
+                mock_player_stats_return=[_get_mock_baseball_player(id=1)],
                 expected_send_tweet_calls=[
                     call(school='fsu', player_stats=[
-                        BaseballPlayer(id=1, full_name='Bo', team_id=1, college='FSU', hits=1, at_bats=2, home_runs=0),
-                        BaseballPlayer(id=1, full_name='Bo', team_id=1, college='FSU', hits=1, at_bats=2, home_runs=0)
+                        _get_mock_baseball_player(id=1),
+                        _get_mock_baseball_player(id=1)
                     ])
                 ],
                 expected_boxscore_calls=[call(gamePk=1)],
@@ -127,7 +135,7 @@ class TestPlayerStatsIterator:
     @dataclass
     class Params:
         expected: List
-        is_decent_day: bool
+        at_bats: int
         team: dict
         expected_baseball_player_from_dict_calls: List
 
@@ -143,19 +151,22 @@ class TestPlayerStatsIterator:
         params=[
             Params(
                 team={'team': {'id': 1}, 'players': {'123': {'person': {'id': 123}}}},
-                is_decent_day=False,
+                at_bats=0,
                 expected=[],
-                expected_baseball_player_from_dict_calls=[call(player={'person': {'id': 123}}, team_id=1, college={'id': 123, 'college': 'FSU'})]
+                expected_baseball_player_from_dict_calls=[
+                    call(player={'person': {'id': 123}}, team_id=1, college={'id': 123, 'college': 'FSU'})]
             ),
             Params(
                 team={'team': {'id': 1}, 'players': {'123': {'person': {'id': 123}}}},
-                is_decent_day=True,
-                expected=[BaseballPlayer(id=123, full_name='Bo', team_id=1, college='FSU', hits=1, at_bats=1, home_runs=1)],
-                expected_baseball_player_from_dict_calls=[call(player={'person': {'id': 123}}, team_id=1, college={'id': 123, 'college': 'FSU'})]
+                at_bats=1,
+                expected=[
+                    _get_mock_baseball_player(id=123)],
+                expected_baseball_player_from_dict_calls=[
+                    call(player={'person': {'id': 123}}, team_id=1, college={'id': 123, 'college': 'FSU'})]
             ),
             Params(
                 team={'team': {'id': 1}, 'players': {'123': {'person': {'id': 0}}}},
-                is_decent_day=True,
+                at_bats=1,
                 expected=[],
                 expected_baseball_player_from_dict_calls=[]
             ),
@@ -163,18 +174,11 @@ class TestPlayerStatsIterator:
     )
     @patch('src.mlb.baseball_player_from_dict', autospec=True)
     def setup(self, mock_baseball_player, request):
-        mock_baseball_player.return_value = BaseballPlayer(
-            id=123,
-            full_name='Bo',
-            college='FSU',
-            team_id=1,
-            hits=1 if request.param.is_decent_day else 0,
-            at_bats=1,
-            home_runs=1
-        )
+        mock_baseball_player.return_value = _get_mock_baseball_player(id=123, at_bats =request.param.at_bats)
         return TestPlayerStatsIterator.Fixture(
             expected=request.param.expected,
-            actual=player_stats_iterator(team=request.param.team, college_by_player={'123': {'id': 123, 'college': 'FSU'}}),
+            actual=player_stats_iterator(team=request.param.team,
+                                         college_by_player={'123': {'id': 123, 'college': 'FSU'}}),
             expected_baseball_player_from_dict_calls=request.param.expected_baseball_player_from_dict_calls,
             mock_baseball_player_from_dict=mock_baseball_player
         )

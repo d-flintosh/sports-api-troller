@@ -30,7 +30,7 @@ def get_basketball(date_to_run, league_id: LeagueID, send_message: bool):
                 league_id=league_id,
                 college=college_by_player.get(str(player_id))
             )
-            if basketball_player.is_decent_day():
+            if basketball_player.has_stats():
                 tweetable_objects.append(TweetObject(player_object=basketball_player))
 
     if tweetable_objects:

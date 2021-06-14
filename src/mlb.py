@@ -18,6 +18,7 @@ def get_mlb(date_to_run, send_message: bool = True):
     schedule = statsapi.schedule(date=formatted_date)
     for game in schedule:
         boxscore = statsapi.boxscore_data(gamePk=game.get('game_id'))
+
         player_boxscores = player_boxscores + player_stats_iterator(team=boxscore.get('away'),
                                                                     college_by_player=college_by_player)
         player_boxscores = player_boxscores + player_stats_iterator(team=boxscore.get('home'),
@@ -47,7 +48,8 @@ def player_stats_iterator(team: dict, college_by_player: dict) -> List[BaseballP
                 team_id=team_id,
                 college=found_college_for_player
             )
-            if player_obj.is_decent_day():
+
+            if player_obj.has_stats():
                 output.append(player_obj)
 
     return output

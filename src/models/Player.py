@@ -3,7 +3,7 @@ from abc import abstractmethod, ABC
 
 class Player(ABC):
     @abstractmethod
-    def is_decent_day(self) -> bool:
+    def has_stats(self) -> bool:
         pass
 
     @abstractmethod
