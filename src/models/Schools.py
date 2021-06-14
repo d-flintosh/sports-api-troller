@@ -10,7 +10,8 @@ COLLEGES_TO_RUN = {
     'florida state university': 'fsu',
     'illinois': 'illinois',
     'michigan': 'michigan',
-    'notre dame': 'notredame'
+    'notre dame': 'notredame',
+    'wisconsin': 'wisconsin'
 }
 
 
@@ -61,6 +62,14 @@ class Schools(Enum):
         },
         'basketball': {
             'header': f'{Emojis.BASKETBALL.value} Notre Dame {Emojis.BASKETBALL.value}\n'
+        }
+    }
+    wisconsin = {
+        'baseball': {
+            'header': f'{Emojis.BASEBALL.value} Wisconsin {Emojis.BASEBALL.value}\n'
+        },
+        'basketball': {
+            'header': f'{Emojis.BASKETBALL.value} Wisconsin {Emojis.BASKETBALL.value}\n'
         }
     }
 
