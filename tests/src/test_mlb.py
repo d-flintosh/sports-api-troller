@@ -94,7 +94,7 @@ class TestGetMlb:
         mock_stats_api.boxscore_data.return_value = request.param.mock_boxscore_return
         mock_player_stats.return_value = request.param.mock_player_stats_return
 
-        get_mlb(date_to_run=date(2020, 1, 1))
+        get_mlb(date_to_run=date(2020, 1, 1), send_message=False)
 
         return TestGetMlb.Fixture(
             mock_stats_api=mock_stats_api,
@@ -124,7 +124,7 @@ class TestGetMlb:
     def test_send_tweet_called(self, setup: Fixture):
         if setup.expected_send_tweet_calls:
             setup.mock_send_tweet.return_value.publish.assert_called_once_with(
-                send_message=True,
+                send_message=False,
                 sport='baseball'
             )
         else:

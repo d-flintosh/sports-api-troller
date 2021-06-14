@@ -9,7 +9,7 @@ from src.models.SendTweetForSchool import SendTweetForSchool
 from src.models.TweetObject import TweetObject
 
 
-def get_mlb(date_to_run, send_message: bool = True):
+def get_mlb(date_to_run, send_message: bool):
     player_boxscores: [BaseballPlayer] = []
     formatted_date = date_to_run.strftime('%m/%d/%Y')
     college_by_player = Gcs().read_as_dict(url='mlb/MLBPlayerDraft.json')
