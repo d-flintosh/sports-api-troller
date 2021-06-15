@@ -4,12 +4,12 @@ from google.cloud.storage import Client
 
 
 class Gcs:
-    def __init__(self):
+    def __init__(self, bucket: str):
         self.client = Client(project='sports-data-service')
-        self.bucket = self.client.get_bucket('college-by-player')
+        self.bucket = self.client.bucket(bucket)
 
     def read_as_dict(self, url: str) -> dict:
-        blob = self.bucket.get_blob(url)
+        blob = self.bucket.blob(url)
         contents = blob.download_as_string()
         return json.loads(contents)
 

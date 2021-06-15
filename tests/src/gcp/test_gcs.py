@@ -23,8 +23,8 @@ class TestEntrypoint:
         mock_blob = Mock()
         mock_blob.download_as_string.return_value = json.dumps({"foo": "bar"})
         mock_bucket = Mock()
-        mock_client.get_bucket.return_value = mock_bucket
-        mock_bucket.get_blob.return_value = mock_blob
+        mock_client.bucket.return_value = mock_bucket
+        mock_bucket.blob.return_value = mock_blob
         mock_bucket.blob.return_value = mock_blob
 
         return TestEntrypoint.Fixture(
@@ -32,18 +32,18 @@ class TestEntrypoint:
             mock_client=mock_client,
             mock_bucket=mock_bucket,
             mock_blob=mock_blob,
-            gcs=Gcs()
+            gcs=Gcs('some-bucket')
         )
 
     def test_client_constructor(self, setup: Fixture):
         setup.mock_client_constructor.assert_called_once_with(project='sports-data-service')
 
-    def test_get_bucket(self, setup: Fixture):
-        setup.mock_client.get_bucket.assert_called_once_with('college-by-player')
+    def test_bucket(self, setup: Fixture):
+        setup.mock_client.bucket.assert_called_once_with('some-bucket')
 
     def test_get_blob(self, setup: Fixture):
         setup.gcs.read_as_dict(url='some/file.json')
-        setup.mock_bucket.get_blob.assert_called_once_with('some/file.json')
+        setup.mock_bucket.blob.assert_called_once_with('some/file.json')
 
     def test_read_as_dict(self, setup: Fixture):
         assert setup.gcs.read_as_dict(url='some/file.json') == {'foo': 'bar'}

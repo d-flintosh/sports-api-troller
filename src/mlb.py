@@ -12,7 +12,7 @@ from src.models.TweetObject import TweetObject
 def get_mlb(date_to_run, send_message: bool):
     player_boxscores: [BaseballPlayer] = []
     formatted_date = date_to_run.strftime('%m/%d/%Y')
-    college_by_player = Gcs().read_as_dict(url='mlb/MLBPlayerDraft.json')
+    college_by_player = Gcs(bucket='college-by-player').read_as_dict(url='mlb/MLBPlayerDraft.json')
 
     print(f'Getting games played for date: {formatted_date}')
     schedule = statsapi.schedule(date=formatted_date)

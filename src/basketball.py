@@ -15,7 +15,7 @@ def get_basketball(date_to_run, league_id: LeagueID, send_message: bool):
     formatted_date = date_to_run.strftime('%m/%d/%Y')
     print(f'Getting games played for date: {formatted_date}')
     league_name = convert_league_id_to_string(league_id=league_id)
-    college_by_player = Gcs().read_as_dict(url=f'{league_name}/players.json')
+    college_by_player = Gcs('college-by-player').read_as_dict(url=f'{league_name}/players.json')
 
     schedule = scoreboard.Scoreboard(game_date=formatted_date, league_id=league_id)
     game_ids = set(map(lambda x: x.get('GAME_ID'), schedule.get_normalized_dict().get('GameHeader')))
