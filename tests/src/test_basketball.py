@@ -105,6 +105,9 @@ class TestBasketball:
     def test_boxscore_called(self, setup: Fixture):
         setup.mock_boxscore.BoxScoreTraditionalV2.assert_has_calls(setup.expected_boxscore_calls)
 
+    def test_gcs_constructor_called(self, setup: Fixture):
+        setup.mock_gcs.assert_called_once_with('college-by-player')
+
     def test_read_as_dict_called(self, setup: Fixture):
         setup.mock_gcs.return_value.read_as_dict.assert_called_once_with(url='nba/players.json')
 
