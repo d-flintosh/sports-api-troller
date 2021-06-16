@@ -39,4 +39,5 @@ def get_basketball(date_to_run, league_id: LeagueID, send_message: bool):
         for school_group in df:
             school = school_group[0]
             player_stats = school_group[1]["player_object"].to_list()
+            print(f'42: {school} and stats: {str(player_stats)}')
             SendTweetForSchool(school=str(school), player_stats=player_stats).publish(send_message=send_message, sport='basketball')

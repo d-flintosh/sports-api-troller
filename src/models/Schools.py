@@ -10,11 +10,17 @@ COLLEGES_TO_RUN = {
     'fsu': 'fsu',
     'florida state': 'fsu',
     'florida state university': 'fsu',
+    'georgia': 'georgia',
     'illinois': 'illinois',
+    'lsu': 'lsu',
+    'louisiana state': 'lsu',
     'miami': 'miami',
     'michigan': 'michigan',
+    'ohio state': 'ohiostate',
     'north carolina': 'northcarolina',
     'notre dame': 'notredame',
+    'texas': 'texas',
+    'texas-austin': 'texas',
     'virginia': 'virginia',
     'wisconsin': 'wisconsin'
 }
@@ -61,12 +67,28 @@ class Schools(Enum):
            'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} @FSUHoops {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n'
        }
     }
+    georgia = {
+        'baseball': {
+            'header': f'{Emojis.BASEBALL.value} Georgia {Emojis.BASEBALL.value}\n'
+        },
+        'basketball': {
+            'header': f'{Emojis.BASKETBALL.value} Georgia {Emojis.BASKETBALL.value}\n'
+        }
+    }
     illinois = {
         'baseball': {
             'header': f'{Emojis.BASEBALL.value} Illinois {Emojis.BASEBALL.value}\n'
         },
         'basketball': {
             'header': f'{Emojis.BASKETBALL.value} Illinois {Emojis.BASKETBALL.value}\n'
+        }
+    }
+    lsu = {
+        'baseball': {
+            'header': f'{Emojis.BASEBALL.value} LSU {Emojis.BASEBALL.value}\n'
+        },
+        'basketball': {
+            'header': f'{Emojis.BASKETBALL.value} LSU {Emojis.BASKETBALL.value}\n'
         }
     }
     miami = {
@@ -99,6 +121,22 @@ class Schools(Enum):
         },
         'basketball': {
             'header': f'{Emojis.BASKETBALL.value} Notre Dame {Emojis.BASKETBALL.value}\n'
+        }
+    }
+    ohiostate = {
+        'baseball': {
+            'header': f'{Emojis.BASEBALL.value} Ohio State {Emojis.BASEBALL.value}\n'
+        },
+        'basketball': {
+            'header': f'{Emojis.BASKETBALL.value} Ohio State {Emojis.BASKETBALL.value}\n'
+        }
+    }
+    texas = {
+        'baseball': {
+            'header': f'{Emojis.BASEBALL.value} Texas {Emojis.BASEBALL.value}\n'
+        },
+        'basketball': {
+            'header': f'{Emojis.BASKETBALL.value} Texas {Emojis.BASKETBALL.value}\n'
         }
     }
     virginia = {
