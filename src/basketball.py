@@ -15,15 +15,18 @@ def get_basketball(date_to_run, league_id: LeagueID, send_message: bool):
     formatted_date = date_to_run.strftime('%m/%d/%Y')
     print(f'Getting games played for date: {formatted_date}')
     league_name = convert_league_id_to_string(league_id=league_id)
+    print('1')
     college_by_player = Gcs('college-by-player').read_as_dict(url=f'{league_name}/players.json')
-
+    print('2')
     schedule = scoreboard.Scoreboard(game_date=formatted_date, league_id=league_id)
+    print('3')
     game_ids = set(map(lambda x: x.get('GAME_ID'), schedule.get_normalized_dict().get('GameHeader')))
-
+    print('4')
     for game_id in game_ids:
         boxscore = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=game_id)
-
+        print('5')
         for player in boxscore.get_normalized_dict().get('PlayerStats'):
+            print('6')
             player_id = player.get('PLAYER_ID')
             basketball_player: BasketballPlayer = basketball_player_from_dict(
                 player=player,
@@ -33,6 +36,7 @@ def get_basketball(date_to_run, league_id: LeagueID, send_message: bool):
             if basketball_player.has_stats():
                 tweetable_objects.append(TweetObject(player_object=basketball_player))
 
+    print('7')
     if tweetable_objects:
         df = pandas.DataFrame([vars(s) for s in tweetable_objects]).groupby('tweet_path')
 
