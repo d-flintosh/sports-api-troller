@@ -1,155 +1,151 @@
 nba_team_map = {
-    '1610612748': {
-        'id': 1610612748,
+    '583ecea6-fb46-11e1-82cb-f4ce4684ea4': {
+        'id': '583ecea6-fb46-11e1-82cb-f4ce4684ea4',
         'teamCode': 'MIA',
         'twitterCode': '#HEATTwitter'
     },
-    '0': {
-        'id': 0,
-        'teamCode': ''
-    },
-    '1610612740': {
-        'id': 1610612740,
+    '583ecc9a-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecc9a-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'NOP',
         'twitterCode': '#WontBowDown'
     },
-    '1610612756': {
-        'id': 1610612756,
+    '583ecfa8-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecfa8-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'PHX',
         'twitterCode': '#WeAreTheValley'
     },
-    '1610612763': {
-        'id': 1610612763,
+    '583eca88-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583eca88-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'MEM',
         'twitterCode': '#GrindCity'
     },
-    '1610612739': {
-        'id': 1610612739,
+    '583ec773-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec773-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'CLE',
         'twitterCode': '#BeTheFight'
     },
-    '1610612741': {
-        'id': 1610612741,
+    '583ec5fd-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec5fd-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'CHI',
         'twitterCode': '#BullsNation'
     },
-    '1610612749': {
-        'id': 1610612749,
+    '583ecefd-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecefd-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'MIL',
         'twitterCode': '#FearTheDeer'
     },
-    '1610612747': {
-        'id': 1610612747,
+    '583ecae2-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecae2-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'LAL',
         'twitterCode': '#LakeShow'
     },
-    '1610612757': {
-        'id': 1610612757,
+    '583ed056-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ed056-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'POR',
         'twitterCode': '#RipCity'
     },
-    '1610612753': {
-        'id': 1610612753,
+    '583ed157-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ed157-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'ORL',
         'twitterCode': '#MagicTogether'
     },
-    '1610612761': {
-        'id': 1610612761,
+    '583ecda6-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecda6-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'TOR',
         'twitterCode': '#WeTheNorth'
     },
-    '1610612745': {
-        'id': 1610612745,
+    '583ecb3a-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecb3a-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'HOU',
         'twitterCode': '#Rockets'
     },
-    '1610612764': {
-        'id': 1610612764,
+    '583ec8d4-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec8d4-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'WAS',
         'twitterCode': '#DCAboveAll'
     },
-    '1610612762': {
-        'id': 1610612762,
+    '583ece50-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ece50-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'UTA',
         'twitterCode': '#TakeNote'
     },
-    '1610612758': {
-        'id': 1610612758,
+    '583ed0ac-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ed0ac-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'SAC',
         'twitterCode': '#SacramentoProud'
     },
-    '1610612766': {
-        'id': 1610612766,
+    '583ec97e-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec97e-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'CHA',
         'twitterCode': '#AllFly'
     },
-    '1610612752': {
-        'id': 1610612752,
+    '583ec70e-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec70e-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'NYK',
         'twitterCode': '#NewYorkForever'
     },
-    '1610612743': {
-        'id': 1610612743,
+    '583ed102-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ed102-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'DEN',
         'twitterCode': '#MileHighBasketball'
     },
-    '1610612759': {
-        'id': 1610612759,
+    '583ecd4f-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecd4f-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'SAS',
         'twitterCode': '#GoSpursGo'
     },
-    '1610612746': {
-        'id': 1610612746,
+    '583ecdfb-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecdfb-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'LAC',
         'twitterCode': '#ClipperNation'
     },
-    '1610612744': {
-        'id': 1610612744,
+    '583ec825-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec825-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'GSW',
         'twitterCode': '#DubNation'
     },
-    '1610612760': {
-        'id': 1610612760,
+    '583ecfff-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecfff-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'OKC',
         'twitterCode': '#ThunderUp'
     },
-    '1610612750': {
-        'id': 1610612750,
+    '583eca2f-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583eca2f-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'MIN',
         'twitterCode': '#RaisedByWolves'
     },
-    '1610612765': {
-        'id': 1610612765,
+    '583ec928-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec928-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'DET',
         'twitterCode': '#DetroitUp'
     },
-    '1610612742': {
-        'id': 1610612742,
+    '583ecf50-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecf50-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'DAL',
         'twitterCode': '#MFFL'
     },
-    '1610612754': {
-        'id': 1610612754,
+    '583ec7cd-fb46-11e1-82cb-f4ce4684ea4': {
+        'id': '583ec7cd-fb46-11e1-82cb-f4ce4684ea4',
         'teamCode': 'IND',
         'twitterCode': '#AlwaysGame'
     },
-    '1610612737': {
-        'id': 1610612737,
+    '583ecb8f-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecb8f-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'ATL',
         'twitterCode': '#TrueToAtlanta'
     },
-    '1610612751': {
-        'id': 1610612751,
+    '583ec9d6-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec9d6-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'BKN',
         'twitterCode': '#BrooklynTogether'
     },
-    '1610612738': {
-        'id': 1610612738,
+    '583eccfa-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583eccfa-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'BOS',
         'twitterCode': '#BleedGreen'
     },
-    '1610612755': {
-        'id': 1610612755,
+    '583ec87d-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec87d-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'PHI',
         'twitterCode': '#HereTheyCome'
     }

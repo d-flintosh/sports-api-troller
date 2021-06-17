@@ -3,7 +3,6 @@ from typing import Optional
 from unittest.mock import patch, Mock
 
 import pytest
-from nba_api.stats.library.parameters import LeagueID
 
 from src.models.BasketballPlayer import BasketballPlayer, basketball_player_from_dict
 from src.models.NbaTeams import nba_team_map
@@ -34,12 +33,12 @@ class TestBasketballPlayer:
         ids=['Has Decent Stats', 'Not Decent WNBA', 'No College', 'None Stats', 'Missing Stats'],
         params=[
             Params(
-                input={'PLAYER_NAME': 'Bo', 'TEAM_ID': 1, 'PLAYER_ID': 1, 'PTS': 1, 'AST': 2, 'REB': 3},
+                input={'full_name': 'Bo', 'id': '1', 'statistics': { 'points': 1, 'assists': 2, 'rebounds': 3}},
                 expected=BasketballPlayer(
-                    id=1,
+                    id='1',
                     full_name='Bo',
-                    league_id=LeagueID.nba,
-                    team_id=1,
+                    league_name='nba',
+                    team_id='1',
                     college='someCollege',
                     points=1,
                     assists=2,
@@ -51,12 +50,12 @@ class TestBasketballPlayer:
                 expected_team_map=nba_team_map
             ),
             Params(
-                input={'PLAYER_NAME': 'Bo', 'TEAM_ID': 1, 'PLAYER_ID': 1, 'PTS': 0, 'AST': 0, 'REB': 0},
+                input={'full_name': 'Bo', 'id': '1', 'statistics': {'points': 0, 'assists': 0, 'rebounds': 0}},
                 expected=BasketballPlayer(
-                    id=1,
+                    id='1',
                     full_name='Bo',
-                    league_id=LeagueID.wnba,
-                    team_id=1,
+                    league_name='wnba',
+                    team_id='1',
                     college='someCollege',
                     points=0,
                     assists=0,
@@ -68,12 +67,12 @@ class TestBasketballPlayer:
                 expected_team_map=wnba_team_map
             ),
             Params(
-                input={'PLAYER_NAME': 'Bo', 'TEAM_ID': 1, 'PLAYER_ID': 1, 'PTS': 0, 'AST': 0, 'REB': 0},
+                input={'full_name': 'Bo', 'id': '1', 'statistics': {'points': 0, 'assists': 0, 'rebounds': 0}},
                 expected=BasketballPlayer(
-                    id=1,
+                    id='1',
                     full_name='Bo',
-                    league_id=LeagueID.nba,
-                    team_id=1,
+                    league_name='nba',
+                    team_id='1',
                     college='',
                     points=0,
                     assists=0,
@@ -85,12 +84,12 @@ class TestBasketballPlayer:
                 expected_team_map=nba_team_map
             ),
             Params(
-                input={'PLAYER_NAME': 'Bo', 'TEAM_ID': 1, 'PLAYER_ID': 1, 'PTS': None, 'AST': None, 'REB': None},
+                input={'full_name': 'Bo', 'id': '1', 'statistics': {'points': None, 'assists': None, 'rebounds': None}},
                 expected=BasketballPlayer(
-                    id=1,
+                    id='1',
                     full_name='Bo',
-                    league_id=LeagueID.nba,
-                    team_id=1,
+                    league_name='nba',
+                    team_id='1',
                     college='',
                     points=0,
                     assists=0,
@@ -102,13 +101,13 @@ class TestBasketballPlayer:
                 expected_team_map=nba_team_map
             ),
             Params(
-                input={'PLAYER_NAME': 'Bo', 'TEAM_ID': 1, 'PLAYER_ID': 1},
+                input={'full_name': 'Bo', 'id': '1'},
                 expected=BasketballPlayer(
-                    id=1,
+                    id='1',
                     full_name='Bo',
                     college='someCollege',
-                    league_id=LeagueID.nba,
-                    team_id=1,
+                    league_name='nba',
+                    team_id='1',
                     points=0,
                     assists=0,
                     rebounds=0
@@ -125,7 +124,8 @@ class TestBasketballPlayer:
         mock_get_team_text.return_value = ' (#some team)'
         actual = basketball_player_from_dict(
             player=request.param.input,
-            league_id=request.param.expected.league_id,
+            league_name=request.param.expected.league_name,
+            team_id='1',
             college=request.param.college_map
         )
         return TestBasketballPlayer.Fixture(
@@ -145,7 +145,7 @@ class TestBasketballPlayer:
         assert setup.actual.has_stats() == setup.expected_is_decent_day
 
     def test_get_team_text_called(self, setup: Fixture):
-        setup.mock_get_team_text.assert_called_once_with(team_map=setup.expected_team_map, team_id=1)
+        setup.mock_get_team_text.assert_called_once_with(team_map=setup.expected_team_map, team_id='1')
 
     def test_convert_to_tweet(self, setup: Fixture):
         assert setup.actual_tweet == setup.expected_tweet

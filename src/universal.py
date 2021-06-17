@@ -1,3 +1,5 @@
+from typing import Union
+
 from google.cloud import pubsub_v1
 
 
@@ -11,7 +13,7 @@ def publish_message(message: str, school: str, send_message: bool = True):
         future.result()
 
 
-def get_team_text(team_map: dict, team_id: int):
+def get_team_text(team_map: dict, team_id: Union[str, int]):
     team_text = ''
     if team_id:
         team = team_map.get(str(team_id), None)

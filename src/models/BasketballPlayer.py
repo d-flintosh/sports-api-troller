@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 
-from nba_api.stats.library.parameters import LeagueID
-
 from src.models.NbaTeams import nba_team_map
 from src.models.Player import Player
 from src.models.WnbaTeams import wnba_team_map
@@ -10,9 +8,9 @@ from src.universal import get_team_text
 
 @dataclass
 class BasketballPlayer(Player):
-    id: int
-    league_id: LeagueID
-    team_id: int
+    id: str
+    league_name: str
+    team_id: str
     full_name: str
     college: str
     points: int
@@ -30,7 +28,7 @@ class BasketballPlayer(Player):
             stat_line.append(f'{self.rebounds} reb')
         if self.assists > 0:
             stat_line.append(f'{self.assists} ast')
-        team_map_to_use = nba_team_map if self.league_id == LeagueID.nba else wnba_team_map
+        team_map_to_use = nba_team_map if self.league_name == 'nba' else wnba_team_map
 
         team_text = get_team_text(team_map=team_map_to_use, team_id=self.team_id)
         return f'{self.full_name}{team_text} {"/".join(stat_line)}'
@@ -39,14 +37,16 @@ class BasketballPlayer(Player):
         return self.college
 
 
-def basketball_player_from_dict(player: dict, league_id: LeagueID, college: dict):
+def basketball_player_from_dict(player: dict, league_name: str, team_id: str, college: dict):
+    player_stats = player.get('statistics', {})
+
     return BasketballPlayer(
-        id=player.get('PLAYER_ID'),
-        full_name=player.get('PLAYER_NAME'),
-        league_id=league_id,
-        team_id=player.get('TEAM_ID'),
+        id=player.get('id'),
+        full_name=player.get('full_name'),
+        league_name=league_name,
+        team_id=team_id,
         college=college.get('college', '') if college else '',
-        points=player.get('PTS', 0) or 0,
-        assists=player.get('AST', 0) or 0,
-        rebounds=player.get('REB', 0) or 0
+        points=player_stats.get('points', 0) or 0,
+        assists=player_stats.get('assists', 0) or 0,
+        rebounds=player_stats.get('rebounds', 0) or 0
     )

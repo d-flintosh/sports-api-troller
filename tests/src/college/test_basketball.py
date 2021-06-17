@@ -1,73 +1,37 @@
 from dataclasses import dataclass
-from typing import Set
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
 import pytest
-from nba_api.stats.library.parameters import LeagueID
 
-from src.college.basketball import extract_all_basketball_players_draft_info
-from src.models.PlayerDraft import PlayerDraft
+from src.api.basketball_sport_radar import BasketballSportRadar
+from src.college.basketball import write_to_file_readable_for_computers
 
 
-class TestExtractAllBasketballPlayersDraftInfo:
-    @dataclass
-    class Params:
-        expected: Set
-
+class TestWriteToFileReadableForComputers:
     @dataclass
     class Fixture:
-        mock_all_players: Mock
-        mock_player_info: Mock
-        actual: Set
-        expected: Set
+        mock_league_client: Mock
+        mock_gcs: Mock
 
-    @pytest.fixture(
-        ids=['Get Players'],
-        params=[
-            Params(
-                expected={PlayerDraft(
-                    id=123,
-                    full_name='Bo',
-                    college='someThing'
-                )}
-            )
-        ])
-    @patch('time.sleep', return_value=None)
-    @patch('src.college.basketball.commonplayerinfo')
-    @patch('src.college.basketball.commonallplayers')
-    def setup(self, mock_all_players, mock_player_info, mock_sleep, request):
-        mock_all_players.CommonAllPlayers.return_value.get_normalized_dict.return_value = {
-            'CommonAllPlayers': [
-                {
-                    'PERSON_ID': 123
-                }
-            ]
-        }
+    @pytest.fixture
+    @patch('src.college.basketball.Gcs', autospec=True)
+    def setup(self, mock_gcs):
+        mock_league_client = Mock(spec=BasketballSportRadar)
+        mock_league_client.get_all_players_with_college.return_value = {
 
-        mock_player_info.CommonPlayerInfo.return_value.get_normalized_dict.return_value = {
-            'CommonPlayerInfo': [
-                {
-                    'PERSON_ID': 123,
-                    'DISPLAY_FIRST_LAST': 'Bo',
-                    'SCHOOL': 'someThing'
-                }
-            ]
         }
-        return TestExtractAllBasketballPlayersDraftInfo.Fixture(
-            mock_all_players=mock_all_players,
-            mock_player_info=mock_player_info,
-            actual=extract_all_basketball_players_draft_info(league_id=LeagueID.nba),
-            expected=request.param.expected
+        write_to_file_readable_for_computers(league='nba', league_client=mock_league_client)
+
+        return TestWriteToFileReadableForComputers.Fixture(
+            mock_league_client=mock_league_client,
+            mock_gcs=mock_gcs
         )
 
-    def test_all_players_called(self, setup: Fixture):
-        setup.mock_all_players.CommonAllPlayers.assert_called_once_with(
-            is_only_current_season=1,
-            league_id=LeagueID.nba
-        )
+    def test_get_all_players_called(self, setup: Fixture):
+        setup.mock_league_client.get_all_players_with_college.assert_called_once()
 
-    def test_player_info_called(self, setup: Fixture):
-        setup.mock_player_info.CommonPlayerInfo.assert_called_once_with(player_id=123)
+    def test_gcs_called(self, setup: Fixture):
+        setup.mock_gcs.assert_called_once_with(bucket='college-by-player')
 
-    def test_output_correct(self, setup: Fixture):
-        assert setup.actual == setup.expected
+    def test_gcs_write_called(self, setup: Fixture):
+        setup.mock_gcs.return_value.write.assert_called_once_with(url='nba/players.json', contents={})

@@ -1,9 +1,10 @@
 from dataclasses import dataclass
+from typing import Union
 
 
 @dataclass(frozen=True, eq=True)
 class PlayerDraft:
-    id: int
+    id: Union[str, int]
     full_name: str
     college: str
     draft_year: int = None

@@ -10,5 +10,8 @@ class TweetObject:
     tweet_path: str
 
     def __init__(self, player_object: Player):
+        print(player_object)
         self.player_object = player_object
-        self.tweet_path = COLLEGES_TO_RUN.get(self.player_object.get_college().lower())
+        college = self.player_object.get_college()
+        tweet_path = college.lower() if college else ''
+        self.tweet_path = COLLEGES_TO_RUN.get(tweet_path)
