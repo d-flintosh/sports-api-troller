@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 from typing import List
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, call
 
 import pytest
 
@@ -13,6 +13,7 @@ class TestGolfLeague:
     @dataclass
     class Params:
         mock_schedule_return: List
+        expected_get_tournament_leaderboard_calls: List
 
     @dataclass
     class Fixture:
@@ -20,28 +21,36 @@ class TestGolfLeague:
         mock_gcs: Mock
         subject: GolfLeague
         expected_games: List
+        expected_get_tournament_leaderboard_calls: List
+        mock_golf_player: Mock
 
     @pytest.fixture(
-        ids=['No games found'],
+        ids=['Has Everything'],
         params=[
             Params(
-                mock_schedule_return=[]
+                mock_schedule_return=[{'id': '123'}],
+                expected_get_tournament_leaderboard_calls=[call(tournament_id='123')]
             )
         ]
     )
+    @patch('src.extraction.GolfLeague.golf_player_from_dict', autospec=True)
     @patch('src.extraction.GolfLeague.Gcs', autospec=True)
-    def setup(self, mock_gcs, request):
+    def setup(self, mock_gcs, mock_golf_player, request):
         mock_league_client = Mock(spec=GolfSportRadar)
         schedule_return = request.param.mock_schedule_return
 
         mock_league_client.get_tournament_schedule.return_value = {
             'games': schedule_return
         }
+        mock_league_client.get_tournament_leaderboard.return_value = {
+            'leaderboard': [{'first_name': 'Bo', 'last_name': 'Jackson', 'id': '123', 'score': 0, 'tied': False, 'position': 2}]
+        }
+
         mock_gcs.return_value.read_as_dict.return_value = {'123': {'id': '123', 'college': 'someSchool'}}
 
         subject = GolfLeague(
             league_client=mock_league_client,
-            league_name='nba',
+            league_name='pga',
         )
         date_to_use = date(2021, 1, 1)
         actual_games = subject.get_games(date=date_to_use)
@@ -52,12 +61,23 @@ class TestGolfLeague:
             mock_league_client=mock_league_client,
             mock_gcs=mock_gcs,
             subject=subject,
-            expected_games=schedule_return
+            expected_games=schedule_return,
+            expected_get_tournament_leaderboard_calls=request.param.expected_get_tournament_leaderboard_calls,
+            mock_golf_player=mock_golf_player
         )
 
     def test_get_games(self, setup: Fixture):
         setup.mock_league_client.get_tournament_schedule.assert_called_once()
 
+    def test_get_leaderboard(self, setup: Fixture):
+        assert setup.mock_league_client.get_tournament_leaderboard.mock_calls == setup.expected_get_tournament_leaderboard_calls
+
+    def test_golf_player_from_dict(self, setup: Fixture):
+        setup.mock_golf_player.assert_called_once_with(
+            player={'first_name': 'Bo', 'last_name': 'Jackson', 'id': '123', 'score': 0, 'tied': False, 'position': 2},
+            league_name='pga',
+            college={'id': '123', 'college': 'someSchool'}
+        )
 
 class TestGetFilteredGames:
     @dataclass

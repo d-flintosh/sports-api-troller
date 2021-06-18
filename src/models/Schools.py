@@ -42,6 +42,14 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} @SunDevilWBB {Emojis.BASKETBALL.value}\n'
             }
         },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @sundevilmgolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @SunDevilWGolf {Emojis.WOMAN_GOLFING.value}\n'
+            }
+        },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} @SunDevilHockey {Emojis.HOCKEY.value}\n'
@@ -60,6 +68,14 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @UConnWBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @UConnMGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @UConnHuskies {Emojis.WOMAN_GOLFING.value}\n'
             }
         },
         'hockey': {
@@ -82,6 +98,14 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} @DukeWBB {Emojis.BASKETBALL.value}\n'
             }
         },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @DukeMGOLF {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @DukeWGOLF {Emojis.WOMAN_GOLFING.value}\n'
+            }
+        },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} @Duke_Hockey {Emojis.HOCKEY.value}\n'
@@ -100,6 +124,14 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @GatorsWBK {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @GatorsGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @GatorsGolf {Emojis.WOMAN_GOLFING.value}\n'
             }
         },
         'hockey': {
@@ -122,6 +154,14 @@ class Schools(Enum):
                 'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} @fsuwbb {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n'
             }
         },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @FSUGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @FSUGolf {Emojis.WOMAN_GOLFING.value}\n'
+            }
+        },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} FSU {Emojis.HOCKEY.value}\n'
@@ -140,6 +180,14 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @UGA_WBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @UGAGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @UGAWomensGolf {Emojis.WOMAN_GOLFING.value}\n'
             }
         },
         'hockey': {
@@ -162,6 +210,14 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} @IlliniWBB {Emojis.BASKETBALL.value}\n'
             }
         },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @IlliniMGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @IlliniWGolf {Emojis.WOMAN_GOLFING.value}\n'
+            }
+        },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} @IlliniHockey {Emojis.HOCKEY.value}\n'
@@ -180,6 +236,14 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @KUWBball {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @KUMensGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @KUWomensGolf {Emojis.WOMAN_GOLFING.value}\n'
             }
         },
         'hockey': {
@@ -202,6 +266,14 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} @LSUwbkb {Emojis.BASKETBALL.value}\n'
             }
         },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @LSUMensGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @LSUWomensGolf {Emojis.WOMAN_GOLFING.value}\n'
+            }
+        },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} @LSUIceHockey {Emojis.HOCKEY.value}\n'
@@ -220,6 +292,14 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @CanesWBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @hurricanesgolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @hurricanesgolf {Emojis.WOMAN_GOLFING.value}\n'
             }
         },
         'hockey': {
@@ -242,6 +322,14 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} @umichwbball {Emojis.BASKETBALL.value}\n'
             }
         },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @umichmgolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @UMichWGolf {Emojis.WOMAN_GOLFING.value}\n'
+            }
+        },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} @umichhockey {Emojis.HOCKEY.value}\n'
@@ -260,6 +348,14 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @uncwbb {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @UNCmensGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @uncwomensgolf {Emojis.WOMAN_GOLFING.value}\n'
             }
         },
         'hockey': {
@@ -282,6 +378,14 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} @ndwbb {Emojis.BASKETBALL.value}\n'
             }
         },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @NDMensGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @NDwomensGolf {Emojis.WOMAN_GOLFING.value}\n'
+            }
+        },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} @NDHockey {Emojis.HOCKEY.value}\n'
@@ -300,6 +404,14 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @OhioStateWBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @OhioStateMGOLF {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @OhioStateWGOLF {Emojis.WOMAN_GOLFING.value}\n'
             }
         },
         'hockey': {
@@ -322,6 +434,14 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} @TexasWBB {Emojis.BASKETBALL.value}\n'
             }
         },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @TexasMGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @TexasWGolf {Emojis.WOMAN_GOLFING.value}\n'
+            }
+        },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} @Texas_Icehockey {Emojis.HOCKEY.value}\n'
@@ -342,6 +462,14 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} @UVAWomensHoops {Emojis.BASKETBALL.value}\n'
             }
         },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @UVAMensGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @UVAWomensGolf {Emojis.WOMAN_GOLFING.value}\n'
+            }
+        },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} Virginia {Emojis.HOCKEY.value}\n'
@@ -360,6 +488,14 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @BadgerWBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'golf': {
+            'pga': {
+                'header': f'{Emojis.MAN_GOLFING.value} @BadgerMGolf {Emojis.MAN_GOLFING.value}\n'
+            },
+            'lpga': {
+                'header': f'{Emojis.WOMAN_GOLFING.value} @BadgerWGolf {Emojis.WOMAN_GOLFING.value}\n'
             }
         },
         'hockey': {

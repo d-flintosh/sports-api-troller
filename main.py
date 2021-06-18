@@ -2,12 +2,14 @@ from datetime import date, timedelta
 
 from src.api.nba_sport_radar import NbaSportRadar
 from src.api.nhl_sport_radar import NhlSportRadar
+from src.api.pga_sport_radar import PgaSportRadar
 from src.api.sport_radar import SportRadarApi
 from src.api.wnba_sport_radar import WnbaSportRadar
 
 
 from src.extraction.BaseballLeague import BaseballLeague
 from src.extraction.BasketballLeague import BasketballLeague
+from src.extraction.GolfLeague import GolfLeague
 from src.extraction.HockeyLeague import HockeyLeague
 from src.tweet_driver import tweet_driver
 
@@ -24,7 +26,11 @@ def entrypoint(event, context):
         HockeyLeague(league_name='nhl', league_client=NhlSportRadar(api_client=api_client))
     ]
 
-    skip_filter = True if time_delta == 1 else False
+    if time_delta == 1:
+        skip_filter = True
+        leagues.append(GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client)))
+    else:
+        skip_filter = False
 
     tweet_driver(leagues=leagues, date_to_run=yesterday, send_message=True, skip_filter=skip_filter)
 

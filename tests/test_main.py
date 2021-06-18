@@ -18,19 +18,24 @@ class TestEntrypoint:
         mock_tweet_driver: Mock
         mock_hockey: Mock
         mock_nhl: Mock
+        mock_golf: Mock
+        mock_pga: Mock
 
     @pytest.fixture
     @patch('main.tweet_driver', autospec=True)
+    @patch('main.GolfLeague', autospec=True)
     @patch('main.HockeyLeague', autospec=True)
     @patch('main.BaseballLeague', autospec=True)
     @patch('main.BasketballLeague', autospec=True)
+    @patch('main.PgaSportRadar', autospec=True)
     @patch('main.NhlSportRadar', autospec=True)
     @patch('main.WnbaSportRadar', autospec=True)
     @patch('main.NbaSportRadar', autospec=True)
     @patch('main.SportRadarApi', autospec=True)
     @patch('main.date', autospec=True)
-    def setup(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_basketball, mock_baseball,
-              mock_hockey, mock_tweet_driver):
+    def setup(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga,
+              mock_basketball, mock_baseball,
+              mock_hockey, mock_golf, mock_tweet_driver):
         mock_date.today.return_value = date(2020, 1, 2)
         mock_event = {
             'attributes': {
@@ -43,10 +48,12 @@ class TestEntrypoint:
             mock_basketball=mock_basketball,
             mock_hockey=mock_hockey,
             mock_baseball=mock_baseball,
+            mock_golf=mock_golf,
             mock_api=mock_api,
             mock_nba=mock_nba,
             mock_wnba=mock_wnba,
             mock_nhl=mock_nhl,
+            mock_pga=mock_pga,
             mock_tweet_driver=mock_tweet_driver
         )
 
@@ -71,6 +78,11 @@ class TestEntrypoint:
             call(league_name='wnba', league_client=setup.mock_wnba.return_value)
         ])
 
+    def test_golf_called(self, setup: Fixture):
+        setup.mock_golf.assert_has_calls([
+            call(league_name='pga', league_client=setup.mock_pga.return_value)
+        ])
+
     def test_hockey_called(self, setup: Fixture):
         setup.mock_hockey.assert_called_once_with(league_name='nhl', league_client=setup.mock_nhl.return_value)
 
@@ -80,7 +92,8 @@ class TestEntrypoint:
                 setup.mock_baseball.return_value,
                 setup.mock_basketball.return_value,
                 setup.mock_basketball.return_value,
-                setup.mock_hockey.return_value
+                setup.mock_hockey.return_value,
+                setup.mock_golf.return_value
             ],
             date_to_run=date(2020, 1, 1),
             send_message=True,

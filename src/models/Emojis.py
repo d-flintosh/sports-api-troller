@@ -8,3 +8,5 @@ class Emojis(Enum):
     HOCKEY = '🏒'
     ROCKET = '🚀'
     TATER = '🥔'
+    MAN_GOLFING = '🏌️‍♂️'
+    WOMAN_GOLFING = '🏌️‍♀️'

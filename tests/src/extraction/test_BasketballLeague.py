@@ -155,7 +155,7 @@ class TestGetFilteredGames:
     def setup(self, request):
 
         return TestGetFilteredGames.Fixture(
-            expected_games=request.param.expected_ids,
+            expected_games=request.param.expected_games,
             actual=BasketballLeague.get_filtered_games(daily_schedule=request.param.input)
         )
 
