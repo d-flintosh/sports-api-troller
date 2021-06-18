@@ -3,6 +3,7 @@ from datetime import date
 import pytest
 import statsapi
 
+from src.api.lpga_sport_radar import LpgaSportRadar
 from src.api.nba_sport_radar import NbaSportRadar
 from src.api.nhl_sport_radar import NhlSportRadar
 from src.api.pga_sport_radar import PgaSportRadar
@@ -24,12 +25,13 @@ def test_all_leagues():
         BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client)),
         BasketballLeague(league_name='wnba', league_client=WnbaSportRadar(api_client=api_client)),
         HockeyLeague(league_name='nhl', league_client=NhlSportRadar(api_client=api_client)),
-        GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client))
+        GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client)),
+        GolfLeague(league_name='lpga', league_client=LpgaSportRadar(api_client=api_client))
     ]
     tweet_driver(
         leagues=leagues,
         date_to_run=date(2021, 6, 17),
-        send_message=True,
+        send_message=False,
         skip_filter=True
     )
 
@@ -59,4 +61,5 @@ def test_extract_nhl_draft_info():
 def test_extract_golf_draft_info():
     api_client = SportRadarApi()
     pga_client = PgaSportRadar(api_client=api_client)
-    write_to_file_readable_for_computers(league='pga', league_client=pga_client)
+    lpga_client = LpgaSportRadar(api_client=api_client)
+    write_to_file_readable_for_computers(league='lpga', league_client=lpga_client)

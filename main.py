@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+from src.api.lpga_sport_radar import LpgaSportRadar
 from src.api.nba_sport_radar import NbaSportRadar
 from src.api.nhl_sport_radar import NhlSportRadar
 from src.api.pga_sport_radar import PgaSportRadar
@@ -29,6 +30,7 @@ def entrypoint(event, context):
     if time_delta == 1:
         skip_filter = True
         leagues.append(GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client)))
+        leagues.append(GolfLeague(league_name='lpga', league_client=LpgaSportRadar(api_client=api_client)))
     else:
         skip_filter = False
 

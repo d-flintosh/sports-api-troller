@@ -20,6 +20,7 @@ class TestEntrypoint:
         mock_nhl: Mock
         mock_golf: Mock
         mock_pga: Mock
+        mock_lpga: Mock
 
     @pytest.fixture
     @patch('main.tweet_driver', autospec=True)
@@ -27,13 +28,14 @@ class TestEntrypoint:
     @patch('main.HockeyLeague', autospec=True)
     @patch('main.BaseballLeague', autospec=True)
     @patch('main.BasketballLeague', autospec=True)
+    @patch('main.LpgaSportRadar', autospec=True)
     @patch('main.PgaSportRadar', autospec=True)
     @patch('main.NhlSportRadar', autospec=True)
     @patch('main.WnbaSportRadar', autospec=True)
     @patch('main.NbaSportRadar', autospec=True)
     @patch('main.SportRadarApi', autospec=True)
     @patch('main.date', autospec=True)
-    def setup(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga,
+    def setup(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga, mock_lpga,
               mock_basketball, mock_baseball,
               mock_hockey, mock_golf, mock_tweet_driver):
         mock_date.today.return_value = date(2020, 1, 2)
@@ -54,6 +56,7 @@ class TestEntrypoint:
             mock_wnba=mock_wnba,
             mock_nhl=mock_nhl,
             mock_pga=mock_pga,
+            mock_lpga=mock_lpga,
             mock_tweet_driver=mock_tweet_driver
         )
 
@@ -80,7 +83,8 @@ class TestEntrypoint:
 
     def test_golf_called(self, setup: Fixture):
         setup.mock_golf.assert_has_calls([
-            call(league_name='pga', league_client=setup.mock_pga.return_value)
+            call(league_name='pga', league_client=setup.mock_pga.return_value),
+            call(league_name='lpga', league_client=setup.mock_lpga.return_value)
         ])
 
     def test_hockey_called(self, setup: Fixture):
@@ -93,6 +97,7 @@ class TestEntrypoint:
                 setup.mock_basketball.return_value,
                 setup.mock_basketball.return_value,
                 setup.mock_hockey.return_value,
+                setup.mock_golf.return_value,
                 setup.mock_golf.return_value
             ],
             date_to_run=date(2020, 1, 1),
