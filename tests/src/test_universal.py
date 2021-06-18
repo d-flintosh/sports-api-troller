@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch, call
 from datetime import date
 import pytest
 
-from src.universal import publish_message, get_team_text, update_tweet_checkpoint
+from src.universal import publish_message, get_team_text, update_tweet_checkpoint, get_previously_published_games
 
 
 class TestPublishMessage:
@@ -35,6 +35,33 @@ class TestPublishMessage:
 
     def test_future_result_called(self, setup: Fixture):
         setup.mock_future.result.assert_called_once()
+
+
+class TestGetPreviouslyPublishedGames:
+    @dataclass
+    class Fixture:
+        mock_gcs: Mock
+        actual: List
+
+    @pytest.fixture
+    @patch('src.universal.Gcs')
+    def setup(self, mock_gcs):
+        mock_gcs.return_value.read_as_dict.return_value = {
+            'games_published': [1, 2]
+        }
+        return TestGetPreviouslyPublishedGames.Fixture(
+            mock_gcs=mock_gcs,
+            actual=get_previously_published_games(league_name='foo', date=date(2021, 1, 1))
+        )
+
+    def test_gcs_bucket(self, setup: Fixture):
+        setup.mock_gcs.assert_called_once_with(bucket='tweet-checkpoints')
+
+    def test_gcs_read(self, setup: Fixture):
+        setup.mock_gcs.return_value.read_as_dict.assert_called_once_with(url='foo/2021-01-01.json')
+
+    def test_future_result_called(self, setup: Fixture):
+        assert setup.actual == [1, 2]
 
 
 class TestGetTeamText:

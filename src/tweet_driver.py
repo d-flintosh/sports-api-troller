@@ -4,14 +4,19 @@ import pandas
 
 from src.extraction.League import League
 from src.models.SendTweetForSchool import SendTweetForSchool
-from src.universal import update_tweet_checkpoint
+from src.universal import update_tweet_checkpoint, get_previously_published_games
 
 
-def tweet_driver(leagues: List[League], date_to_run, send_message: bool):
+def tweet_driver(leagues: List[League], date_to_run, send_message: bool, skip_filter: bool):
     for league in leagues:
         games = league.get_games(date=date_to_run)
+        previously_published_games = get_previously_published_games(date=date_to_run, league_name=league.league_name)
+        filtered_games = list(filter(
+            lambda x: skip_filter or league.get_game_id(game=x) not in previously_published_games, games)
+        )
         games_published = []
-        for game in games:
+
+        for game in filtered_games:
             game_id = league.get_game_id(game=game)
             games_published.append(game_id)
 

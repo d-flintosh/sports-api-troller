@@ -11,7 +11,8 @@ from src.tweet_driver import tweet_driver
 
 
 def entrypoint(event, context):
-    yesterday = date.today() - timedelta(1)
+    time_delta = int(event.get('attributes', {}).get('time_delta', '1'))
+    yesterday = date.today() - timedelta(time_delta)
 
     api_client = SportRadarApi()
     leagues = [
@@ -19,5 +20,8 @@ def entrypoint(event, context):
         BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client)),
         BasketballLeague(league_name='wnba', league_client=WnbaSportRadar(api_client=api_client))
     ]
-    tweet_driver(leagues=leagues, date_to_run=yesterday, send_message=False)
+
+    skip_filter = True if time_delta == 1 else False
+
+    tweet_driver(leagues=leagues, date_to_run=yesterday, send_message=True, skip_filter=skip_filter)
 

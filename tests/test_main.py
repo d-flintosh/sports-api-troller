@@ -27,8 +27,12 @@ class TestEntrypoint:
     @patch('main.date', autospec=True)
     def setup(self, mock_date, mock_api, mock_nba, mock_wnba, mock_basketball, mock_baseball, mock_tweet_driver):
         mock_date.today.return_value = date(2020, 1, 2)
-
-        entrypoint(event=Mock(), context=Mock())
+        mock_event = {
+            'attributes': {
+                'time_delta': '1'
+            }
+        }
+        entrypoint(event=mock_event, context=Mock())
 
         return TestEntrypoint.Fixture(
             mock_basketball=mock_basketball,
@@ -56,3 +60,15 @@ class TestEntrypoint:
             call(league_name='nba', league_client=setup.mock_nba.return_value),
             call(league_name='wnba', league_client=setup.mock_wnba.return_value)
         ])
+
+    def test_tweet_driver_called(self, setup: Fixture):
+        setup.mock_tweet_driver.assert_called_once_with(
+            leagues=[
+                setup.mock_baseball.return_value,
+                setup.mock_basketball.return_value,
+                setup.mock_basketball.return_value
+            ],
+            date_to_run=date(2020, 1, 1),
+            send_message=True,
+            skip_filter=True
+        )

@@ -18,7 +18,8 @@ class BaseballLeague(League):
 
     def get_games(self, date) -> Optional[List]:
         formatted_date = date.strftime('%m/%d/%Y')
-        return statsapi.schedule(date=formatted_date)
+        schedule = statsapi.schedule(date=formatted_date)
+        return self.get_filtered_games(schedule)
 
     def get_tweetable_objects(self, game: dict) -> Optional[List]:
         boxscore = statsapi.boxscore_data(gamePk=game.get('game_id'))
@@ -52,3 +53,8 @@ class BaseballLeague(League):
                     output.append(player_obj)
 
         return output
+
+    @staticmethod
+    def get_filtered_games(daily_schedule: List):
+        games = list(filter(lambda game: game.get('status') == 'Final', daily_schedule))
+        return games
