@@ -1,9 +1,10 @@
 from dataclasses import dataclass
-from unittest.mock import Mock, patch
-
+from typing import List
+from unittest.mock import Mock, patch, call
+from datetime import date
 import pytest
 
-from src.universal import publish_message, get_team_text
+from src.universal import publish_message, get_team_text, update_tweet_checkpoint, get_previously_published_games
 
 
 class TestPublishMessage:
@@ -34,6 +35,33 @@ class TestPublishMessage:
 
     def test_future_result_called(self, setup: Fixture):
         setup.mock_future.result.assert_called_once()
+
+
+class TestGetPreviouslyPublishedGames:
+    @dataclass
+    class Fixture:
+        mock_gcs: Mock
+        actual: List
+
+    @pytest.fixture
+    @patch('src.universal.Gcs')
+    def setup(self, mock_gcs):
+        mock_gcs.return_value.read_as_dict.return_value = {
+            'games_published': [1, 2]
+        }
+        return TestGetPreviouslyPublishedGames.Fixture(
+            mock_gcs=mock_gcs,
+            actual=get_previously_published_games(league_name='foo', date=date(2021, 1, 1))
+        )
+
+    def test_gcs_bucket(self, setup: Fixture):
+        setup.mock_gcs.assert_called_once_with(bucket='tweet-checkpoints')
+
+    def test_gcs_read(self, setup: Fixture):
+        setup.mock_gcs.return_value.read_as_dict.assert_called_once_with(url='foo/2021-01-01.json')
+
+    def test_future_result_called(self, setup: Fixture):
+        assert setup.actual == [1, 2]
 
 
 class TestGetTeamText:
@@ -80,3 +108,53 @@ class TestGetTeamText:
 
     def test_output_correct(self, setup: Fixture):
         assert setup.actual == setup.expected
+
+
+class TestUpdateTweetCheckpoint:
+    @dataclass
+    class Params:
+        send_message: bool
+        expected_write_calls: List
+        games_published: List
+
+    @dataclass
+    class Fixture:
+        mock_gcs: Mock
+        expected_write_calls: List
+
+    @pytest.fixture(
+        ids=['False Send Message', 'No games to publish', 'Has games'],
+        params=[
+            Params(
+                send_message=False,
+                expected_write_calls=[],
+                games_published=[]
+            ),
+            Params(
+                send_message=True,
+                expected_write_calls=[],
+                games_published=[]
+            ),
+            Params(
+                send_message=True,
+                expected_write_calls=[call(url='foo/2021-01-05.json', contents={'games_published': [123]})],
+                games_published=[123]
+            )
+        ])
+    @patch('src.universal.Gcs', autospec=True)
+    def setup(self, mock_gcs, request):
+        date_to_use = date(2021, 1, 5)
+        update_tweet_checkpoint(
+            league_name='foo',
+            send_message=request.param.send_message,
+            date=date_to_use,
+            games_published=request.param.games_published
+        )
+        return TestUpdateTweetCheckpoint.Fixture(
+            expected_write_calls=request.param.expected_write_calls,
+            mock_gcs=mock_gcs
+        )
+
+    def test_calls_write(self, setup: Fixture):
+        print(setup.mock_gcs.return_value.write)
+        setup.mock_gcs.return_value.write.assert_has_calls(setup.expected_write_calls)

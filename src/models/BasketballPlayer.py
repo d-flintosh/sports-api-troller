@@ -39,7 +39,6 @@ class BasketballPlayer(Player):
 
 def basketball_player_from_dict(player: dict, league_name: str, team_id: str, college: dict):
     player_stats = player.get('statistics', {})
-
     return BasketballPlayer(
         id=player.get('id'),
         full_name=player.get('full_name'),
