@@ -11,8 +11,8 @@ class GolfSportRadar(ABC):
         self.api_client = api_client
         self.league_base_url = league_base_url
     
-    def get_tournament_schedule(self, date: date):
-        SCHEUDLE_URL = f'/tournaments/schedule.json'
+    def get_tournament_schedule(self):
+        SCHEUDLE_URL = '/tournaments/schedule.json'
         FULL_URL = BASE_URL + self.league_base_url + SCHEUDLE_URL
         return self.api_client.make_request(url=FULL_URL)
 
