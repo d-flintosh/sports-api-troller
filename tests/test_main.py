@@ -16,16 +16,21 @@ class TestEntrypoint:
         mock_nba: Mock
         mock_wnba: Mock
         mock_tweet_driver: Mock
+        mock_hockey: Mock
+        mock_nhl: Mock
 
     @pytest.fixture
     @patch('main.tweet_driver', autospec=True)
+    @patch('main.HockeyLeague', autospec=True)
     @patch('main.BaseballLeague', autospec=True)
     @patch('main.BasketballLeague', autospec=True)
+    @patch('main.NhlSportRadar', autospec=True)
     @patch('main.WnbaSportRadar', autospec=True)
     @patch('main.NbaSportRadar', autospec=True)
     @patch('main.SportRadarApi', autospec=True)
     @patch('main.date', autospec=True)
-    def setup(self, mock_date, mock_api, mock_nba, mock_wnba, mock_basketball, mock_baseball, mock_tweet_driver):
+    def setup(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_basketball, mock_baseball,
+              mock_hockey, mock_tweet_driver):
         mock_date.today.return_value = date(2020, 1, 2)
         mock_event = {
             'attributes': {
@@ -36,10 +41,12 @@ class TestEntrypoint:
 
         return TestEntrypoint.Fixture(
             mock_basketball=mock_basketball,
+            mock_hockey=mock_hockey,
             mock_baseball=mock_baseball,
             mock_api=mock_api,
             mock_nba=mock_nba,
             mock_wnba=mock_wnba,
+            mock_nhl=mock_nhl,
             mock_tweet_driver=mock_tweet_driver
         )
 
@@ -55,18 +62,25 @@ class TestEntrypoint:
     def test_wnba_client(self, setup: Fixture):
         setup.mock_wnba.assert_called_once_with(api_client=setup.mock_api.return_value)
 
-    def test_get_basketball_called(self, setup: Fixture):
+    def test_nhl_client(self, setup: Fixture):
+        setup.mock_nhl.assert_called_once_with(api_client=setup.mock_api.return_value)
+
+    def test_basketball_called(self, setup: Fixture):
         setup.mock_basketball.assert_has_calls([
             call(league_name='nba', league_client=setup.mock_nba.return_value),
             call(league_name='wnba', league_client=setup.mock_wnba.return_value)
         ])
+
+    def test_hockey_called(self, setup: Fixture):
+        setup.mock_hockey.assert_called_once_with(league_name='nhl', league_client=setup.mock_nhl.return_value)
 
     def test_tweet_driver_called(self, setup: Fixture):
         setup.mock_tweet_driver.assert_called_once_with(
             leagues=[
                 setup.mock_baseball.return_value,
                 setup.mock_basketball.return_value,
-                setup.mock_basketball.return_value
+                setup.mock_basketball.return_value,
+                setup.mock_hockey.return_value
             ],
             date_to_run=date(2020, 1, 1),
             send_message=True,

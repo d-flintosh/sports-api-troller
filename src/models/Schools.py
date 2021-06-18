@@ -41,6 +41,11 @@ class Schools(Enum):
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @SunDevilWBB {Emojis.BASKETBALL.value}\n'
             }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @SunDevilHockey {Emojis.HOCKEY.value}\n'
+            }
         }
     }
     connecticut = {
@@ -55,6 +60,11 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @UConnWBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @UConnMHOC {Emojis.HOCKEY.value}\n'
             }
         }
     }
@@ -71,6 +81,11 @@ class Schools(Enum):
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @DukeWBB {Emojis.BASKETBALL.value}\n'
             }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @Duke_Hockey {Emojis.HOCKEY.value}\n'
+            }
         }
     }
     florida = {
@@ -85,6 +100,11 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @GatorsWBK {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} Florida {Emojis.HOCKEY.value}\n'
             }
         }
     }
@@ -101,6 +121,11 @@ class Schools(Enum):
             'wnba': {
                 'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} @fsuwbb {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n'
             }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} FSU {Emojis.HOCKEY.value}\n'
+            }
         }
     }
     georgia = {
@@ -115,6 +140,11 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @UGA_WBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @UGAHockey {Emojis.HOCKEY.value}\n'
             }
         }
     }
@@ -131,6 +161,11 @@ class Schools(Enum):
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @IlliniWBB {Emojis.BASKETBALL.value}\n'
             }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @IlliniHockey {Emojis.HOCKEY.value}\n'
+            }
         }
     }
     kansas = {
@@ -145,6 +180,11 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @KUWBball {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @JayhawkHockey {Emojis.HOCKEY.value}\n'
             }
         }
     }
@@ -161,6 +201,11 @@ class Schools(Enum):
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @LSUwbkb {Emojis.BASKETBALL.value}\n'
             }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @LSUIceHockey {Emojis.HOCKEY.value}\n'
+            }
         }
     }
     miami = {
@@ -175,6 +220,11 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @CanesWBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} Miami {Emojis.HOCKEY.value}\n'
             }
         }
     }
@@ -191,6 +241,11 @@ class Schools(Enum):
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @umichwbball {Emojis.BASKETBALL.value}\n'
             }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @umichhockey {Emojis.HOCKEY.value}\n'
+            }
         }
     }
     northcarolina = {
@@ -205,6 +260,11 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @uncwbb {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @UNCHockey {Emojis.HOCKEY.value}\n'
             }
         }
     }
@@ -221,6 +281,11 @@ class Schools(Enum):
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @ndwbb {Emojis.BASKETBALL.value}\n'
             }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @NDHockey {Emojis.HOCKEY.value}\n'
+            }
         }
     }
     ohiostate = {
@@ -235,6 +300,11 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @OhioStateWBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @OhioStateMHKY {Emojis.HOCKEY.value}\n'
             }
         }
     }
@@ -251,6 +321,11 @@ class Schools(Enum):
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @TexasWBB {Emojis.BASKETBALL.value}\n'
             }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @Texas_Icehockey {Emojis.HOCKEY.value}\n'
+            }
         }
     }
     virginia = {
@@ -266,6 +341,11 @@ class Schools(Enum):
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @UVAWomensHoops {Emojis.BASKETBALL.value}\n'
             }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} Virginia {Emojis.HOCKEY.value}\n'
+            }
         }
     }
     wisconsin = {
@@ -280,6 +360,11 @@ class Schools(Enum):
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} @BadgerWBB {Emojis.BASKETBALL.value}\n'
+            }
+        },
+        'hockey': {
+            'nhl': {
+                'header': f'{Emojis.HOCKEY.value} @BadgerMHockey {Emojis.HOCKEY.value}\n'
             }
         }
     }
