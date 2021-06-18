@@ -6,7 +6,7 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from src.api.basketball_sport_radar import BasketballSportRadar
-from src.basketball import get_basketball
+from src.basketball import get_basketball, get_filtered_games
 from src.models.BasketballPlayer import BasketballPlayer
 
 
@@ -37,7 +37,7 @@ class TestBasketball:
                 expected_basketball_player_from_dict=[]
             ),
             Params(
-                mock_schedule_return=[{'id': '1'}],
+                mock_schedule_return=[{'id': '1', 'status': 'closed'}],
                 mock_player_stats_return=BasketballPlayer(
                     id='5',
                     league_name='nba',
@@ -136,3 +136,46 @@ class TestBasketball:
             setup.mock_send_tweet.return_value.publish.assert_called_once_with(send_message=True, sport='basketball')
         else:
             setup.mock_send_tweet.return_value.publish.assert_not_called()
+
+
+class TestGetFilteredGames:
+    @dataclass
+    class Params:
+        input: dict
+        expected_games: List
+
+    @dataclass
+    class Fixture:
+        expected_games: List
+        actual: List
+
+    @pytest.fixture(
+        ids=['No games object', 'No games', 'No closed games', 'Found Game'],
+        params=[
+            Params(
+                input={},
+                expected_games=[]
+            ),
+            Params(
+                input={'games': []},
+                expected_games=[]
+            ),
+            Params(
+                input={'games': [{'status': 'not closed'}]},
+                expected_games=[]
+            ),
+            Params(
+                input={'games': [{'status': 'closed'}]},
+                expected_games=[{'status': 'closed'}]
+            )
+        ]
+    )
+    def setup(self, request):
+
+        return TestGetFilteredGames.Fixture(
+            expected_games=request.param.expected_games,
+            actual=get_filtered_games(daily_schedule=request.param.input)
+        )
+
+    def test_get_filtered_games_result(self, setup: Fixture):
+        assert setup.actual == setup.expected_games

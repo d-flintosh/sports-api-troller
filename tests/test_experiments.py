@@ -22,8 +22,8 @@ def test_get_basketball():
     nba_client = NbaSportRadar(api_client=api_client)
     wnba_client = WnbaSportRadar(api_client=api_client)
 
-    get_basketball(date(2021, 6, 16), send_message=False, league_name='nba', league_client=nba_client)
-    get_basketball(date(2021, 6, 16), send_message=False, league_name='wnba', league_client=wnba_client)
+    get_basketball(date(2021, 6, 17), send_message=False, league_name='nba', league_client=nba_client)
+    get_basketball(date(2021, 6, 17), send_message=False, league_name='wnba', league_client=wnba_client)
 
 
 @pytest.mark.skip(reason="only run this manually")

@@ -15,9 +15,10 @@ def get_basketball(date_to_run, league_client: BasketballSportRadar, league_name
 
     college_by_player = Gcs('college-by-player').read_as_dict(url=f'{league_name}/players.json')
 
-    games = league_client.get_daily_schedule(date=date_to_run)
+    daily_schedule = league_client.get_daily_schedule(date=date_to_run)
+    games = get_filtered_games(daily_schedule)
 
-    for game in games.get('games'):
+    for game in games:
         game_id = game.get('id')
 
         boxscore = league_client.get_boxscore(game_id=game_id)
@@ -54,3 +55,8 @@ def get_basketball(date_to_run, league_client: BasketballSportRadar, league_name
             player_stats = school_group[1]["player_object"].to_list()
             SendTweetForSchool(school=str(school), player_stats=player_stats).publish(send_message=send_message, sport='basketball')
 
+
+def get_filtered_games(daily_schedule: dict):
+    games = daily_schedule.get('games', [])
+    games = list(filter(lambda game: game.get('status') == 'closed', games))
+    return games
