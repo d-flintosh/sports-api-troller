@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, timedelta
 from unittest.mock import Mock, patch, call
 
 import pytest

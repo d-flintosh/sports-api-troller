@@ -12,19 +12,19 @@ from src.extraction.BaseballLeague import BaseballLeague
 from src.tweet_driver import tweet_driver
 
 
-# @pytest.mark.skip(reason="only run this manually")
+@pytest.mark.skip(reason="only run this manually")
 def test_mlb():
     api_client = SportRadarApi()
     leagues = [
         BaseballLeague(),
-        # BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client)),
-        # BasketballLeague(league_name='wnba', league_client=WnbaSportRadar(api_client=api_client))
+        BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client)),
+        BasketballLeague(league_name='wnba', league_client=WnbaSportRadar(api_client=api_client))
     ]
     tweet_driver(
         leagues=leagues,
-        date_to_run=date(2021, 6, 18),
+        date_to_run=date(2021, 6, 17),
         send_message=False,
-        skip_filter=False
+        skip_filter=True
     )
 
 

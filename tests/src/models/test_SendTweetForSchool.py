@@ -16,7 +16,9 @@ class TestSendTweetForSchool:
     @patch('src.models.SendTweetForSchool.publish_message', autospec=True)
     def setup(self, mock_publish, mock_player):
         mock_player.convert_to_tweet.return_value = 'some text'
-        SendTweetForSchool(school='fsu', player_stats=[mock_player]).publish(send_message=True, sport='baseball')
+        SendTweetForSchool(school='fsu', player_stats=[mock_player]).publish(
+            send_message=True, sport='baseball', league_name='mlb'
+        )
 
         return TestSendTweetForSchool.Fixture(
             mock_publish=mock_publish

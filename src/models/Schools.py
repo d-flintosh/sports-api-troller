@@ -30,138 +30,256 @@ COLLEGES_TO_RUN = {
 class Schools(Enum):
     azst = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Arizona St {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @ASU_Baseball {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Arizona St {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @SunDevilHoops {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @SunDevilWBB {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     connecticut = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} UConn {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @UConnBSB {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} UConn {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @UConnMBB {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @UConnWBB {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     duke = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Duke {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @DukeBASE {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Duke {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @DukeMBB {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @DukeWBB {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     florida = {
-       'baseball': {
-           'header': f'{Emojis.BASEBALL.value} Florida {Emojis.BASEBALL.value}\n'
-       },
-       'basketball': {
-           'header': f'{Emojis.BASKETBALL.value} Florida {Emojis.BASKETBALL.value}\n'
-       }
+        'baseball': {
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @GatorsBB {Emojis.BASEBALL.value}\n'
+            }
+        },
+        'basketball': {
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @GatorsMBK {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @GatorsWBK {Emojis.BASKETBALL.value}\n'
+            }
+        }
     }
     fsu = {
-       'baseball': {
-           'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASEBALL.value} @FSUBaseball {Emojis.BASEBALL.value}{Emojis.FSU_SPEAR.value}\n'
-       },
-       'basketball': {
-           'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} @FSUHoops {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n'
-       }
+        'baseball': {
+            'mlb': {
+                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASEBALL.value} @FSUBaseball {Emojis.BASEBALL.value}{Emojis.FSU_SPEAR.value}\n'
+            }
+        },
+        'basketball': {
+            'nba': {
+                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} @FSUHoops {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} @fsuwbb {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n'
+            }
+        }
     }
     georgia = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Georgia {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @BaseballUGA {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Georgia {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @UGABasketball {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @UGA_WBB {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     illinois = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Illinois {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @IlliniBaseball {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Illinois {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @IlliniMBB {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @IlliniWBB {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     kansas = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Kansas {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @KUBaseball {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Kansas {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @KUHoops {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @KUWBball {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     lsu = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} LSU {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @LSUbaseball {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} LSU {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @LSUBasketball {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @LSUwbkb {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     miami = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Miami {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @CanesBaseball {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Miami {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @CanesHoops {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @CanesWBB {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     michigan = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} @umichbaseball {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @umichbaseball {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} @umichbball {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @umichbball {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @umichwbball {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     northcarolina = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} UNC {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @DiamondHeels {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} UNC {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @UNC_Basketball {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @uncwbb {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     notredame = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Notre Dame {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @NDBaseball {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Notre Dame {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @NDmbb {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @ndwbb {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     ohiostate = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Ohio State {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @OhioStateBASE {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Ohio State {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @OhioStateHoops {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @OhioStateWBB {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     texas = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Texas {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @TexasBaseball {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Texas {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @TexasMBB {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @TexasWBB {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     virginia = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Virginia {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} @UVABaseball {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Virginia {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @UVAMensHoops {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @UVAWomensHoops {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
     wisconsin = {
         'baseball': {
-            'header': f'{Emojis.BASEBALL.value} Wisconsin {Emojis.BASEBALL.value}\n'
+            'mlb': {
+                'header': f'{Emojis.BASEBALL.value} Wisconsin {Emojis.BASEBALL.value}\n'
+            }
         },
         'basketball': {
-            'header': f'{Emojis.BASKETBALL.value} Wisconsin {Emojis.BASKETBALL.value}\n'
+            'nba': {
+                'header': f'{Emojis.BASKETBALL.value} @BadgerMBB {Emojis.BASKETBALL.value}\n'
+            },
+            'wnba': {
+                'header': f'{Emojis.BASKETBALL.value} @BadgerWBB {Emojis.BASKETBALL.value}\n'
+            }
         }
     }
-
