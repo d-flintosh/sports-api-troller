@@ -5,6 +5,7 @@ import statsapi
 
 from src.api.nba_sport_radar import NbaSportRadar
 from src.api.nhl_sport_radar import NhlSportRadar
+from src.api.pga_sport_radar import PgaSportRadar
 from src.api.sport_radar import SportRadarApi
 from src.api.wnba_sport_radar import WnbaSportRadar
 from src.college.basketball import write_to_file_readable_for_computers
@@ -50,3 +51,10 @@ def test_extract_nhl_draft_info():
     api_client = SportRadarApi()
     nhl_client = NhlSportRadar(api_client=api_client)
     write_to_file_readable_for_computers(league='nhl', league_client=nhl_client)
+
+
+@pytest.mark.skip(reason="only run this manually")
+def test_extract_golf_draft_info():
+    api_client = SportRadarApi()
+    pga_client = PgaSportRadar(api_client=api_client)
+    write_to_file_readable_for_computers(league='pga', league_client=pga_client)
