@@ -55,5 +55,5 @@ class BasketballLeague(League):
     @staticmethod
     def get_filtered_games(daily_schedule: dict):
         games = daily_schedule.get('games', [])
-        games = list(filter(lambda game: game.get('status') == 'closed', games))
+        games = list(filter(lambda game: game.get('status') in ['complete', 'closed'], games))
         return games
