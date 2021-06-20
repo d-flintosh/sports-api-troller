@@ -27,7 +27,7 @@ def get_previously_published_games(league_name: str, date) -> List:
 
 
 def update_tweet_checkpoint(league_name: str, send_message: bool, date, games_published: List):
-    if games_published:
+    if send_message and games_published:
         formatted_date = date.strftime('%Y-%m-%d')
         contents = {
             'games_published': games_published
