@@ -26,7 +26,7 @@ class TestSendTweetForSchool:
 
     def test_publish_message_called(self, setup: Fixture):
         setup.mock_publish.assert_called_once_with(
-            message='🍢⚾️ @FSUBaseball ⚾️🍢\nsome text',
+            message='🍢⚾️ FSU ⚾️🍢\nsome text',
             school='fsu',
             send_message=True
         )

@@ -30,9 +30,9 @@ def test_all_leagues():
     ]
     tweet_driver(
         leagues=leagues,
-        date_to_run=date(2021, 6, 18),
-        send_message=True,
-        skip_filter=True
+        date_to_run=date(2021, 6, 20),
+        send_message=False,
+        skip_filter=False
     )
 
 

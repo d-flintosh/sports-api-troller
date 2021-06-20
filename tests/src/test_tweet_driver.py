@@ -60,7 +60,7 @@ class TestTweetDriver:
                     call(send_message=True, sport='some sport', league_name='some league')
                 ],
                 expected_checkpoint_calls=[
-                    call(league_name='some league', send_message=True, date=date(2021, 1, 1), games_published=[1])
+                    call(league_name='some league', send_message=True, date=date(2021, 1, 1), games_published=[1, 1])
                 ],
                 skip_filter=True
             ),
