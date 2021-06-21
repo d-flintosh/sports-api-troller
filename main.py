@@ -20,12 +20,7 @@ def entrypoint(event, context):
     yesterday = date.today() - timedelta(time_delta)
 
     api_client = SportRadarApi()
-    leagues = [
-        BaseballLeague(),
-        BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client)),
-        BasketballLeague(league_name='wnba', league_client=WnbaSportRadar(api_client=api_client)),
-        HockeyLeague(league_name='nhl', league_client=NhlSportRadar(api_client=api_client))
-    ]
+    leagues = []
 
     if time_delta == 1:
         skip_filter = True
@@ -33,6 +28,10 @@ def entrypoint(event, context):
         leagues.append(GolfLeague(league_name='lpga', league_client=LpgaSportRadar(api_client=api_client)))
     else:
         skip_filter = False
+        leagues.append(BaseballLeague())
+        leagues.append(BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client)))
+        leagues.append(BasketballLeague(league_name='wnba', league_client=WnbaSportRadar(api_client=api_client)))
+        leagues.append(HockeyLeague(league_name='nhl', league_client=NhlSportRadar(api_client=api_client)))
 
     tweet_driver(leagues=leagues, date_to_run=yesterday, send_message=True, skip_filter=skip_filter)
 
