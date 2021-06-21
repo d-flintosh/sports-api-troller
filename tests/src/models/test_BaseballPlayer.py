@@ -4,7 +4,6 @@ from unittest.mock import Mock, patch
 import pytest
 
 from src.models.BaseballPlayer import BaseballPlayer, baseball_player_from_dict
-from src.models.Emojis import Emojis
 from src.models.MlbTeams import mlb_team_map
 
 
@@ -26,111 +25,182 @@ class TestBaseballPlayer:
         actual_tweet: str
 
     @pytest.fixture(
-        ids=['Missing Batting Stats', 'W/ stats No AtBats', 'W/stats and AtBats and team lookup'],
+        ids=['Missing Batting Stats', 'W/ stats No AtBats', 'W/pitching stats', 'W/ hittings stats'],
         params=[
             Params(
                 input={
-                    'person': {
-                        'id': 1,
-                        'fullName': 'Bo'
-                    },
-                    'stats': {
-                        'batting': {}
+                    'id': '1',
+                    'preferred_name': 'Bo',
+                    'last_name': 'Jack',
+                    'statistics': {
+                        'hitting': {}
                     }
                 },
                 expected=BaseballPlayer(
-                    id=1,
-                    full_name='Bo',
-                    team_id=1,
+                    id='1',
+                    full_name='Bo Jack',
+                    team_id='1',
                     college='someCollege',
                     hits=0,
                     at_bats=0,
                     home_runs=0,
+                    rbis=0,
+                    runs=0,
+                    stolen_bases=0,
                     pitching_hits=0,
-                    pitching_note='',
                     pitching_wins=0,
                     pitching_innings='',
                     pitching_losses=0,
+                    pitching_saves=0,
                     pitching_strikeouts=0,
                     pitching_earned_runs=0
                 ),
                 expected_has_stats=False,
-                expected_tweet='Bo (#some team) went 0-0'
+                expected_tweet='Bo Jack (#some team) went 0-0'
             ),
             Params(
                 input={
-                    'person': {
-                        'id': 1,
-                        'fullName': 'Bo'
-                    },
-                    'stats': {
-                        'batting': {
-                            'hits': 0,
-                            'atBats': 0,
-                            'homeRuns': 0
+                    'id': '1',
+                    'preferred_name': 'Bo',
+                    'last_name': 'Jack',
+                    'statistics': {
+                        'hitting': {
+                            'overall': {
+                                'onbase': {
+                                    'h': 0,
+                                    'hr': 0
+                                },
+                                'ab': 0,
+                            }
                         }
                     }
                 },
                 expected=BaseballPlayer(
-                    id=1,
-                    full_name='Bo',
-                    team_id=1,
+                    id='1',
+                    full_name='Bo Jack',
+                    team_id='1',
                     hits=0,
                     college='someCollege',
                     at_bats=0,
                     home_runs=0,
+                    rbis=0,
+                    runs=0,
+                    stolen_bases=0,
                     pitching_hits=0,
-                    pitching_note='',
                     pitching_wins=0,
                     pitching_innings='',
                     pitching_losses=0,
+                    pitching_saves=0,
                     pitching_strikeouts=0,
                     pitching_earned_runs=0
                 ),
                 expected_has_stats=False,
-                expected_tweet='Bo (#some team) went 0-0'
+                expected_tweet='Bo Jack (#some team) went 0-0'
             ),
             Params(
                 input={
-                    'person': {
-                        'id': 1,
-                        'fullName': 'Bo'
-                    },
-                    'stats': {
-                        'batting': {
-                            'hits': 1,
-                            'atBats': 4,
-                            'homeRuns': 1
+                    'id': '1',
+                    'preferred_name': 'Bo',
+                    'last_name': 'Jack',
+                    'statistics': {
+                        'hitting': {
+                            'overall': {
+                                'onbase': {
+                                    'h': 1,
+                                    'hr': 1
+                                },
+                                'ab': 4,
+                            }
                         },
                         'pitching': {
-                            'strikeouts': 2,
-                            'inningsPitched': '1.2',
-                            'hits': 4,
-                            'earnedRuns': 3,
-                            'note': '(L, 4-3)',
-                            'losses': 1,
-                            'wins': 0
+                            'overall': {
+                                'outs': {
+                                    'ktotal': 2,
+                                },
+                                'ip_2': 1.2,
+                                'onbase': {
+                                    'h': 4,
+                                },
+                                'runs': {
+                                    'earned': 3,
+                                },
+                                'games': {
+                                    'loss': 1,
+                                    'win': 0,
+                                    'save': 0
+                                }
+                            }
                         }
                     }
                 },
                 expected=BaseballPlayer(
-                    id=1,
-                    full_name='Bo',
-                    team_id=1,
+                    id='1',
+                    full_name='Bo Jack',
+                    team_id='1',
                     college='someCollege',
                     hits=1,
                     at_bats=4,
                     home_runs=1,
+                    rbis=0,
+                    runs=0,
+                    stolen_bases=0,
                     pitching_hits=4,
-                    pitching_note='(L, 4-3)',
                     pitching_wins=0,
                     pitching_innings='1.2',
                     pitching_losses=1,
+                    pitching_saves=0,
                     pitching_strikeouts=2,
                     pitching_earned_runs=3
                 ),
                 expected_has_stats=True,
-                expected_tweet=f'Bo (#some team) 1.2IP 3ER 4H 2K (L, 4-3)'
+                expected_tweet=f'Bo Jack (#some team) L 1.2IP 3ER 4H 2K'
+            ),
+            Params(
+                input={
+                    'id': '1',
+                    'preferred_name': 'Bo',
+                    'last_name': 'Jack',
+                    'statistics': {
+                        'hitting': {
+                            'overall': {
+                                'onbase': {
+                                    'h': 1,
+                                    'hr': 4
+                                },
+                                'steal': {
+                                    'stolen': 1
+                                },
+                                'runs': {
+                                    'total': 2
+                                },
+                                'ab': 4,
+                                'rbi': 3
+                            }
+                        },
+                        'pitching': {}
+                    }
+                },
+                expected=BaseballPlayer(
+                    id='1',
+                    full_name='Bo Jack',
+                    team_id='1',
+                    college='someCollege',
+                    hits=1,
+                    at_bats=4,
+                    home_runs=4,
+                    rbis=3,
+                    runs=2,
+                    stolen_bases=1,
+                    pitching_hits=0,
+                    pitching_wins=0,
+                    pitching_innings='',
+                    pitching_losses=0,
+                    pitching_saves=0,
+                    pitching_strikeouts=0,
+                    pitching_earned_runs=0
+                ),
+                expected_has_stats=True,
+                expected_tweet=f'Bo Jack (#some team) went 1-4 4HR 3RBI 2R 1SB'
             )
         ]
     )
@@ -139,7 +209,7 @@ class TestBaseballPlayer:
         mock_get_team_text.return_value = ' (#some team)'
         actual = baseball_player_from_dict(
             player=request.param.input,
-            team_id=1,
+            team_id='1',
             college={'college': 'someCollege'}
         )
 
@@ -159,7 +229,7 @@ class TestBaseballPlayer:
         assert setup.actual.has_stats() == setup.expected_has_stats
 
     def test_get_team_text_called(self, setup: Fixture):
-        setup.mock_get_team_text.assert_called_once_with(team_map=mlb_team_map, team_id=1)
+        setup.mock_get_team_text.assert_called_once_with(team_map=mlb_team_map, team_id='1')
 
     def test_convert_to_tweet(self, setup: Fixture):
         assert setup.actual_tweet == setup.expected_tweet

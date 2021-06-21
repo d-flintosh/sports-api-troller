@@ -8,7 +8,7 @@ class League(ABC):
         self.sport = sport
 
     @abstractmethod
-    def get_game_id(self, game: dict) -> Union[str, int]:
+    def get_game_id(self, game: dict) -> str:
         raise NotImplementedError
 
     @abstractmethod

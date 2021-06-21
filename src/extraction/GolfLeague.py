@@ -1,9 +1,9 @@
-from datetime import date, datetime, timedelta
+from datetime import datetime
 from typing import List, Optional, Union
 
 from src.api.golf_sport_radar import GolfSportRadar
-from src.gcp.gcs import Gcs
 from src.extraction.League import League
+from src.gcp.gcs import Gcs
 from src.models.GolfPlayer import golf_player_from_dict
 from src.models.TweetObject import TweetObject
 
