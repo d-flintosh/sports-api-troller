@@ -45,7 +45,7 @@ class GolfLeague(League):
 
         def is_date_in_range(start: str, end: str, reference_date: date):
             start_date = datetime.strptime(start, '%Y-%m-%d').date()
-            end_date = datetime.strptime(end, '%Y-%m-%d').date() + timedelta(1)
+            end_date = datetime.strptime(end, '%Y-%m-%d').date()
             is_in_range = start_date <= reference_date <= end_date
             return is_in_range
 
