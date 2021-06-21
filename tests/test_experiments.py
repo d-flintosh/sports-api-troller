@@ -18,21 +18,34 @@ from src.tweet_driver import tweet_driver
 
 
 @pytest.mark.skip(reason="only run this manually")
-def test_all_leagues():
+def test_daily():
+    api_client = SportRadarApi()
+    leagues = [
+        GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client)),
+        GolfLeague(league_name='lpga', league_client=LpgaSportRadar(api_client=api_client))
+    ]
+    tweet_driver(
+        leagues=leagues,
+        date_to_run=date(2021, 6, 21),
+        send_message=False,
+        skip_filter=True
+    )
+
+
+@pytest.mark.skip(reason="only run this manually")
+def test_hourly():
     api_client = SportRadarApi()
     leagues = [
         BaseballLeague(league_client=MlbSportRadar(api_client=api_client)),
         BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client)),
         BasketballLeague(league_name='wnba', league_client=WnbaSportRadar(api_client=api_client)),
         HockeyLeague(league_name='nhl', league_client=NhlSportRadar(api_client=api_client)),
-        GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client)),
-        GolfLeague(league_name='lpga', league_client=LpgaSportRadar(api_client=api_client))
     ]
     tweet_driver(
         leagues=leagues,
-        date_to_run=date(2021, 6, 20),
+        date_to_run=date(2021, 6, 21),
         send_message=False,
-        skip_filter=True
+        skip_filter=False
     )
 
 
