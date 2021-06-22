@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import date, timedelta
+from datetime import date, datetime
 from unittest.mock import Mock, patch, call
 
 import pytest
@@ -36,11 +36,11 @@ class TestEntrypoint:
     @patch('main.WnbaSportRadar', autospec=True)
     @patch('main.NbaSportRadar', autospec=True)
     @patch('main.SportRadarApi', autospec=True)
-    @patch('main.date', autospec=True)
+    @patch('main.datetime', autospec=True)
     def setup_time_delta_1(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga, mock_lpga,
               mock_mlb, mock_basketball, mock_baseball,
               mock_hockey, mock_golf, mock_tweet_driver):
-        mock_date.today.return_value = date(2020, 1, 2)
+        mock_date.now.return_value = datetime(2020, 1, 2)
         mock_event = {
             'attributes': {
                 'time_delta': '1'
@@ -114,11 +114,11 @@ class TestEntrypoint:
     @patch('main.WnbaSportRadar', autospec=True)
     @patch('main.NbaSportRadar', autospec=True)
     @patch('main.SportRadarApi', autospec=True)
-    @patch('main.date', autospec=True)
+    @patch('main.datetime', autospec=True)
     def setup_time_delta_0(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga, mock_lpga,
               mock_mlb, mock_basketball, mock_baseball,
               mock_hockey, mock_golf, mock_tweet_driver):
-        mock_date.today.return_value = date(2020, 1, 2)
+        mock_date.now.return_value = datetime(2020, 1, 2)
         mock_event = {
             'attributes': {
                 'time_delta': '0'
