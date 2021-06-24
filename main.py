@@ -17,10 +17,10 @@ from src.tweet_driver import tweet_driver
 
 
 def entrypoint(event, context):
-    time_delta = int(event.get('attributes', {}).get('time_delta', '1'))
+    time_delta = int(event.get('attributes', {}).get('time_delta', '24'))
     tz = pytz.timezone('America/Chicago')
     chicago_now = datetime.now(tz)
-    date_to_run = chicago_now - timedelta(time_delta)
+    date_to_run = chicago_now - timedelta(hours=time_delta)
 
     api_client = SportRadarApi()
     leagues = []

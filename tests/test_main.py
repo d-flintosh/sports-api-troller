@@ -118,10 +118,10 @@ class TestEntrypoint:
     def setup_time_delta_0(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga, mock_lpga,
               mock_mlb, mock_basketball, mock_baseball,
               mock_hockey, mock_golf, mock_tweet_driver):
-        mock_date.now.return_value = datetime(2020, 1, 2)
+        mock_date.now.return_value = datetime(2020, 1, 2, 12)
         mock_event = {
             'attributes': {
-                'time_delta': '0'
+                'time_delta': '6'
             }
         }
         entrypoint(event=mock_event, context=Mock())
