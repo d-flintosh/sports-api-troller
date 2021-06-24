@@ -43,7 +43,7 @@ class TestEntrypoint:
         mock_date.now.return_value = datetime(2020, 1, 2)
         mock_event = {
             'attributes': {
-                'time_delta': '1'
+                'time_delta': '24'
             }
         }
         entrypoint(event=mock_event, context=Mock())

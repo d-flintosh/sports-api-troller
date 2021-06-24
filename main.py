@@ -25,7 +25,7 @@ def entrypoint(event, context):
     api_client = SportRadarApi()
     leagues = []
 
-    if time_delta == 1:
+    if time_delta == 24:
         skip_filter = True
         leagues.append(GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client)))
         leagues.append(GolfLeague(league_name='lpga', league_client=LpgaSportRadar(api_client=api_client)))
