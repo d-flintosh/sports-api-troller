@@ -32,8 +32,12 @@ def tweet_driver(leagues: List[League], date_to_run, send_message: bool, skip_fi
             for school_group in df:
                 school = school_group[0]
                 player_stats = school_group[1]["player_object"].to_list()
-                SendTweetForSchool(school=str(school), player_stats=player_stats).publish(
-                    send_message=send_message,
+
+                SendTweetForSchool(
+                    school=str(school),
+                    player_stats=player_stats,
+                    send_message=send_message
+                ).publish(
                     sport=league.sport,
                     league_name=league.league_name
                 )

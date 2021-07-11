@@ -25,6 +25,9 @@ class GolfPlayer(Player):
     def has_stats(self):
         return self.status == 'PROBABLY_NOT_CUT'
 
+    def had_a_great_day(self) -> bool:
+        return self. position <= 5
+
     def convert_to_tweet(self):
         position_text = f'({"T" if self.tied else ""}{self.position})'
         score_text = 'E' if self.score == 0 else str(self.score)

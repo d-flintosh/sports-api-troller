@@ -4,16 +4,15 @@ from unittest.mock import patch, Mock
 
 import pytest
 
-from src.models.BasketballPlayer import BasketballPlayer, basketball_player_from_dict
-from src.models.NbaTeams import nba_team_map
-from src.models.WnbaTeams import wnba_team_map
+from src.models.HockeyPlayer import HockeyPlayer, hockey_player_from_dict
+from src.models.NhlTeams import nhl_team_map
 
 
-class TestBasketballPlayer:
+class TestHockeyPlayer:
     @dataclass
     class Params:
         input: dict
-        expected: BasketballPlayer
+        expected: HockeyPlayer
         expected_has_stats: bool
         expected_had_great_day: bool
         expected_tweet: str
@@ -22,8 +21,8 @@ class TestBasketballPlayer:
 
     @dataclass
     class Fixture:
-        actual: BasketballPlayer
-        expected: BasketballPlayer
+        actual: HockeyPlayer
+        expected: HockeyPlayer
         expected_team_map: dict
         expected_has_stats: bool
         expected_had_great_day: bool
@@ -32,110 +31,105 @@ class TestBasketballPlayer:
         actual_tweet: str
 
     @pytest.fixture(
-        ids=['Has Decent Stats', 'Not Decent WNBA', 'No College', 'None Stats', 'Missing Stats'],
+        ids=['Has Decent Stats', 'Not Decent', 'No College', 'None Stats', 'Missing Stats'],
         params=[
             Params(
-                input={'full_name': 'Bo', 'id': '1', 'statistics': { 'points': 1, 'assists': 2, 'rebounds': 30}},
-                expected=BasketballPlayer(
+                input={'full_name': 'Bo', 'id': '1', 'statistics': {'total': { 'goals': 1, 'assists': 2}}},
+                expected=HockeyPlayer(
                     id='1',
                     full_name='Bo',
-                    league_name='nba',
+                    league_name='nhl',
                     team_id='1',
                     college='someCollege',
-                    points=1,
+                    goals=1,
                     assists=2,
-                    rebounds=30
                 ),
                 expected_has_stats=True,
                 expected_had_great_day=True,
-                expected_tweet='Bo (#some team) 1 pts/30 reb/2 ast',
+                expected_tweet='Bo (#some team) 1 g/2 ast',
                 college_map={'college': 'someCollege'},
-                expected_team_map=nba_team_map
+                expected_team_map=nhl_team_map
             ),
             Params(
-                input={'full_name': 'Bo', 'id': '1', 'statistics': {'points': 0, 'assists': 0, 'rebounds': 0}},
-                expected=BasketballPlayer(
+                input={'full_name': 'Bo', 'id': '1', 'statistics': {'total': {'goals': 0, 'assists': 0}}},
+                expected=HockeyPlayer(
                     id='1',
                     full_name='Bo',
-                    league_name='wnba',
+                    league_name='wnhl',
                     team_id='1',
                     college='someCollege',
-                    points=0,
+                    goals=0,
                     assists=0,
-                    rebounds=0
                 ),
                 expected_has_stats=False,
                 expected_had_great_day=False,
                 expected_tweet='Bo (#some team) ',
                 college_map={'college': 'someCollege'},
-                expected_team_map=wnba_team_map
+                expected_team_map=nhl_team_map
             ),
             Params(
-                input={'full_name': 'Bo', 'id': '1', 'statistics': {'points': 0, 'assists': 0, 'rebounds': 0}},
-                expected=BasketballPlayer(
+                input={'full_name': 'Bo', 'id': '1', 'statistics': {'total': {'goals': 0, 'assists': 0}}},
+                expected=HockeyPlayer(
                     id='1',
                     full_name='Bo',
-                    league_name='nba',
+                    league_name='nhl',
                     team_id='1',
                     college='',
-                    points=0,
-                    assists=0,
-                    rebounds=0
+                    goals=0,
+                    assists=0
                 ),
                 expected_has_stats=False,
                 expected_had_great_day=False,
                 expected_tweet='Bo (#some team) ',
                 college_map=None,
-                expected_team_map=nba_team_map
+                expected_team_map=nhl_team_map
             ),
             Params(
-                input={'full_name': 'Bo', 'id': '1', 'statistics': {'points': None, 'assists': None, 'rebounds': None}},
-                expected=BasketballPlayer(
+                input={'full_name': 'Bo', 'id': '1', 'statistics': {'total': {'goals': None, 'assists': None}}},
+                expected=HockeyPlayer(
                     id='1',
                     full_name='Bo',
-                    league_name='nba',
+                    league_name='nhl',
                     team_id='1',
                     college='',
-                    points=0,
-                    assists=0,
-                    rebounds=0
+                    goals=0,
+                    assists=0
                 ),
                 expected_has_stats=False,
                 expected_had_great_day=False,
                 expected_tweet='Bo (#some team) ',
                 college_map=None,
-                expected_team_map=nba_team_map
+                expected_team_map=nhl_team_map
             ),
             Params(
                 input={'full_name': 'Bo', 'id': '1'},
-                expected=BasketballPlayer(
+                expected=HockeyPlayer(
                     id='1',
                     full_name='Bo',
                     college='someCollege',
-                    league_name='nba',
+                    league_name='nhl',
                     team_id='1',
-                    points=0,
                     assists=0,
-                    rebounds=0
+                    goals=0
                 ),
                 expected_has_stats=False,
                 expected_had_great_day=False,
                 expected_tweet='Bo (#some team) ',
                 college_map={'college': 'someCollege'},
-                expected_team_map=nba_team_map
+                expected_team_map=nhl_team_map
             )
         ]
     )
-    @patch('src.models.BasketballPlayer.get_team_text', autospec=True)
+    @patch('src.models.HockeyPlayer.get_team_text', autospec=True)
     def setup(self, mock_get_team_text, request):
         mock_get_team_text.return_value = ' (#some team)'
-        actual = basketball_player_from_dict(
+        actual = hockey_player_from_dict(
             player=request.param.input,
             league_name=request.param.expected.league_name,
             team_id='1',
             college=request.param.college_map
         )
-        return TestBasketballPlayer.Fixture(
+        return TestHockeyPlayer.Fixture(
             actual=actual,
             expected=request.param.expected,
             expected_has_stats=request.param.expected_has_stats,

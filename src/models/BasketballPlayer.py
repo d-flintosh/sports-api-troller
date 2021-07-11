@@ -20,6 +20,9 @@ class BasketballPlayer(Player):
     def has_stats(self):
         return self.points > 0 or self.assists > 0 or self.rebounds > 0 and self.college is not None
 
+    def had_a_great_day(self) -> bool:
+        return self.points >= 20 or self.assists >= 10 or self.rebounds >= 10 and self.college is not None
+
     def convert_to_tweet(self):
         stat_line = []
         if self.points > 0:

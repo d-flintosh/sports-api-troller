@@ -18,6 +18,9 @@ class HockeyPlayer(Player):
     def has_stats(self):
         return self.goals > 0 or self.assists > 0 and self.college is not None
 
+    def had_a_great_day(self) -> bool:
+        return self.has_stats()
+
     def convert_to_tweet(self):
         stat_line = []
         if self.goals > 0:

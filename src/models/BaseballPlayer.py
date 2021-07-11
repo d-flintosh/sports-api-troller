@@ -28,6 +28,9 @@ class BaseballPlayer(Player):
     def has_stats(self):
         return self.at_bats > 0 or self.pitching_innings != ''
 
+    def had_a_great_day(self) -> bool:
+        return self.home_runs > 0 or self.pitching_wins > 0
+
     def convert_to_tweet(self):
         team_text = get_team_text(team_map=mlb_team_map, team_id=self.team_id)
         player_text = f'{self.full_name}{team_text}'

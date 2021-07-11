@@ -11,7 +11,8 @@ class TestGolfPlayer:
     class Params:
         input: dict
         expected: GolfPlayer
-        expected_is_decent_day: bool
+        expected_has_stats: bool
+        expected_had_great_day: bool
         expected_tweet: str
         college_map: Optional[dict]
 
@@ -19,7 +20,8 @@ class TestGolfPlayer:
     class Fixture:
         actual: GolfPlayer
         expected: GolfPlayer
-        expected_is_decent_day: bool
+        expected_has_stats: bool
+        expected_had_great_day: bool
         expected_tweet: str
         actual_tweet: str
 
@@ -39,7 +41,8 @@ class TestGolfPlayer:
                     status='PROBABLY_NOT_CUT',
                     rounds=[]
                 ),
-                expected_is_decent_day=True,
+                expected_has_stats=True,
+                expected_had_great_day=True,
                 expected_tweet='Bo Jackson E (T2)',
                 college_map={'college': 'someCollege'},
             ),
@@ -56,7 +59,8 @@ class TestGolfPlayer:
                     status='PROBABLY_NOT_CUT',
                     rounds=[]
                 ),
-                expected_is_decent_day=True,
+                expected_has_stats=True,
+                expected_had_great_day=True,
                 expected_tweet='Bo Jackson E (2)',
                 college_map={'college': 'someCollege'},
             ),
@@ -73,7 +77,8 @@ class TestGolfPlayer:
                     status='CUT',
                     rounds=[]
                 ),
-                expected_is_decent_day=False,
+                expected_has_stats=False,
+                expected_had_great_day=True,
                 expected_tweet='Bo Jackson E (2)',
                 college_map={'college': 'someCollege'},
             )
@@ -88,16 +93,20 @@ class TestGolfPlayer:
         return TestGolfPlayer.Fixture(
             actual=actual,
             expected=request.param.expected,
-            expected_is_decent_day=request.param.expected_is_decent_day,
+            expected_has_stats=request.param.expected_has_stats,
             expected_tweet=request.param.expected_tweet,
-            actual_tweet=actual.convert_to_tweet()
+            actual_tweet=actual.convert_to_tweet(),
+            expected_had_great_day=request.param.expected_had_great_day
         )
 
     def test_object_correct(self, setup: Fixture):
         assert setup.actual == setup.expected
 
-    def test_is_decent_day(self, setup: Fixture):
-        assert setup.actual.has_stats() == setup.expected_is_decent_day
+    def test_has_stats(self, setup: Fixture):
+        assert setup.actual.has_stats() == setup.expected_has_stats
+
+    def test_had_great_day(self, setup: Fixture):
+        assert setup.actual.had_a_great_day() == setup.expected_had_great_day
 
     def test_convert_to_tweet(self, setup: Fixture):
         assert setup.actual_tweet == setup.expected_tweet

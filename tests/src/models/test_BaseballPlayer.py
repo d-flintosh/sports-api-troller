@@ -13,6 +13,7 @@ class TestBaseballPlayer:
         input: dict
         expected: BaseballPlayer
         expected_has_stats: bool
+        expected_had_a_great_day: bool
         expected_tweet: str
 
     @dataclass
@@ -20,6 +21,7 @@ class TestBaseballPlayer:
         actual: BaseballPlayer
         expected: BaseballPlayer
         expected_has_stats: bool
+        expected_had_a_great_day: bool
         expected_tweet: str
         mock_get_team_text: Mock
         actual_tweet: str
@@ -56,6 +58,7 @@ class TestBaseballPlayer:
                     pitching_earned_runs=0
                 ),
                 expected_has_stats=False,
+                expected_had_a_great_day=False,
                 expected_tweet='Bo Jack (#some team) went 0-0'
             ),
             Params(
@@ -95,6 +98,7 @@ class TestBaseballPlayer:
                     pitching_earned_runs=0
                 ),
                 expected_has_stats=False,
+                expected_had_a_great_day=False,
                 expected_tweet='Bo Jack (#some team) went 0-0'
             ),
             Params(
@@ -153,6 +157,7 @@ class TestBaseballPlayer:
                     pitching_earned_runs=3
                 ),
                 expected_has_stats=True,
+                expected_had_a_great_day=True,
                 expected_tweet=f'Bo Jack (#some team) L 1.2IP 3ER 4H 2K'
             ),
             Params(
@@ -200,6 +205,7 @@ class TestBaseballPlayer:
                     pitching_earned_runs=0
                 ),
                 expected_has_stats=True,
+                expected_had_a_great_day=True,
                 expected_tweet=f'Bo Jack (#some team) went 1-4 4HR 3RBI 2R 1SB'
             )
         ]
@@ -219,7 +225,8 @@ class TestBaseballPlayer:
             expected_has_stats=request.param.expected_has_stats,
             expected_tweet=request.param.expected_tweet,
             mock_get_team_text=mock_get_team_text,
-            actual_tweet=actual.convert_to_tweet()
+            actual_tweet=actual.convert_to_tweet(),
+            expected_had_a_great_day=request.param.expected_had_a_great_day
         )
 
     def test_object_correct(self, setup: Fixture):
@@ -227,6 +234,9 @@ class TestBaseballPlayer:
 
     def test_has_stats(self, setup: Fixture):
         assert setup.actual.has_stats() == setup.expected_has_stats
+
+    def test_had_a_great_day(self, setup: Fixture):
+        assert setup.actual.had_a_great_day() == setup.expected_had_a_great_day
 
     def test_get_team_text_called(self, setup: Fixture):
         setup.mock_get_team_text.assert_called_once_with(team_map=mlb_team_map, team_id='1')
