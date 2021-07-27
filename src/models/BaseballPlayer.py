@@ -9,6 +9,7 @@ from src.universal import get_team_text
 class BaseballPlayer(Player):
     id: str
     full_name: str
+    league_name: str
     team_id: str
     college: str
     hits: int
@@ -72,6 +73,7 @@ def baseball_player_from_dict(player: dict, team_id: str, college: dict):
         id=player.get('id'),
         full_name=f'{player.get("preferred_name")} {player.get("last_name")}',
         team_id=team_id,
+        league_name='mlb',
         college=college.get('college'),
         hits=batting_stats.get('onbase', {}).get('h', 0),
         rbis=batting_stats.get('rbi', 0),
