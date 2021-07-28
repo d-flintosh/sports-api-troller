@@ -57,7 +57,7 @@ class TestTweetDriver:
                     call(game={'id': 1})
                 ],
                 expected_tweet_calls=[
-                    call(send_message=True, sport='some sport', league_name='some league')
+                    call(sport='some sport', league_name='some league')
                 ],
                 expected_checkpoint_calls=[
                     call(league_name='some league', send_message=True, date=date(2021, 1, 1), games_published=[1, 1])

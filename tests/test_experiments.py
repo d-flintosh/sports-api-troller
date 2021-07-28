@@ -43,7 +43,7 @@ def test_hourly():
     ]
     tweet_driver(
         leagues=leagues,
-        date_to_run=date(2021, 6, 24),
+        date_to_run=date(2021, 7, 16),
         send_message=False,
         skip_filter=False
     )
