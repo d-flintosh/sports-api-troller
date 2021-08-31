@@ -1,4 +1,3 @@
-from datetime import date
 from abc import ABC
 from typing import List
 

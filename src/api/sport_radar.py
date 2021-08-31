@@ -26,4 +26,5 @@ class SportRadarApi:
         full_url = url + f'?api_key={api_key}'
         time.sleep(1)
         response = requests.get(full_url)
+        print(full_url)
         return json.loads(response.content)

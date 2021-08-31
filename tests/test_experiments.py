@@ -5,6 +5,7 @@ import pytest
 from src.api.lpga_sport_radar import LpgaSportRadar
 from src.api.mlb_sport_radar import MlbSportRadar
 from src.api.nba_sport_radar import NbaSportRadar
+from src.api.nfl_sport_radar import NflSportRadar
 from src.api.nhl_sport_radar import NhlSportRadar
 from src.api.pga_sport_radar import PgaSportRadar
 from src.api.sport_radar import SportRadarApi
@@ -12,6 +13,7 @@ from src.api.wnba_sport_radar import WnbaSportRadar
 from src.college.basketball import write_to_file_readable_for_computers
 from src.extraction.BaseballLeague import BaseballLeague
 from src.extraction.BasketballLeague import BasketballLeague
+from src.extraction.FootballLeague import FootballLeague
 from src.extraction.GolfLeague import GolfLeague
 from src.extraction.HockeyLeague import HockeyLeague
 from src.tweet_driver import tweet_driver
@@ -21,12 +23,11 @@ from src.tweet_driver import tweet_driver
 def test_daily():
     api_client = SportRadarApi()
     leagues = [
-        GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client)),
-        GolfLeague(league_name='lpga', league_client=LpgaSportRadar(api_client=api_client))
+        FootballLeague(league_name='nfl', league_client=NflSportRadar(api_client=api_client))
     ]
     tweet_driver(
         leagues=leagues,
-        date_to_run=date(2021, 6, 21),
+        date_to_run=date(2020, 12, 6),
         send_message=False,
         skip_filter=True
     )
@@ -78,3 +79,10 @@ def test_extract_golf_draft_info():
     pga_client = PgaSportRadar(api_client=api_client)
     lpga_client = LpgaSportRadar(api_client=api_client)
     write_to_file_readable_for_computers(league='lpga', league_client=lpga_client)
+
+
+@pytest.mark.skip(reason="only run this manually")
+def test_extract_nfl_draft_info():
+    api_client = SportRadarApi()
+    nfl_client = NflSportRadar(api_client=api_client)
+    write_to_file_readable_for_computers(league='nfl', league_client=nfl_client)
