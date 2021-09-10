@@ -1,6 +1,8 @@
 from datetime import date, datetime
 from typing import List
 
+from dateutil import tz
+
 from src.api.sport_radar import SportRadarApi, BASE_URL
 from src.models.PlayerDraft import PlayerDraft
 
@@ -19,7 +21,10 @@ class NflSportRadar:
         games = []
         for week in full_schedule.get('weeks', []):
             for game in week.get('games', []):
-                game_date = datetime.fromisoformat(game.get('scheduled'))
+                game_date = datetime.fromisoformat(game.get('scheduled')).replace(
+                    tzinfo=tz.gettz('UTC')
+                )
+                game_date = game_date.astimezone(tz.gettz('America/Chicago'))
                 if game_date.date() == date:
                     games.append(game)
         return games
