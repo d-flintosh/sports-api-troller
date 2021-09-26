@@ -60,7 +60,7 @@ class NflSportRadar:
                 players.append(
                     PlayerDraft(
                         id=player.get('id'),
-                        full_name=player.get('full_name'),
+                        full_name=player.get('name'),
                         college=player.get('college')
                     )
                 )

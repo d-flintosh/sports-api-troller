@@ -10,11 +10,10 @@ from src.api.nhl_sport_radar import NhlSportRadar
 from src.api.pga_sport_radar import PgaSportRadar
 from src.api.sport_radar import SportRadarApi
 from src.api.wnba_sport_radar import WnbaSportRadar
-from src.college.basketball import write_to_file_readable_for_computers
+from src.college.write_players_to_gcs import write_to_file_readable_for_computers
 from src.extraction.BaseballLeague import BaseballLeague
 from src.extraction.BasketballLeague import BasketballLeague
 from src.extraction.FootballLeague import FootballLeague
-from src.extraction.GolfLeague import GolfLeague
 from src.extraction.HockeyLeague import HockeyLeague
 from src.tweet_driver import tweet_driver
 
@@ -78,6 +77,7 @@ def test_extract_golf_draft_info():
     api_client = SportRadarApi()
     pga_client = PgaSportRadar(api_client=api_client)
     lpga_client = LpgaSportRadar(api_client=api_client)
+    write_to_file_readable_for_computers(league='pga', league_client=pga_client)
     write_to_file_readable_for_computers(league='lpga', league_client=lpga_client)
 
 
