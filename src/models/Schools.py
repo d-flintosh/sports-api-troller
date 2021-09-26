@@ -31,33 +31,33 @@ class Schools(Enum):
     azst = {
         'baseball': {
             'mlb': {
-                'header': f'{Emojis.BASEBALL.value} ASU {Emojis.BASEBALL.value}\n'
+                'header': f'{Emojis.BASEBALL.value} #ForksUp {Emojis.BASEBALL.value}\n'
             }
         },
         'basketball': {
             'nba': {
-                'header': f'{Emojis.BASKETBALL.value} ASU {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #ForksUp {Emojis.BASKETBALL.value}\n'
             },
             'wnba': {
-                'header': f'{Emojis.BASKETBALL.value} ASU {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #ForksUp {Emojis.BASKETBALL.value}\n'
             }
         },
         'football': {
             'nfl': {
-                'header': f'{Emojis.FOOTBALL.value} ASU {Emojis.FOOTBALL.value}\n'
+                'header': f'{Emojis.FOOTBALL.value} #ForksUp {Emojis.FOOTBALL.value}\n'
             }
         },
         'golf': {
             'pga': {
-                'header': f'{Emojis.MAN_GOLFING.value} ASU {Emojis.MAN_GOLFING.value}\n'
+                'header': f'{Emojis.MAN_GOLFING.value} #ForksUp {Emojis.MAN_GOLFING.value}\n'
             },
             'lpga': {
-                'header': f'{Emojis.WOMAN_GOLFING.value} ASU {Emojis.WOMAN_GOLFING.value}\n'
+                'header': f'{Emojis.WOMAN_GOLFING.value} #ForksUp {Emojis.WOMAN_GOLFING.value}\n'
             }
         },
         'hockey': {
             'nhl': {
-                'header': f'{Emojis.HOCKEY.value} ASU {Emojis.HOCKEY.value}\n'
+                'header': f'{Emojis.HOCKEY.value} #ForksUp {Emojis.HOCKEY.value}\n'
             }
         }
     }
