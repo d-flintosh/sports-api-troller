@@ -44,8 +44,8 @@ wnba_team_map = {
         'teamCode': 'CHI',
         'twitterCode': 'CHI'
     },
-    '092510cf-3285-48bb-b831-40ac3608ca36': {
-        'id': '092510cf-3285-48bb-b831-40ac3608ca36',
+    '08ed8274-e29f-4248-bc2e-83cc8ed18d75': {
+        'id': '08ed8274-e29f-4248-bc2e-83cc8ed18d75',
         'teamCode': 'NYL',
         'twitterCode': 'NYL'
     },
