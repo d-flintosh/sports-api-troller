@@ -48,7 +48,7 @@ MOCK_ROSTER_RETURN = {
     'players': [
         {
             'id': '1',
-            'full_name': 'Bo',
+            'name': 'Bo',
             'college': 'someCollege'
         }
     ]
