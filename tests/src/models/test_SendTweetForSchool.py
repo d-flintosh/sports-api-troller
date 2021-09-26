@@ -24,7 +24,7 @@ class TestSendTweetForSchool:
             Params(
                 had_great_day=False,
                 expected_publish_calls=[
-                    call(message='🍢⚾️ FSU ⚾️🍢\nsome text',
+                    call(message='🍢⚾️ #GoNoles #ProNoles ⚾️🍢\nsome text',
                          school='fsu',
                          topic='twitter-message-service-pubsub',
                          send_message=True)
@@ -37,7 +37,7 @@ class TestSendTweetForSchool:
                          school='fsu',
                          topic='twitter-retweet-service-pubsub',
                          send_message=True),
-                    call(message='🍢⚾️ FSU ⚾️🍢\nsome text',
+                    call(message='🍢⚾️ #GoNoles #ProNoles ⚾️🍢\nsome text',
                          school='fsu',
                          topic='twitter-message-service-pubsub',
                          send_message=True),
