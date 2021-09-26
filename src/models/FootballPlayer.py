@@ -41,19 +41,19 @@ class FootballPlayer(Player):
         team_text = get_team_text(team_map=nfl_team_map, team_id=self.team_id)
         stat_line = []
         if self.rushing_attempts > 0:
-            line = f'Rush {self.rushing_attempts} ATT/{self.rushing_yards} YDS'
+            line = f'{self.rushing_attempts} ATT/{self.rushing_yards} YDS'
             line = line if self.rushing_td == 0 else f'{line}/{self.rushing_td} TD'
             stat_line.append(line)
         if self.receiving_receptions > 0:
-            line = f'Rec {self.receiving_receptions} REC/{self.receiving_yards} YDS'
+            line = f'{self.receiving_receptions} REC/{self.receiving_yards} YDS'
             line = line if self.receiving_td == 0 else f'{line}/{self.receiving_td} TD'
             stat_line.append(line)
         if self.passing_attempts > 0:
-            line = f'Pass {self.passing_completions}-{self.passing_attempts} {self.passing_yards} YDS'
+            line = f'{self.passing_completions}-{self.passing_attempts} {self.passing_yards} YDS'
             line = line if self.passing_td == 0 else f'{line}/{self.passing_td} TD'
             stat_line.append(line)
         if self.def_tackles > 0 or self.def_int > 0:
-            line = f'Def {self.def_tackles} TAK'
+            line = f'{self.def_tackles} TAK'
             line = line if self.def_sacks == 0 else f'{line}/{self.def_sacks} SCK'
             line = line if self.def_int == 0 else f'{line}/{self.def_int} INT'
             line = line if self.def_ff == 0 else f'{line}/{self.def_ff} FF'
@@ -61,7 +61,7 @@ class FootballPlayer(Player):
             line = line if self.def_pd == 0 else f'{line}/{self.def_pd} PD'
             stat_line.append(line)
         if self.fg_attempts > 0:
-            line = f'{self.fg_attempts}/{self.fg_made} FGs'
+            line = f'{self.fg_made}/{self.fg_attempts} FGs'
             stat_line.append(line)
         return f'{self.full_name}{team_text} {". ".join(stat_line)}'
 

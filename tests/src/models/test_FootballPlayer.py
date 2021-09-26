@@ -28,7 +28,7 @@ class TestFootballPlayer:
         actual_tweet: str
 
     @pytest.fixture(
-        ids=['Missing Batting Stats'],
+        ids=['All Stats'],
         params=[
             Params(
                 input={
@@ -91,7 +91,7 @@ class TestFootballPlayer:
                 ),
                 expected_has_stats=True,
                 expected_had_a_great_day=True,
-                expected_tweet='Bo Jack (#some team) Rush 1 ATT/10 YDS/2 TD. Rec 3 REC/11 YDS/4 TD. Pass 6-5 12 YDS/7 TD. Def 9 TAK/4.5 SCK/3 INT/9 FF/4 FR/9 PD. 4/3 FGs'
+                expected_tweet='Bo Jack (#some team) 1 ATT/10 YDS/2 TD. 3 REC/11 YDS/4 TD. 6-5 12 YDS/7 TD. 9 TAK/4.5 SCK/3 INT/9 FF/4 FR/9 PD. 3/4 FGs'
             )
         ]
     )
