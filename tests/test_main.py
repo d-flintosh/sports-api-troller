@@ -22,13 +22,17 @@ class TestEntrypoint:
         mock_pga: Mock
         mock_lpga: Mock
         mock_mlb: Mock
+        mock_football: Mock
+        mock_nfl: Mock
 
     @pytest.fixture
     @patch('main.tweet_driver', autospec=True)
+    @patch('main.FootballLeague', autospec=True)
     @patch('main.GolfLeague', autospec=True)
     @patch('main.HockeyLeague', autospec=True)
     @patch('main.BaseballLeague', autospec=True)
     @patch('main.BasketballLeague', autospec=True)
+    @patch('main.NflSportRadar', autospec=True)
     @patch('main.MlbSportRadar', autospec=True)
     @patch('main.LpgaSportRadar', autospec=True)
     @patch('main.PgaSportRadar', autospec=True)
@@ -38,8 +42,8 @@ class TestEntrypoint:
     @patch('main.SportRadarApi', autospec=True)
     @patch('main.datetime', autospec=True)
     def setup_time_delta_1(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga, mock_lpga,
-              mock_mlb, mock_basketball, mock_baseball,
-              mock_hockey, mock_golf, mock_tweet_driver):
+              mock_mlb, mock_nfl, mock_basketball, mock_baseball,
+              mock_hockey, mock_golf, mock_football, mock_tweet_driver):
         mock_date.now.return_value = datetime(2020, 1, 2)
         mock_event = {
             'attributes': {
@@ -60,6 +64,8 @@ class TestEntrypoint:
             mock_pga=mock_pga,
             mock_lpga=mock_lpga,
             mock_mlb=mock_mlb,
+            mock_football=mock_football,
+            mock_nfl=mock_nfl,
             mock_tweet_driver=mock_tweet_driver
         )
 
@@ -78,8 +84,14 @@ class TestEntrypoint:
     def test_nhl_client_1(self, setup_time_delta_1: Fixture):
         setup_time_delta_1.mock_nhl.assert_not_called()
 
+    def test_nfl_client_1(self, setup_time_delta_1: Fixture):
+        setup_time_delta_1.mock_nfl.assert_not_called()
+
     def test_basketball_called_1(self, setup_time_delta_1: Fixture):
         setup_time_delta_1.mock_basketball.assert_not_called()
+
+    def test_football_called_1(self, setup_time_delta_1: Fixture):
+        setup_time_delta_1.mock_football.assert_not_called()
 
     def test_golf_called_1(self, setup_time_delta_1: Fixture):
         setup_time_delta_1.mock_golf.assert_has_calls([
@@ -103,10 +115,12 @@ class TestEntrypoint:
 
     @pytest.fixture
     @patch('main.tweet_driver', autospec=True)
+    @patch('main.FootballLeague', autospec=True)
     @patch('main.GolfLeague', autospec=True)
     @patch('main.HockeyLeague', autospec=True)
     @patch('main.BaseballLeague', autospec=True)
     @patch('main.BasketballLeague', autospec=True)
+    @patch('main.NflSportRadar', autospec=True)
     @patch('main.MlbSportRadar', autospec=True)
     @patch('main.LpgaSportRadar', autospec=True)
     @patch('main.PgaSportRadar', autospec=True)
@@ -116,8 +130,8 @@ class TestEntrypoint:
     @patch('main.SportRadarApi', autospec=True)
     @patch('main.datetime', autospec=True)
     def setup_time_delta_0(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga, mock_lpga,
-              mock_mlb, mock_basketball, mock_baseball,
-              mock_hockey, mock_golf, mock_tweet_driver):
+              mock_mlb, mock_nfl, mock_basketball, mock_baseball,
+              mock_hockey, mock_golf, mock_football, mock_tweet_driver):
         mock_date.now.return_value = datetime(2020, 1, 2, 12)
         mock_event = {
             'attributes': {
@@ -138,6 +152,8 @@ class TestEntrypoint:
             mock_pga=mock_pga,
             mock_lpga=mock_lpga,
             mock_mlb=mock_mlb,
+            mock_football=mock_football,
+            mock_nfl=mock_nfl,
             mock_tweet_driver=mock_tweet_driver
         )
 
@@ -155,6 +171,9 @@ class TestEntrypoint:
 
     def test_nhl_client_0(self, setup_time_delta_0: Fixture):
         setup_time_delta_0.mock_nhl.assert_called_once_with(api_client=setup_time_delta_0.mock_api.return_value)
+
+    def test_nfl_client_0(self, setup_time_delta_0: Fixture):
+        setup_time_delta_0.mock_nfl.assert_called_once_with(api_client=setup_time_delta_0.mock_api.return_value)
 
     def test_basketball_called_0(self, setup_time_delta_0: Fixture):
         setup_time_delta_0.mock_basketball.assert_has_calls([
@@ -177,7 +196,8 @@ class TestEntrypoint:
                 setup_time_delta_0.mock_baseball.return_value,
                 setup_time_delta_0.mock_basketball.return_value,
                 setup_time_delta_0.mock_basketball.return_value,
-                setup_time_delta_0.mock_hockey.return_value
+                setup_time_delta_0.mock_hockey.return_value,
+                setup_time_delta_0.mock_football.return_value
             ],
             date_to_run=date(2020, 1, 2),
             send_message=True,

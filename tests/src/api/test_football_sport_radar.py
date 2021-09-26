@@ -159,7 +159,7 @@ class TestNflSportRadar:
     def test_get_games_for_date_result(self, setup: Fixture):
         actual = setup.subject.get_daily_schedule(date=date(2021, 6, 1))
         assert actual == [{'id': 'e70135f7-b822-4a3e-9068-e025c490fd2f',
-                           'scheduled': '2021-06-01T00:20:00+00:00'}]
+                           'scheduled': '2021-06-02T00:20:00+00:00'}]
 
     def test_get_boxscore(self, setup: Fixture):
         setup.subject.get_boxscore(game_id='1234')
