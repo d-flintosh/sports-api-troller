@@ -41,7 +41,7 @@ class FootballPlayer(Player):
         team_text = get_team_text(team_map=nfl_team_map, team_id=self.team_id)
         stat_line = []
         if self.rushing_attempts > 0:
-            line = f'{self.rushing_attempts} ATT/{self.rushing_yards} YDS'
+            line = f'{self.rushing_attempts} CAR/{self.rushing_yards} YDS'
             line = line if self.rushing_td == 0 else f'{line}/{self.rushing_td} TD'
             stat_line.append(line)
         if self.receiving_receptions > 0:
