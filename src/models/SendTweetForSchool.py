@@ -19,6 +19,7 @@ class SendTweetForSchool:
     def publish(self, sport: str, league_name: str):
         school_header = Schools[self.school].value.get(sport).get(league_name)
         message_header = school_header.get('header')
+        message_header = message_header + school_header.get('hashtag_header') if school_header.get('hashtag_header', None) else message_header
         tweet_message = '\n'.join(list(map(self.map_player_to_tweet, self.player_stats)))
         publish_message(
             message=message_header + tweet_message,

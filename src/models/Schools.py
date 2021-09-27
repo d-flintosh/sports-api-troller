@@ -69,7 +69,8 @@ class Schools(Enum):
         },
         'basketball': {
             'nba': {
-                'header': f'{Emojis.BASKETBALL.value} #BleedBlue #ThisIsUConn {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #BleedBlue {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#ThisIsUConn\n'
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} #BleedBlue {Emojis.BASKETBALL.value}\n'
@@ -97,20 +98,24 @@ class Schools(Enum):
     duke = {
         'baseball': {
             'mlb': {
-                'header': f'{Emojis.BASEBALL.value} #BlueCollar #GoDuke {Emojis.BASEBALL.value}\n'
+                'header': f'{Emojis.BASEBALL.value} #GoDuke {Emojis.BASEBALL.value}\n',
+                'hashtag_header': '#BlueCollar\n'
             }
         },
         'basketball': {
             'nba': {
-                'header': f'{Emojis.BASKETBALL.value} #GoDuke #𝔗𝔥𝔢𝔅𝔯𝔬𝔱𝔥𝔢𝔯𝔥𝔬𝔬𝔡 {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #GoDuke {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#𝔗𝔥𝔢𝔅𝔯𝔬𝔱𝔥𝔢𝔯𝔥𝔬𝔬𝔡\n'
             },
             'wnba': {
-                'header': f'{Emojis.BASKETBALL.value} #GoDuke #𝕿𝖍𝖊𝕾𝖎𝖘𝖙𝖊𝖗𝖍𝖔𝖔𝖉 {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #GoDuke {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#𝕿𝖍𝖊𝕾𝖎𝖘𝖙𝖊𝖗𝖍𝖔𝖔𝖉\n'
             }
         },
         'football': {
             'nfl': {
-                'header': f'{Emojis.FOOTBALL.value} #GoDuke #DukeGang {Emojis.FOOTBALL.value}\n'
+                'header': f'{Emojis.FOOTBALL.value} #GoDuke {Emojis.FOOTBALL.value}\n',
+                'hashtag_header': '#DukeGang\n'
             }
         },
         'golf': {
@@ -163,33 +168,39 @@ class Schools(Enum):
     fsu = {
         'baseball': {
             'mlb': {
-                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASEBALL.value} #GoNoles #ProNoles {Emojis.BASEBALL.value}{Emojis.FSU_SPEAR.value}\n'
+                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASEBALL.value} #GoNoles {Emojis.BASEBALL.value}{Emojis.FSU_SPEAR.value}\n',
+                'hashtag_header': '#ProNoles\n'
             }
         },
         'basketball': {
             'nba': {
-                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} #GoNoles #NewBlood #ProNoles {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n'
+                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} #GoNoles {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n',
+                'hashtag_header': '#NewBlood #ProNoles\n'
             },
             'wnba': {
-                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} #GoNoles #ProNoles {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n'
+                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.BASKETBALL.value} #GoNoles {Emojis.BASKETBALL.value}{Emojis.FSU_SPEAR.value}\n',
+                'hashtag_header': '#ProNoles\n'
             }
         },
         'football': {
             'nfl': {
-                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.FOOTBALL.value} #GoNoles #NoleFamily #ProNoles {Emojis.FOOTBALL.value}{Emojis.FSU_SPEAR.value}\n'
+                'header': f'{Emojis.FSU_SPEAR.value}{Emojis.FOOTBALL.value} #GoNoles {Emojis.FOOTBALL.value}{Emojis.FSU_SPEAR.value}\n',
+                'hashtag_header': '#NoleFamily #ProNoles\n'
             }
         },
         'golf': {
             'pga': {
-                'header': f'{Emojis.MAN_GOLFING.value} #GoNoles #ProNoles {Emojis.MAN_GOLFING.value}\n'
+                'header': f'{Emojis.MAN_GOLFING.value} #GoNoles {Emojis.MAN_GOLFING.value}\n',
+                'hashtag_header': '#ProNoles\n'
             },
             'lpga': {
-                'header': f'{Emojis.WOMAN_GOLFING.value} #GoNoles #ProNoles {Emojis.WOMAN_GOLFING.value}\n'
+                'header': f'{Emojis.WOMAN_GOLFING.value} #GoNoles {Emojis.WOMAN_GOLFING.value}\n',
+                'hashtag_header': '#ProNoles\n'
             }
         },
         'hockey': {
             'nhl': {
-                'header': f'{Emojis.HOCKEY.value} #GoNoles #ProNoles {Emojis.HOCKEY.value}\n'
+                'header': f'{Emojis.HOCKEY.value} #GoNoles {Emojis.HOCKEY.value}\n'
             }
         }
     }
@@ -267,15 +278,18 @@ class Schools(Enum):
         },
         'basketball': {
             'nba': {
-                'header': f'{Emojis.BASKETBALL.value} #RockChalk #PayHeed #KUbball {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #RockChalk {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#PayHeed #KUbball\n'
             },
             'wnba': {
-                'header': f'{Emojis.BASKETBALL.value} #RockChalk #KUwbb {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #RockChalk {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#KUwbb\n'
             }
         },
         'football': {
             'nfl': {
-                'header': f'{Emojis.FOOTBALL.value}  #KUfball #RockChalk {Emojis.FOOTBALL.value}\n'
+                'header': f'{Emojis.FOOTBALL.value} #RockChalk {Emojis.FOOTBALL.value}\n',
+                'hashtag_header': '#KUfball\n'
             }
         },
         'golf': {
@@ -295,73 +309,88 @@ class Schools(Enum):
     lsu = {
         'baseball': {
             'mlb': {
-                'header': f'{Emojis.BASEBALL.value} #LSU #GeauxTigers {Emojis.BASEBALL.value}\n'
+                'header': f'{Emojis.BASEBALL.value} #LSU {Emojis.BASEBALL.value}\n',
+                'hashtag_header': '#GeauxTigers\n'
             }
         },
         'basketball': {
             'nba': {
-                'header': f'{Emojis.BASKETBALL.value} #LSU #GeauxTigers #BootUp {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #LSU {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#GeauxTigers #BootUp\n'
             },
             'wnba': {
-                'header': f'{Emojis.BASKETBALL.value} #LSU #GeauxTigers {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #LSU {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#GeauxTigers\n'
             }
         },
         'football': {
             'nfl': {
-                'header': f'{Emojis.FOOTBALL.value} #LSU #GeauxTigers {Emojis.FOOTBALL.value}\n'
+                'header': f'{Emojis.FOOTBALL.value} #LSU {Emojis.FOOTBALL.value}\n',
+                'hashtag_header': '#GeauxTigers\n'
             }
         },
         'golf': {
             'pga': {
-                'header': f'{Emojis.MAN_GOLFING.value} #LSU #GeauxTigers {Emojis.MAN_GOLFING.value}\n'
+                'header': f'{Emojis.MAN_GOLFING.value} #LSU {Emojis.MAN_GOLFING.value}\n',
+                'hashtag_header': '#GeauxTigers\n'
             },
             'lpga': {
-                'header': f'{Emojis.WOMAN_GOLFING.value} #LSU #GeauxTigers {Emojis.WOMAN_GOLFING.value}\n'
+                'header': f'{Emojis.WOMAN_GOLFING.value} #LSU {Emojis.WOMAN_GOLFING.value}\n',
+                'hashtag_header': '#GeauxTigers\n'
             }
         },
         'hockey': {
             'nhl': {
-                'header': f'{Emojis.HOCKEY.value} #LSU #GeauxTigers {Emojis.HOCKEY.value}\n'
+                'header': f'{Emojis.HOCKEY.value} #LSU {Emojis.HOCKEY.value}\n',
+                'hashtag_header': '#GeauxTigers\n'
             }
         }
     }
     miami = {
         'baseball': {
             'mlb': {
-                'header': f'{Emojis.BASEBALL.value} #ItsAllAboutTheU #ProCanes {Emojis.BASEBALL.value}\n'
+                'header': f'{Emojis.BASEBALL.value} #ItsAllAboutTheU {Emojis.BASEBALL.value}\n',
+                'hashtag_header': '#ProCanes'
             }
         },
         'basketball': {
             'nba': {
-                'header': f'{Emojis.BASKETBALL.value} #ItsAllAboutTheU #ProCanes {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #ItsAllAboutTheU {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#ProCanes'
             },
             'wnba': {
-                'header': f'{Emojis.BASKETBALL.value} #ItsAllAboutTheU #ProCanes {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #ItsAllAboutTheU {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#ProCanes'
             }
         },
         'football': {
             'nfl': {
-                'header': f'{Emojis.FOOTBALL.value} #ItsAllAboutTheU #ProCanes {Emojis.FOOTBALL.value}\n'
+                'header': f'{Emojis.FOOTBALL.value} #ItsAllAboutTheU {Emojis.FOOTBALL.value}\n',
+                'hashtag_header': '#ProCanes'
             }
         },
         'golf': {
             'pga': {
-                'header': f'{Emojis.MAN_GOLFING.value} #ItsAllAboutTheU #ProCanes {Emojis.MAN_GOLFING.value}\n'
+                'header': f'{Emojis.MAN_GOLFING.value} #ItsAllAboutTheU {Emojis.MAN_GOLFING.value}\n',
+                'hashtag_header': '#ProCanes'
             },
             'lpga': {
-                'header': f'{Emojis.WOMAN_GOLFING.value} #ItsAllAboutTheU #ProCanes {Emojis.WOMAN_GOLFING.value}\n'
+                'header': f'{Emojis.WOMAN_GOLFING.value} #ItsAllAboutTheU {Emojis.WOMAN_GOLFING.value}\n',
+                'hashtag_header': '#ProCanes'
             }
         },
         'hockey': {
             'nhl': {
-                'header': f'{Emojis.HOCKEY.value} #ItsAllAboutTheU #ProCanes {Emojis.HOCKEY.value}\n'
+                'header': f'{Emojis.HOCKEY.value} #ItsAllAboutTheU {Emojis.HOCKEY.value}\n',
+                'hashtag_header': '#ProCanes'
             }
         }
     }
     michigan = {
         'baseball': {
             'mlb': {
-                'header': f'{Emojis.BASEBALL.value} #GoBlue #BlueCrew {Emojis.BASEBALL.value}\n'
+                'header': f'{Emojis.BASEBALL.value} #GoBlue {Emojis.BASEBALL.value}\n',
+                'hashtag_header': '#BlueCrew\n'
             }
         },
         'basketball': {
@@ -399,15 +428,18 @@ class Schools(Enum):
         },
         'basketball': {
             'nba': {
-                'header': f'{Emojis.BASKETBALL.value} #GoHeels #CarolinaFamily {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #GoHeels {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#CarolinaFamily\n'
             },
             'wnba': {
-                'header': f'{Emojis.BASKETBALL.value} #GoHeels #InPursuit {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #GoHeels {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#InPursuit\n'
             }
         },
         'football': {
             'nfl': {
-                'header': f'{Emojis.FOOTBALL.value} #GoHeels #CarolinaFootball {Emojis.FOOTBALL.value}\n'
+                'header': f'{Emojis.FOOTBALL.value} #GoHeels {Emojis.FOOTBALL.value}\n',
+                'hashtag_header': '#CarolinaFootball\n'
             }
         },
         'golf': {
@@ -435,7 +467,8 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} #GoIrish {Emojis.BASKETBALL.value}\n'
             },
             'wnba': {
-                'header': f'{Emojis.BASKETBALL.value} #GoIrish #IrishintheWNBA {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #GoIrish {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#IrishintheWNBA\n'
             }
         },
         'football': {
@@ -506,7 +539,8 @@ class Schools(Enum):
         },
         'football': {
             'nfl': {
-                'header': f'{Emojis.FOOTBALL.value} #ThisIsTexas #HookEm {Emojis.FOOTBALL.value}\n'
+                'header': f'{Emojis.FOOTBALL.value} #HookEm {Emojis.FOOTBALL.value}\n',
+                'hashtag_header': '#ThisIsTexas\n'
             }
         },
         'golf': {
@@ -534,12 +568,14 @@ class Schools(Enum):
                 'header': f'{Emojis.BASKETBALL.value} #GoHoos {Emojis.BASKETBALL.value}\n'
             },
             'wnba': {
-                'header': f'{Emojis.BASKETBALL.value} #GoHoos #WeCavaliers {Emojis.BASKETBALL.value}\n'
+                'header': f'{Emojis.BASKETBALL.value} #GoHoos {Emojis.BASKETBALL.value}\n',
+                'hashtag_header': '#GoHoos\n'
             }
         },
         'football': {
             'nfl': {
-                'header': f'{Emojis.FOOTBALL.value} #THEStandard #GoHoos {Emojis.FOOTBALL.value}\n'
+                'header': f'{Emojis.FOOTBALL.value} #GoHoos {Emojis.FOOTBALL.value}\n',
+                'hashtag_header': '#THEStandard\n'
             }
         },
         'golf': {

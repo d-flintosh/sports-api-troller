@@ -11,6 +11,7 @@ class TestSendTweetForSchool:
     @dataclass
     class Params:
         had_great_day: bool
+        school: str
         expected_publish_calls: List
 
     @dataclass
@@ -23,8 +24,9 @@ class TestSendTweetForSchool:
         params=[
             Params(
                 had_great_day=False,
+                school='fsu',
                 expected_publish_calls=[
-                    call(message='🍢⚾️ #GoNoles #ProNoles ⚾️🍢\nsome text',
+                    call(message='🍢⚾️ #GoNoles ⚾️🍢\n#ProNoles\nsome text',
                          school='fsu',
                          topic='twitter-message-service-pubsub',
                          send_message=True)
@@ -32,13 +34,14 @@ class TestSendTweetForSchool:
             ),
             Params(
                 had_great_day=True,
+                school='wisconsin',
                 expected_publish_calls=[
                     call(message='some json',
-                         school='fsu',
+                         school='wisconsin',
                          topic='twitter-retweet-service-pubsub',
                          send_message=True),
-                    call(message='🍢⚾️ #GoNoles #ProNoles ⚾️🍢\nsome text',
-                         school='fsu',
+                    call(message='⚾️ #Badgers ⚾️\nsome text',
+                         school='wisconsin',
                          topic='twitter-message-service-pubsub',
                          send_message=True),
                 ]
@@ -53,7 +56,7 @@ class TestSendTweetForSchool:
         mock_player.had_a_great_day.return_value = request.param.had_great_day
 
         SendTweetForSchool(
-            school='fsu', player_stats=[mock_player], send_message=True
+            school=request.param.school, player_stats=[mock_player], send_message=True
         ).publish(sport='baseball', league_name='mlb')
 
         return TestSendTweetForSchool.Fixture(
