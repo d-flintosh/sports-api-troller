@@ -42,7 +42,7 @@ nhl_team_map = {
     '44157522-0f24-11e2-8525-18a905767e44': {
         'id': '44157522-0f24-11e2-8525-18a905767e44',
         'teamCode': 'DAL',
-        'twitterCode': '#GoStars'
+        'twitterCode': '#TexasHockey'
     },
     '4416272f-0f24-11e2-8525-18a905767e44': {
         'id': '4416272f-0f24-11e2-8525-18a905767e44',
@@ -153,6 +153,11 @@ nhl_team_map = {
         'id': '44180e55-0f24-11e2-8525-18a905767e44',
         'teamCode': 'WPG',
         'twitterCode': '#GoJetsGo'
+    },
+    '1fb48e65-9688-4084-8868-02173525c3e1': {
+        'id': '1fb48e65-9688-4084-8868-02173525c3e1',
+        'teamCode': 'SEA',
+        'twitterCode': '#SeaKraken'
     }
 }
 

@@ -1,18 +1,18 @@
 nba_team_map = {
-    '583ecea6-fb46-11e1-82cb-f4ce4684ea4': {
-        'id': '583ecea6-fb46-11e1-82cb-f4ce4684ea4',
+    '583ecea6-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ecea6-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'MIA',
-        'twitterCode': '#HEATTwitter'
+        'twitterCode': '#HEATCulture'
     },
     '583ecc9a-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583ecc9a-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'NOP',
-        'twitterCode': '#WontBowDown'
+        'twitterCode': '#WBD'
     },
     '583ecfa8-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583ecfa8-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'PHX',
-        'twitterCode': '#WeAreTheValley'
+        'twitterCode': '#Valleyproud'
     },
     '583eca88-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583eca88-fb46-11e1-82cb-f4ce4684ea4c',
@@ -92,7 +92,7 @@ nba_team_map = {
     '583ecd4f-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583ecd4f-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'SAS',
-        'twitterCode': '#GoSpursGo'
+        'twitterCode': '#PorVida'
     },
     '583ecdfb-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583ecdfb-fb46-11e1-82cb-f4ce4684ea4c',
@@ -117,17 +117,17 @@ nba_team_map = {
     '583ec928-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583ec928-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'DET',
-        'twitterCode': '#DetroitUp'
+        'twitterCode': '#Pistons'
     },
     '583ecf50-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583ecf50-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'DAL',
         'twitterCode': '#MFFL'
     },
-    '583ec7cd-fb46-11e1-82cb-f4ce4684ea4': {
-        'id': '583ec7cd-fb46-11e1-82cb-f4ce4684ea4',
+    '583ec7cd-fb46-11e1-82cb-f4ce4684ea4c': {
+        'id': '583ec7cd-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'IND',
-        'twitterCode': '#AlwaysGame'
+        'twitterCode': '#GoldBlooded'
     },
     '583ecb8f-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583ecb8f-fb46-11e1-82cb-f4ce4684ea4c',
@@ -137,7 +137,7 @@ nba_team_map = {
     '583ec9d6-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583ec9d6-fb46-11e1-82cb-f4ce4684ea4c',
         'teamCode': 'BKN',
-        'twitterCode': '#BrooklynTogether'
+        'twitterCode': '#NetsWorld'
     },
     '583eccfa-fb46-11e1-82cb-f4ce4684ea4c': {
         'id': '583eccfa-fb46-11e1-82cb-f4ce4684ea4c',

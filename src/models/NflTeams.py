@@ -32,12 +32,12 @@ nfl_team_map = {
     '5fee86ae-74ab-4bdd-8416-42a9dd9964f3': {
         'id': '5fee86ae-74ab-4bdd-8416-42a9dd9964f3',
         'teamCode': 'NYJ',
-        'twitterCode': '#JetsNation'
+        'twitterCode': '#TakeFlight'
     },
     '97354895-8c77-4fd4-a860-32e62ea7382a': {
         'id': '97354895-8c77-4fd4-a860-32e62ea7382a',
         'teamCode': 'NE',
-        'twitterCode': '#GoPats'
+        'twitterCode': '#ForeverNE'
     },
     '82cf9565-6eb9-4f01-bdbd-5aa0d472fcd9': {
         'id': '82cf9565-6eb9-4f01-bdbd-5aa0d472fcd9',
@@ -87,7 +87,7 @@ nfl_team_map = {
     'e6aa13a4-0055-48a9-bc41-be28dc106929': {
         'id': 'e6aa13a4-0055-48a9-bc41-be28dc106929',
         'teamCode': 'ATL',
-        'twitterCode': '#RiseUpATL'
+        'twitterCode': '#DirtyBirds'
     },
     'f14bf5cc-9a82-4a38-bc15-d39f75ed5314': {
         'id': 'f14bf5cc-9a82-4a38-bc15-d39f75ed5314',
@@ -117,7 +117,7 @@ nfl_team_map = {
     '3d08af9e-c767-4f88-a7dc-b920c6d2b4a8': {
         'id': '3d08af9e-c767-4f88-a7dc-b920c6d2b4a8',
         'teamCode': 'SEA',
-        'twitterCode': '#GoHawks'
+        'twitterCode': '#Seahawks'
     },
     'e627eec7-bbae-4fa4-8e73-8e1d6bc5c060': {
         'id': 'e627eec7-bbae-4fa4-8e73-8e1d6bc5c060',
@@ -132,7 +132,7 @@ nfl_team_map = {
     '22052ff7-c065-42ee-bc8f-c4691c50e624': {
         'id': '22052ff7-c065-42ee-bc8f-c4691c50e624',
         'teamCode': 'WAS',
-        'twitterCode': '#HTTR'
+        'twitterCode': '#WashingtonFootball'
     },
     '04aa1c9d-66da-489d-b16a-1dee3f2eec4d': {
         'id': '04aa1c9d-66da-489d-b16a-1dee3f2eec4d',
