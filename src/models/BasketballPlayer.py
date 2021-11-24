@@ -16,12 +16,25 @@ class BasketballPlayer(Player):
     points: int
     assists: int
     rebounds: int
+    steals: int
+    blocks: int
+    threes: int
 
     def has_stats(self):
-        return self.points > 0 or self.assists > 0 or self.rebounds > 0 and self.college is not None
+        return self.points > 0 \
+               or self.assists > 0 \
+               or self.rebounds > 0 \
+               or self.steals > 0 \
+               or self.blocks > 0 \
+               or self.threes >= 5 \
+               and self.college is not None
 
     def had_a_great_day(self) -> bool:
-        return self.points >= 20 or self.assists >= 10 or self.rebounds >= 10 and self.college is not None
+        return self.points >= 20 \
+               or self.assists >= 10 \
+               or self.rebounds >= 10 \
+               or self.threes >= 5 \
+               and self.college is not None
 
     def convert_to_tweet(self):
         stat_line = []
@@ -31,6 +44,12 @@ class BasketballPlayer(Player):
             stat_line.append(f'{self.rebounds} reb')
         if self.assists > 0:
             stat_line.append(f'{self.assists} ast')
+        if self.steals > 0:
+            stat_line.append(f'{self.steals} stl')
+        if self.blocks > 0:
+            stat_line.append(f'{self.blocks} blk')
+        if self.threes >= 5:
+            stat_line.append(f'{self.threes} 3s')
         team_map_to_use = nba_team_map if self.league_name == 'nba' else wnba_team_map
 
         team_text = get_team_text(team_map=team_map_to_use, team_id=self.team_id)
@@ -50,5 +69,8 @@ def basketball_player_from_dict(player: dict, league_name: str, team_id: str, co
         college=college.get('college', '') if college else '',
         points=player_stats.get('points', 0) or 0,
         assists=player_stats.get('assists', 0) or 0,
-        rebounds=player_stats.get('rebounds', 0) or 0
+        rebounds=player_stats.get('rebounds', 0) or 0,
+        steals=player_stats.get('steals', 0) or 0,
+        blocks=player_stats.get('blocks', 0) or 0,
+        threes=player_stats.get('three_points_made', 0) or 0
     )

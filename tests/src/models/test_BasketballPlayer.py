@@ -35,7 +35,16 @@ class TestBasketballPlayer:
         ids=['Has Decent Stats', 'Not Decent WNBA', 'No College', 'None Stats', 'Missing Stats'],
         params=[
             Params(
-                input={'full_name': 'Bo', 'id': '1', 'statistics': { 'points': 1, 'assists': 2, 'rebounds': 30}},
+                input={
+                    'full_name': 'Bo', 'id': '1', 'statistics': {
+                        'points': 1,
+                        'assists': 2,
+                        'rebounds': 30,
+                        'steals': 3,
+                        'blocks': 4,
+                        'three_points_made': 5,
+                    }
+                },
                 expected=BasketballPlayer(
                     id='1',
                     full_name='Bo',
@@ -44,11 +53,14 @@ class TestBasketballPlayer:
                     college='someCollege',
                     points=1,
                     assists=2,
-                    rebounds=30
+                    rebounds=30,
+                    steals=3,
+                    blocks=4,
+                    threes=5
                 ),
                 expected_has_stats=True,
                 expected_had_great_day=True,
-                expected_tweet='Bo (#some team) 1 pts/30 reb/2 ast',
+                expected_tweet='Bo (#some team) 1 pts/30 reb/2 ast/3 stl/4 blk/5 3s',
                 college_map={'college': 'someCollege'},
                 expected_team_map=nba_team_map
             ),
@@ -62,7 +74,10 @@ class TestBasketballPlayer:
                     college='someCollege',
                     points=0,
                     assists=0,
-                    rebounds=0
+                    rebounds=0,
+                    steals=0,
+                    blocks=0,
+                    threes=0
                 ),
                 expected_has_stats=False,
                 expected_had_great_day=False,
@@ -80,7 +95,10 @@ class TestBasketballPlayer:
                     college='',
                     points=0,
                     assists=0,
-                    rebounds=0
+                    rebounds=0,
+                    steals=0,
+                    blocks=0,
+                    threes=0
                 ),
                 expected_has_stats=False,
                 expected_had_great_day=False,
@@ -98,7 +116,10 @@ class TestBasketballPlayer:
                     college='',
                     points=0,
                     assists=0,
-                    rebounds=0
+                    rebounds=0,
+                    steals=0,
+                    blocks=0,
+                    threes=0
                 ),
                 expected_has_stats=False,
                 expected_had_great_day=False,
@@ -116,7 +137,10 @@ class TestBasketballPlayer:
                     team_id='1',
                     points=0,
                     assists=0,
-                    rebounds=0
+                    rebounds=0,
+                    steals=0,
+                    blocks=0,
+                    threes=0
                 ),
                 expected_has_stats=False,
                 expected_had_great_day=False,
