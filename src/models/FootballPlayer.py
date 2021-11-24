@@ -21,6 +21,7 @@ class FootballPlayer(Player):
     passing_completions: int
     passing_td: int
     passing_yards: int
+    interceptions: int
     def_sacks: float
     def_tackles: int
     def_int: int
@@ -32,7 +33,12 @@ class FootballPlayer(Player):
     league_name: str = 'nfl'
 
     def has_stats(self):
-        return self.rushing_attempts > 0 or self.receiving_receptions > 0 or self.passing_attempts > 0 or self.def_tackles > 0 or self.def_int > 0 or self.fg_attempts > 0
+        return self.rushing_attempts > 0 \
+               or self.receiving_receptions > 0 \
+               or self.passing_attempts > 0 \
+               or self.def_tackles > 0 \
+               or self.def_int > 0 \
+               or self.fg_attempts > 0
 
     def had_a_great_day(self) -> bool:
         return (self.receiving_yards + self.receiving_yards) > 100 or self.receiving_yards > 100 or self.rushing_yards > 100 or self.passing_yards > 300 or (self.passing_td + self.rushing_td) > 4 or self.def_int > 1 or self.def_sacks > 1.5
@@ -51,6 +57,7 @@ class FootballPlayer(Player):
         if self.passing_attempts > 0:
             line = f'{self.passing_completions}-{self.passing_attempts} {self.passing_yards} YDS'
             line = line if self.passing_td == 0 else f'{line}/{self.passing_td} TD'
+            line = line if self.interceptions < 1 else f'{line}/{self.interceptions} INT'
             stat_line.append(line)
         if self.def_tackles > 0 or self.def_int > 0:
             line = f'{self.def_tackles} TAK'
@@ -84,6 +91,7 @@ def football_player_from_dict(player: dict, college: dict):
         passing_attempts=player.get('passing', {}).get('attempts', 0),
         passing_completions=player.get('passing', {}).get('completions', 0),
         passing_td=player.get('passing', {}).get('touchdowns', 0),
+        interceptions=player.get('passing', {}).get('interceptions', 0),
         passing_yards=player.get('passing', {}).get('yards', 0),
         def_sacks=player.get('defense', {}).get('sacks', 0),
         def_tackles=player.get('defense', {}).get('tackles', 0),

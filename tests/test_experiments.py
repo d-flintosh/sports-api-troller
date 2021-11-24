@@ -26,7 +26,7 @@ def test_daily():
     ]
     tweet_driver(
         leagues=leagues,
-        date_to_run=date(2020, 12, 6),
+        date_to_run=date(2021, 11, 15),
         send_message=False,
         skip_filter=True
     )

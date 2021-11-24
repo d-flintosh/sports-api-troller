@@ -47,7 +47,10 @@ class TestBasketballLeague:
                     college='FSU',
                     points=1,
                     rebounds=5,
-                    assists=0
+                    assists=0,
+                    steals=0,
+                    blocks=0,
+                    threes=0
                 ),
                 expected_boxscore_calls=[call(game_id='1')],
                 expected_basketball_player_from_dict=[

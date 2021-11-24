@@ -6,7 +6,7 @@ from dateutil import tz
 from src.api.sport_radar import SportRadarApi, BASE_URL
 from src.models.PlayerDraft import PlayerDraft
 
-NFL_BASE_URL = 'nfl/official/trial/v6/en/'
+NFL_BASE_URL = 'nfl/official/trial/v7/en/'
 
 
 class NflSportRadar:
