@@ -16,6 +16,7 @@ COLLEGES_TO_RUN = {
     'lsu': 'lsu',
     'louisiana state': 'lsu',
     'miami': 'miami',
+    'miami (fl)': 'miami',
     'michigan': 'michigan',
     'ohio state': 'ohiostate',
     'north carolina': 'northcarolina',
@@ -350,39 +351,39 @@ class Schools(Enum):
         'baseball': {
             'mlb': {
                 'header': f'{Emojis.BASEBALL.value} #ItsAllAboutTheU {Emojis.BASEBALL.value}\n',
-                'hashtag_header': '#ProCanes'
+                'hashtag_header': '#ProCanes\n'
             }
         },
         'basketball': {
             'nba': {
                 'header': f'{Emojis.BASKETBALL.value} #ItsAllAboutTheU {Emojis.BASKETBALL.value}\n',
-                'hashtag_header': '#ProCanes'
+                'hashtag_header': '#ProCanes\n'
             },
             'wnba': {
                 'header': f'{Emojis.BASKETBALL.value} #ItsAllAboutTheU {Emojis.BASKETBALL.value}\n',
-                'hashtag_header': '#ProCanes'
+                'hashtag_header': '#ProCanes\n'
             }
         },
         'football': {
             'nfl': {
                 'header': f'{Emojis.FOOTBALL.value} #ItsAllAboutTheU {Emojis.FOOTBALL.value}\n',
-                'hashtag_header': '#ProCanes'
+                'hashtag_header': '#ProCanes\n'
             }
         },
         'golf': {
             'pga': {
                 'header': f'{Emojis.MAN_GOLFING.value} #ItsAllAboutTheU {Emojis.MAN_GOLFING.value}\n',
-                'hashtag_header': '#ProCanes'
+                'hashtag_header': '#ProCanes\n'
             },
             'lpga': {
                 'header': f'{Emojis.WOMAN_GOLFING.value} #ItsAllAboutTheU {Emojis.WOMAN_GOLFING.value}\n',
-                'hashtag_header': '#ProCanes'
+                'hashtag_header': '#ProCanes\n'
             }
         },
         'hockey': {
             'nhl': {
                 'header': f'{Emojis.HOCKEY.value} #ItsAllAboutTheU {Emojis.HOCKEY.value}\n',
-                'hashtag_header': '#ProCanes'
+                'hashtag_header': '#ProCanes\n'
             }
         }
     }
