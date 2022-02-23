@@ -1,7 +1,12 @@
-from datetime import date
+from datetime import date, datetime
+from time import strptime
 
 import pytest
+from nba_api.stats.endpoints import playercareerbycollege, playercareerbycollegerollup, playercareerstats, \
+    playerprofilev2
+from nba_api.stats.library.parameters import LeagueID
 
+from src.api.basketball_nba_api import BasketballNbaApi
 from src.api.lpga_sport_radar import LpgaSportRadar
 from src.api.mlb_sport_radar import MlbSportRadar
 from src.api.nba_sport_radar import NbaSportRadar
@@ -15,6 +20,9 @@ from src.extraction.BaseballLeague import BaseballLeague
 from src.extraction.BasketballLeague import BasketballLeague
 from src.extraction.FootballLeague import FootballLeague
 from src.extraction.HockeyLeague import HockeyLeague
+from src.models.BasketballStatPlayer import BasketballStatPlayer
+from src.models.Schools import nba_api_college_names
+from src.models.SendTweetForSchool import SendTweetForSchool
 from src.tweet_driver import tweet_driver
 
 
@@ -86,3 +94,119 @@ def test_extract_nfl_draft_info():
     api_client = SportRadarApi()
     nfl_client = NflSportRadar(api_client=api_client)
     write_to_file_readable_for_computers(league='nfl', league_client=nfl_client)
+
+
+@pytest.mark.skip(reason="only run this manually")
+def test_get_player_by_college_stats():
+    api = BasketballNbaApi(league_name='nba', league_id=LeagueID.nba)
+    test_college = {
+        'nba_api': 'Texas-Austin',
+        'in_the_pros': 'texas'
+    }
+    for college in nba_api_college_names:
+        api.save_player_by_college(college=college)
+
+
+@pytest.mark.skip(reason="only run this manually")
+def test_commit_a_bunch_of_sins():
+    api = BasketballNbaApi(league_name='nba', league_id=LeagueID.nba)
+    test_college = [{
+        'nba_api': 'Ohio State',
+        'in_the_pros': 'ohiostate'
+    }]
+    for college in nba_api_college_names:
+    # for college in test_college:
+        tweetable_objects = []
+        college_players = []
+        player_ids = api.get_historical_player_ids_by_college(college=college)
+        for player_id in player_ids:
+            player = api.get_player_by_college(college=college, player_id=player_id)
+            season_totals = player.get('SeasonTotalsRegularSeason')
+            is_current_season = False
+            current_season = '2021-22'
+            if any(season.get('SEASON_ID') == current_season for season in season_totals):
+                is_current_season = True
+            player_subset = {
+                'player_name': player.get('player_name'),
+                'season_totals': season_totals,
+                'career_highs': player.get('CareerHighs'),
+                'season_highs': player.get('SeasonHighs'),
+                'is_current_season': is_current_season
+            }
+            college_players.append(player_subset)
+
+        current_college_players = list(filter(lambda x: x.get('is_current_season'), college_players))
+
+        stats = [
+            {
+                'nba_api_text': 'PTS',
+                'common_text': 'points'
+            },
+            {
+                'nba_api_text': 'REB',
+                'common_text': 'rebounds'
+            },
+            {
+                'nba_api_text': 'AST',
+                'common_text': 'assists'
+            },
+            {
+                'nba_api_text': 'FG3M',
+                'common_text': '3\'s'
+            },
+            {
+                'nba_api_text': 'STL',
+                'common_text': 'steals'
+            },
+            {
+                'nba_api_text': 'BLK',
+                'common_text': 'blocks'
+            }
+        ]
+
+        for stat in stats:
+            max_stat_by_player = {}
+            for player in current_college_players:
+                max_stat = list(filter(
+                    lambda x: x.get('STAT') == stat.get('nba_api_text') and datetime.strptime(x.get('GAME_DATE'), '%b %d %Y') >= datetime(2021, 9, 1), player.get('season_highs')
+                ))
+                if max_stat:
+                    max_stat = max_stat[0]
+                    if max_stat.get('STAT_VALUE') > max_stat_by_player.get('the_stat', {}).get('STAT_VALUE', 0):
+                        max_stat_by_player = player
+                        max_stat_by_player['the_stat'] = max_stat
+
+            max_career_stat_by_player = []
+            for player in college_players:
+                max_stat = list(filter(
+                    lambda x: x.get('STAT') == stat.get('nba_api_text') and datetime.strptime(x.get('GAME_DATE'), '%b %d %Y') < datetime(2021, 9, 1), player.get('career_highs')
+                ))
+                if max_stat:
+                    max_stat = max_stat[0]
+                    if max_stat.get('STAT_VALUE') >= max_stat_by_player.get('the_stat', {}).get('STAT_VALUE', 0):
+                        max_career = player
+                        max_career['the_career_stat'] = max_stat
+                        max_career_stat_by_player.append(max_career)
+            try:
+                most_recent_max_career_stat = max(max_career_stat_by_player, key=lambda x: datetime.strptime(x.get('the_career_stat').get('GAME_DATE'), '%b %d %Y'))
+            except ValueError as e:
+                most_recent_max_career_stat = {}
+
+            the_tweet = BasketballStatPlayer(
+                college=college,
+                stat_name=stat.get('common_text'),
+                current_player_name=max_stat_by_player.get('player_name'),
+                current_player_stat_value=max_stat_by_player.get('the_stat').get('STAT_VALUE'),
+                previous_player_name=most_recent_max_career_stat.get('player_name', None),
+                previous_player_stat_value=most_recent_max_career_stat.get('the_career_stat', {}).get('STAT_VALUE', None),
+                previous_player_date=most_recent_max_career_stat.get('the_career_stat', {}).get('GAME_DATE', None)
+            )
+            tweetable_objects.append(the_tweet)
+        SendTweetForSchool(
+            school=college.get('in_the_pros'),
+            player_stats=tweetable_objects,
+            send_message=False
+        ).publish(
+            sport='basketball',
+            league_name='nba'
+        )

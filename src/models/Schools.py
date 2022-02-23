@@ -626,3 +626,79 @@ class Schools(Enum):
             }
         }
     }
+
+
+nba_api_college_names = [
+    {
+        'nba_api': 'Arizona State',
+        'in_the_pros': 'azst'
+    },
+    {
+        'nba_api': 'Connecticut',
+        'in_the_pros': 'connecticut'
+    },
+    {
+        'nba_api': 'Duke',
+        'in_the_pros': 'duke'
+    },
+    {
+        'nba_api': 'Florida',
+        'in_the_pros': 'florida'
+    },
+    {
+        'nba_api': 'Florida State',
+        'in_the_pros': 'fsu'
+    },
+    {
+        'nba_api': 'Georgia',
+        'in_the_pros': 'georgia'
+    },
+    {
+        'nba_api': 'Illinois',
+        'in_the_pros': 'illinois'
+    },
+    {
+        'nba_api': 'Kansas',
+        'in_the_pros': 'kansas'
+    },
+    {
+        'nba_api': 'Louisiana State',
+        'in_the_pros': 'lsu'
+    },
+    {
+        'nba_api': 'Miami',
+        'in_the_pros': 'miami'
+    },
+    {
+        'nba_api': 'Michigan',
+        'in_the_pros': 'michigan'
+    },
+    {
+        'nba_api': 'Michigan',
+        'in_the_pros': 'michigan'
+    },
+    {
+        'nba_api': 'North Carolina',
+        'in_the_pros': 'northcarolina'
+    },
+    {
+        'nba_api': 'Notre Dame',
+        'in_the_pros': 'notredame'
+    },
+    {
+        'nba_api': 'Ohio State',
+        'in_the_pros': 'ohiostate'
+    },
+    {
+        'nba_api': 'Texas-Austin',
+        'in_the_pros': 'texas'
+    },
+    {
+        'nba_api': 'Virginia',
+        'in_the_pros': 'virginia'
+    },
+    {
+        'nba_api': 'Wisconsin',
+        'in_the_pros': 'wisconsin'
+    }
+]
