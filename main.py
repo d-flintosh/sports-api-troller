@@ -1,9 +1,7 @@
 from datetime import timedelta, datetime
 
 import pytz
-from nba_api.stats.library.parameters import LeagueID
 
-from src.api.basketball_nba_api import BasketballNbaApi
 from src.api.lpga_sport_radar import LpgaSportRadar
 from src.api.mlb_sport_radar import MlbSportRadar
 from src.api.nba_sport_radar import NbaSportRadar
@@ -17,7 +15,6 @@ from src.extraction.BasketballLeague import BasketballLeague
 from src.extraction.FootballLeague import FootballLeague
 from src.extraction.GolfLeague import GolfLeague
 from src.extraction.HockeyLeague import HockeyLeague
-from src.models.Schools import nba_api_college_names
 from src.tweet_driver import tweet_driver
 
 
@@ -44,10 +41,5 @@ def entrypoint(event, context):
             leagues.append(FootballLeague(league_name='nfl', league_client=NflSportRadar(api_client=api_client)))
 
         tweet_driver(leagues=leagues, date_to_run=date_to_run.date(), send_message=True, skip_filter=skip_filter)
-    elif task_type == 'update_rosters':
-        nba_api = BasketballNbaApi(league_name='nba', league_id=LeagueID.nba)
-        wnba_api = BasketballNbaApi(league_name='wnba', league_id=LeagueID.wnba)
-
-        for college in nba_api_college_names:
-            nba_api.save_player_by_college(college=college)
-            wnba_api.save_player_by_college(college=college)
+    elif task_type == 'published_message':
+        print('I got a message')

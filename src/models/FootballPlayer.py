@@ -75,6 +75,12 @@ class FootballPlayer(Player):
     def get_college(self):
         return self.college
 
+    def get_player_id(self) -> str:
+        return self.id
+
+    def get_league_name(self) -> str:
+        return self.league_name
+
 
 def football_player_from_dict(player: dict, college: dict):
     return FootballPlayer(

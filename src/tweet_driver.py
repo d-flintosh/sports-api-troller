@@ -13,7 +13,8 @@ def tweet_driver(leagues: List[League], date_to_run, send_message: bool, skip_fi
         try:
             games_published = []
             games = league.get_games(date=date_to_run)
-            previously_published_games = get_previously_published_games(date=date_to_run, league_name=league.league_name)
+            previously_published_games = get_previously_published_games(date=date_to_run,
+                                                                        league_name=league.league_name)
             filtered_games = list(filter(
                 lambda x: skip_filter or league.get_game_id(game=x) not in previously_published_games, games)
             )
@@ -34,14 +35,13 @@ def tweet_driver(leagues: List[League], date_to_run, send_message: bool, skip_fi
                     school = school_group[0]
                     player_stats = school_group[1]["player_object"].to_list()
 
-                    SendTweetForSchool(
+                    tweets_for_school = SendTweetForSchool(
                         school=str(school),
                         player_stats=player_stats,
                         send_message=send_message
-                    ).publish(
-                        sport=league.sport,
-                        league_name=league.league_name
                     )
+                    tweets_for_school.publish(sport=league.sport, league_name=league.league_name)
+                    tweets_for_school.save(date=date_to_run)
 
                 update_tweet_checkpoint(
                     league_name=league.league_name,
@@ -49,5 +49,6 @@ def tweet_driver(leagues: List[League], date_to_run, send_message: bool, skip_fi
                     date=date_to_run,
                     games_published=games_published
                 )
+
         except Exception as e:
             print(str(e))

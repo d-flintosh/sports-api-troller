@@ -1,6 +1,9 @@
 import dataclasses
 import json
 from abc import abstractmethod, ABC
+from datetime import datetime
+
+from src.gcp.gcs import Gcs
 
 
 class Player(ABC):
@@ -17,8 +20,22 @@ class Player(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_college(self) -> str:
+    def get_player_id(self) -> str:
         raise NotImplementedError
+
+    @abstractmethod
+    def get_league_name(self) -> str:
+        raise NotImplementedError
+
+    def get_gcs_path_by_date(self, date: datetime, college: str) -> str:
+        date_string = date.strftime("%Y-%m-%d")
+        return f'{self.get_league_name()}/{college}/by_date/{date_string}/{self.get_player_id()}.json'
+
+    def save(self, gcs: Gcs, date: datetime, college: str) -> None:
+        gcs.write(
+            url=self.get_gcs_path_by_date(date=date, college=college),
+            contents=dataclasses.asdict(self)
+        )
 
     def convert_dataclass_to_json(self):
         return json.dumps(self, cls=EnhancedJSONEncoder)

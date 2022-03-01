@@ -65,6 +65,12 @@ class BaseballPlayer(Player):
     def get_college(self):
         return self.college
 
+    def get_player_id(self) -> str:
+        return self.id
+
+    def get_league_name(self) -> str:
+        return self.league_name
+
 
 def baseball_player_from_dict(player: dict, team_id: str, college: dict):
     batting_stats = player.get('statistics', {}).get('hitting', {}).get('overall', {})

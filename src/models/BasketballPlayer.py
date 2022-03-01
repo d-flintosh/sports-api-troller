@@ -58,6 +58,12 @@ class BasketballPlayer(Player):
     def get_college(self):
         return self.college
 
+    def get_player_id(self) -> str:
+        return self.id
+
+    def get_league_name(self) -> str:
+        return self.league_name
+
 
 def basketball_player_from_dict(player: dict, league_name: str, team_id: str, college: dict):
     player_stats = player.get('statistics', {})

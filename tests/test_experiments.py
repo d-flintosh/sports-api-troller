@@ -27,11 +27,11 @@ from src.tweet_driver import tweet_driver
 def test_daily():
     api_client = SportRadarApi()
     leagues = [
-        FootballLeague(league_name='nfl', league_client=NflSportRadar(api_client=api_client))
+        BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client))
     ]
     tweet_driver(
         leagues=leagues,
-        date_to_run=date(2021, 11, 15),
+        date_to_run=date(2022, 2, 28),
         send_message=False,
         skip_filter=True
     )

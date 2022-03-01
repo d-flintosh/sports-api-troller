@@ -1,9 +1,8 @@
 from dataclasses import dataclass
 from datetime import date, datetime
-from unittest.mock import Mock, patch, call, PropertyMock
+from unittest.mock import Mock, patch, call
 
 import pytest
-from nba_api.stats.library.parameters import LeagueID
 
 from main import entrypoint
 
@@ -25,10 +24,8 @@ class TestEntrypoint:
         mock_mlb: Mock
         mock_football: Mock
         mock_nfl: Mock
-        mock_nba_api: Mock
 
     @pytest.fixture
-    @patch('main.BasketballNbaApi', autospec=True)
     @patch('main.tweet_driver', autospec=True)
     @patch('main.FootballLeague', autospec=True)
     @patch('main.GolfLeague', autospec=True)
@@ -46,7 +43,7 @@ class TestEntrypoint:
     @patch('main.datetime', autospec=True)
     def setup_time_delta_1(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga, mock_lpga,
                            mock_mlb, mock_nfl, mock_basketball, mock_baseball,
-                           mock_hockey, mock_golf, mock_football, mock_tweet_driver, mock_nba_api):
+                           mock_hockey, mock_golf, mock_football, mock_tweet_driver):
         mock_date.now.return_value = datetime(2020, 1, 2)
         mock_event = {
             'attributes': {
@@ -69,8 +66,7 @@ class TestEntrypoint:
             mock_mlb=mock_mlb,
             mock_football=mock_football,
             mock_nfl=mock_nfl,
-            mock_tweet_driver=mock_tweet_driver,
-            mock_nba_api=mock_nba_api
+            mock_tweet_driver=mock_tweet_driver
         )
 
     def test_get_mlb_called_1(self, setup_time_delta_1: Fixture):
@@ -118,7 +114,6 @@ class TestEntrypoint:
         )
 
     @pytest.fixture
-    @patch('main.BasketballNbaApi', autospec=True)
     @patch('main.tweet_driver', autospec=True)
     @patch('main.FootballLeague', autospec=True)
     @patch('main.GolfLeague', autospec=True)
@@ -136,7 +131,7 @@ class TestEntrypoint:
     @patch('main.datetime', autospec=True)
     def setup_time_delta_0(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga, mock_lpga,
                            mock_mlb, mock_nfl, mock_basketball, mock_baseball,
-                           mock_hockey, mock_golf, mock_football, mock_tweet_driver, mock_nba_api):
+                           mock_hockey, mock_golf, mock_football, mock_tweet_driver):
         mock_date.now.return_value = datetime(2020, 1, 2, 12)
         mock_event = {
             'attributes': {
@@ -159,8 +154,7 @@ class TestEntrypoint:
             mock_mlb=mock_mlb,
             mock_football=mock_football,
             mock_nfl=mock_nfl,
-            mock_tweet_driver=mock_tweet_driver,
-            mock_nba_api=mock_nba_api
+            mock_tweet_driver=mock_tweet_driver
         )
 
     def test_sport_radar_api_0(self, setup_time_delta_0: Fixture):
@@ -191,8 +185,7 @@ class TestEntrypoint:
         setup_time_delta_0.mock_golf.assert_not_called()
 
     def test_hockey_called_0(self, setup_time_delta_0: Fixture):
-        setup_time_delta_0.mock_hockey.assert_called_once_with(league_name='nhl',
-                                                               league_client=setup_time_delta_0.mock_nhl.return_value)
+        setup_time_delta_0.mock_hockey.assert_called_once_with(league_name='nhl', league_client=setup_time_delta_0.mock_nhl.return_value)
 
     def test_baseball_called_0(self, setup_time_delta_0: Fixture):
         setup_time_delta_0.mock_baseball.assert_called_once_with(league_client=setup_time_delta_0.mock_mlb.return_value)
@@ -210,94 +203,3 @@ class TestEntrypoint:
             send_message=True,
             skip_filter=False
         )
-
-    @pytest.fixture
-    @patch('main.nba_api_college_names', ['someCollege'])
-    @patch('main.BasketballNbaApi', autospec=True)
-    @patch('main.tweet_driver', autospec=True)
-    @patch('main.FootballLeague', autospec=True)
-    @patch('main.GolfLeague', autospec=True)
-    @patch('main.HockeyLeague', autospec=True)
-    @patch('main.BaseballLeague', autospec=True)
-    @patch('main.BasketballLeague', autospec=True)
-    @patch('main.NflSportRadar', autospec=True)
-    @patch('main.MlbSportRadar', autospec=True)
-    @patch('main.LpgaSportRadar', autospec=True)
-    @patch('main.PgaSportRadar', autospec=True)
-    @patch('main.NhlSportRadar', autospec=True)
-    @patch('main.WnbaSportRadar', autospec=True)
-    @patch('main.NbaSportRadar', autospec=True)
-    @patch('main.SportRadarApi', autospec=True)
-    @patch('main.datetime', autospec=True)
-    def setup_update_rosters(self, mock_date, mock_api, mock_nba, mock_wnba, mock_nhl, mock_pga, mock_lpga,
-                             mock_mlb, mock_nfl, mock_basketball, mock_baseball,
-                             mock_hockey, mock_golf, mock_football, mock_tweet_driver, mock_nba_api):
-        mock_event = {
-            'attributes': {
-                'task_type': 'update_rosters'
-            }
-        }
-        entrypoint(event=mock_event, context=Mock())
-
-        return TestEntrypoint.Fixture(
-            mock_basketball=mock_basketball,
-            mock_hockey=mock_hockey,
-            mock_baseball=mock_baseball,
-            mock_golf=mock_golf,
-            mock_api=mock_api,
-            mock_nba=mock_nba,
-            mock_wnba=mock_wnba,
-            mock_nhl=mock_nhl,
-            mock_pga=mock_pga,
-            mock_lpga=mock_lpga,
-            mock_mlb=mock_mlb,
-            mock_football=mock_football,
-            mock_nfl=mock_nfl,
-            mock_tweet_driver=mock_tweet_driver,
-            mock_nba_api=mock_nba_api
-        )
-
-    def test_sport_radar_api_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_api.assert_not_called()
-
-    def test_mlb_client_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_mlb.assert_not_called()
-
-    def test_nba_client_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_nba.assert_not_called()
-
-    def test_wnba_client_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_wnba.assert_not_called()
-
-    def test_nhl_client_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_nhl.assert_not_called()
-
-    def test_nfl_client_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_nfl.assert_not_called()
-
-    def test_basketball_called_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_basketball.assert_not_called()
-
-    def test_golf_called_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_golf.assert_not_called()
-
-    def test_hockey_called_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_hockey.assert_not_called()
-
-    def test_baseball_called_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_baseball.assert_not_called()
-
-    def test_tweet_driver_called_update_rosters(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_tweet_driver.assert_not_called()
-
-    def test_nba_api_constructor_calls(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_nba_api.assert_has_calls([
-            call(league_name='nba', league_id=LeagueID.nba),
-            call(league_name='wnba', league_id=LeagueID.wnba)
-        ])
-
-    def test_nba_api_save_player_by_college(self, setup_update_rosters: Fixture):
-        setup_update_rosters.mock_nba_api.return_value.save_player_by_college.assert_has_calls([
-            call(college='someCollege'),
-            call(college='someCollege')
-        ])

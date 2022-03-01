@@ -1,6 +1,8 @@
 from dataclasses import dataclass
+from datetime import datetime
 from typing import List
 
+from src.gcp.gcs import Gcs
 from src.models.Player import Player
 from src.models.Schools import Schools
 from src.universal import publish_message
@@ -27,6 +29,11 @@ class SendTweetForSchool:
             topic='twitter-message-service-pubsub',
             send_message=self.send_message
         )
+
+    def save(self, date: datetime):
+        gcs = Gcs(bucket='college-by-player-stats')
+        for player in self.player_stats:
+            player.save(gcs=gcs, date=date, college=self.school)
 
     def map_player_to_tweet(self, player: Player):
         if player.had_a_great_day():
