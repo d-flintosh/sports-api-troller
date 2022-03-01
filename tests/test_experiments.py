@@ -96,11 +96,14 @@ def test_extract_nfl_draft_info():
     write_to_file_readable_for_computers(league='nfl', league_client=nfl_client)
 
 
-@pytest.mark.skip(reason="only run this manually")
+# @pytest.mark.skip(reason="only run this manually")
 def test_get_player_by_college_stats():
     api = BasketballNbaApi(league_name='nba', league_id=LeagueID.nba)
-    for college in nba_api_college_names:
-        api.save_player_by_college(college=college)
+    college = {
+        'nba_api': 'Ohio State',
+        'in_the_pros': 'ohiostate'
+    }
+    api.save_player_by_college(college=college)
 
 
 @pytest.mark.skip(reason="only run this manually")
