@@ -40,8 +40,11 @@ def tweet_driver(leagues: List[League], date_to_run, send_message: bool, skip_fi
                         player_stats=player_stats,
                         send_message=send_message
                     )
-                    tweets_for_school.publish(sport=league.sport, league_name=league.league_name)
-                    tweets_for_school.save(date=date_to_run)
+                    tweets_for_school.publish(
+                        sport=league.sport,
+                        league_name=league.league_name,
+                        date=date_to_run
+                    )
 
                 update_tweet_checkpoint(
                     league_name=league.league_name,

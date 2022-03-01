@@ -1,3 +1,5 @@
+import dataclasses
+import json
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List
@@ -18,7 +20,7 @@ class SendTweetForSchool:
         self.player_stats = player_stats
         self.send_message = send_message
 
-    def publish(self, sport: str, league_name: str):
+    def publish(self, sport: str, league_name: str, date: datetime):
         school_header = Schools[self.school].value.get(sport).get(league_name)
         message_header = school_header.get('header')
         message_header = message_header + school_header.get('hashtag_header') if school_header.get('hashtag_header', None) else message_header
@@ -27,6 +29,17 @@ class SendTweetForSchool:
             message=message_header + tweet_message,
             school=self.school,
             topic='twitter-message-service-pubsub',
+            send_message=self.send_message
+        )
+        self.save(date=date)
+        historical_message = {
+            'date': date.strftime('%Y-%m-%d'),
+            'player_stats': list(map(lambda x: dataclasses.asdict(x), self.player_stats))
+        }
+        publish_message(
+            message=json.dumps(historical_message),
+            school=self.school,
+            topic='historical-significance-pubsub',
             send_message=self.send_message
         )
 
