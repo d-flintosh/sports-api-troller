@@ -6,20 +6,6 @@ from nba_api.stats.library.parameters import LeagueID
 
 from src.gcp.gcs import Gcs
 
-proxy = [
-    '50.206.25.111:80',
-    '50.206.25.104:80',
-    '20.105.253.176:8080',
-    '50.206.25.106:80',
-    '50.206.25.109:80',
-    '50.206.25.110:80',
-    '68.188.59.198:80',
-    '68.185.57.66:80',
-    '107.151.182.247:80',
-    '192.154.247.9:8000',
-    '192.154.247.25:8000',
-]
-
 
 class BasketballNbaApi:
     def __init__(self, league_name: str, league_id: LeagueID):
@@ -45,8 +31,7 @@ class BasketballNbaApi:
                 player_name = player.get('PLAYER_NAME')
                 player_profile = playerprofilev2.PlayerProfileV2(
                     player_id=player_id,
-                    league_id_nullable=self.league_id,
-                    proxy=proxy
+                    league_id_nullable=self.league_id
                 )
                 player_profile_dict = player_profile.get_normalized_dict()
                 player_profile_dict['player_name'] = player_name
