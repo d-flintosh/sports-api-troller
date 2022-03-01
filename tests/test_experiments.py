@@ -99,10 +99,6 @@ def test_extract_nfl_draft_info():
 @pytest.mark.skip(reason="only run this manually")
 def test_get_player_by_college_stats():
     api = BasketballNbaApi(league_name='nba', league_id=LeagueID.nba)
-    test_college = {
-        'nba_api': 'Texas-Austin',
-        'in_the_pros': 'texas'
-    }
     for college in nba_api_college_names:
         api.save_player_by_college(college=college)
 
@@ -115,7 +111,7 @@ def test_commit_a_bunch_of_sins():
         'in_the_pros': 'ohiostate'
     }]
     for college in nba_api_college_names:
-    # for college in test_college:
+        # for college in test_college:
         tweetable_objects = []
         college_players = []
         player_ids = api.get_historical_player_ids_by_college(college=college)
@@ -168,7 +164,9 @@ def test_commit_a_bunch_of_sins():
             max_stat_by_player = {}
             for player in current_college_players:
                 max_stat = list(filter(
-                    lambda x: x.get('STAT') == stat.get('nba_api_text') and datetime.strptime(x.get('GAME_DATE'), '%b %d %Y') >= datetime(2021, 9, 1), player.get('season_highs')
+                    lambda x: x.get('STAT') == stat.get('nba_api_text') and datetime.strptime(x.get('GAME_DATE'),
+                                                                                              '%b %d %Y') >= datetime(
+                        2021, 9, 1), player.get('season_highs')
                 ))
                 if max_stat:
                     max_stat = max_stat[0]
@@ -179,7 +177,9 @@ def test_commit_a_bunch_of_sins():
             max_career_stat_by_player = []
             for player in college_players:
                 max_stat = list(filter(
-                    lambda x: x.get('STAT') == stat.get('nba_api_text') and datetime.strptime(x.get('GAME_DATE'), '%b %d %Y') < datetime(2021, 9, 1), player.get('career_highs')
+                    lambda x: x.get('STAT') == stat.get('nba_api_text') and datetime.strptime(x.get('GAME_DATE'),
+                                                                                              '%b %d %Y') < datetime(
+                        2021, 9, 1), player.get('career_highs')
                 ))
                 if max_stat:
                     max_stat = max_stat[0]
@@ -188,7 +188,8 @@ def test_commit_a_bunch_of_sins():
                         max_career['the_career_stat'] = max_stat
                         max_career_stat_by_player.append(max_career)
             try:
-                most_recent_max_career_stat = max(max_career_stat_by_player, key=lambda x: datetime.strptime(x.get('the_career_stat').get('GAME_DATE'), '%b %d %Y'))
+                most_recent_max_career_stat = max(max_career_stat_by_player, key=lambda x: datetime.strptime(
+                    x.get('the_career_stat').get('GAME_DATE'), '%b %d %Y'))
             except ValueError as e:
                 most_recent_max_career_stat = {}
 
@@ -198,7 +199,8 @@ def test_commit_a_bunch_of_sins():
                 current_player_name=max_stat_by_player.get('player_name'),
                 current_player_stat_value=max_stat_by_player.get('the_stat').get('STAT_VALUE'),
                 previous_player_name=most_recent_max_career_stat.get('player_name', None),
-                previous_player_stat_value=most_recent_max_career_stat.get('the_career_stat', {}).get('STAT_VALUE', None),
+                previous_player_stat_value=most_recent_max_career_stat.get('the_career_stat', {}).get('STAT_VALUE',
+                                                                                                      None),
                 previous_player_date=most_recent_max_career_stat.get('the_career_stat', {}).get('GAME_DATE', None)
             )
             tweetable_objects.append(the_tweet)

@@ -1,7 +1,9 @@
 from datetime import timedelta, datetime
 
 import pytz
+from nba_api.stats.library.parameters import LeagueID
 
+from src.api.basketball_nba_api import BasketballNbaApi
 from src.api.lpga_sport_radar import LpgaSportRadar
 from src.api.mlb_sport_radar import MlbSportRadar
 from src.api.nba_sport_radar import NbaSportRadar
@@ -15,29 +17,37 @@ from src.extraction.BasketballLeague import BasketballLeague
 from src.extraction.FootballLeague import FootballLeague
 from src.extraction.GolfLeague import GolfLeague
 from src.extraction.HockeyLeague import HockeyLeague
+from src.models.Schools import nba_api_college_names
 from src.tweet_driver import tweet_driver
 
 
 def entrypoint(event, context):
     time_delta = int(event.get('attributes', {}).get('time_delta', '24'))
-    tz = pytz.timezone('America/Chicago')
-    chicago_now = datetime.now(tz)
-    date_to_run = chicago_now - timedelta(hours=time_delta)
+    task_type = event.get('attributes', {}).get('task_type', 'recent_events')
 
-    api_client = SportRadarApi()
-    leagues = []
+    if task_type == 'recent_events':
+        api_client = SportRadarApi()
+        tz = pytz.timezone('America/Chicago')
+        chicago_now = datetime.now(tz)
+        date_to_run = chicago_now - timedelta(hours=time_delta)
+        leagues = []
+        if time_delta == 24:
+            skip_filter = True
+            leagues.append(GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client)))
+            leagues.append(GolfLeague(league_name='lpga', league_client=LpgaSportRadar(api_client=api_client)))
+        else:
+            skip_filter = False
+            leagues.append(BaseballLeague(league_client=MlbSportRadar(api_client=api_client)))
+            leagues.append(BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client)))
+            leagues.append(BasketballLeague(league_name='wnba', league_client=WnbaSportRadar(api_client=api_client)))
+            leagues.append(HockeyLeague(league_name='nhl', league_client=NhlSportRadar(api_client=api_client)))
+            leagues.append(FootballLeague(league_name='nfl', league_client=NflSportRadar(api_client=api_client)))
 
-    if time_delta == 24:
-        skip_filter = True
-        leagues.append(GolfLeague(league_name='pga', league_client=PgaSportRadar(api_client=api_client)))
-        leagues.append(GolfLeague(league_name='lpga', league_client=LpgaSportRadar(api_client=api_client)))
-    else:
-        skip_filter = False
-        leagues.append(BaseballLeague(league_client=MlbSportRadar(api_client=api_client)))
-        leagues.append(BasketballLeague(league_name='nba', league_client=NbaSportRadar(api_client=api_client)))
-        leagues.append(BasketballLeague(league_name='wnba', league_client=WnbaSportRadar(api_client=api_client)))
-        leagues.append(HockeyLeague(league_name='nhl', league_client=NhlSportRadar(api_client=api_client)))
-        leagues.append(FootballLeague(league_name='nfl', league_client=NflSportRadar(api_client=api_client)))
+        tweet_driver(leagues=leagues, date_to_run=date_to_run.date(), send_message=True, skip_filter=skip_filter)
+    elif task_type == 'update_rosters':
+        nba_api = BasketballNbaApi(league_name='nba', league_id=LeagueID.nba)
+        wnba_api = BasketballNbaApi(league_name='wnba', league_id=LeagueID.wnba)
 
-    tweet_driver(leagues=leagues, date_to_run=date_to_run.date(), send_message=True, skip_filter=skip_filter)
-
+        for college in nba_api_college_names:
+            nba_api.save_player_by_college(college=college)
+            wnba_api.save_player_by_college(college=college)
