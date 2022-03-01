@@ -22,6 +22,12 @@ class FakePlayer(Player):
     def get_college(self) -> str:
         pass
 
+    def get_league_name(self) -> str:
+        pass
+
+    def get_player_id(self) -> str:
+        pass
+
 
 class TestPlayer:
     @dataclass

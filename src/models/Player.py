@@ -27,6 +27,10 @@ class Player(ABC):
     def get_league_name(self) -> str:
         raise NotImplementedError
 
+    @abstractmethod
+    def get_college(self) -> str:
+        raise NotImplementedError
+
     def get_gcs_path_by_date(self, date: datetime, college: str) -> str:
         date_string = date.strftime("%Y-%m-%d")
         return f'{self.get_league_name()}/{college}/by_date/{date_string}/{self.get_player_id()}.json'
