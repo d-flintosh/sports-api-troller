@@ -17,10 +17,13 @@ from src.extraction.BaseballLeague import BaseballLeague
 from src.extraction.BasketballLeague import BasketballLeague
 from src.extraction.FootballLeague import FootballLeague
 from src.extraction.HockeyLeague import HockeyLeague
+from src.gcp.gcs import Gcs
+from src.historical.significance import stat_list, get_top_3_players_by_stat
 from src.models.BasketballStatPlayer import BasketballStatPlayer
 from src.models.Schools import nba_api_college_names
 from src.models.SendTweetForSchool import SendTweetForSchool
 from src.tweet_driver import tweet_driver
+from src.universal import publish_message
 
 
 @pytest.mark.skip(reason="only run this manually")
@@ -101,6 +104,25 @@ def test_get_player_by_college_stats():
     for college in nba_api_college_names:
         nba_api.save_player_by_college(college=college)
         wnba_api.save_player_by_college(college=college)
+
+
+@pytest.mark.skip(reason="only run this manually")
+def test_get_nba_career_stats():
+    for college in nba_api_college_names:
+        for stat_key, stat_text in stat_list:
+            top_3 = get_top_3_players_by_stat(
+                school=college.get('in_the_pros'),
+                league_name='nba',
+                stat_key=stat_key
+            )
+            header_text = f'All-Time Leaders in {stat_text}\n\n'
+            top_3_text = '\n'.join(top_3)
+            publish_message(
+                message=header_text + top_3_text,
+                school=college.get('in_the_pros'),
+                topic='twitter-message-service-pubsub',
+                send_message=True
+            )
 
 
 @pytest.mark.skip(reason="only run this manually")

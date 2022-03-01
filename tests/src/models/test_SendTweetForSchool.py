@@ -47,6 +47,7 @@ class TestSendTweetForSchool:
     class Fixture:
         mock_publish: Mock
         expected_publish_calls: List
+        mock_save: Mock
 
     @pytest.fixture(
         ids=['has stats', 'had great day'],
@@ -85,8 +86,9 @@ class TestSendTweetForSchool:
             ),
         ]
     )
+    @patch.object(SendTweetForSchool, 'save')
     @patch('src.models.SendTweetForSchool.publish_message', autospec=True)
-    def setup(self, mock_publish, request):
+    def setup(self, mock_publish, mock_save, request):
         mock_player = FakePlayer(is_great_day=request.param.had_great_day)
         mock_date = datetime(2021, 1, 1)
         SendTweetForSchool(
@@ -95,8 +97,12 @@ class TestSendTweetForSchool:
 
         return TestSendTweetForSchool.Fixture(
             mock_publish=mock_publish,
-            expected_publish_calls=request.param.expected_publish_calls
+            expected_publish_calls=request.param.expected_publish_calls,
+            mock_save=mock_save
         )
 
     def test_publish_message_called(self, setup: Fixture):
         assert setup.mock_publish.mock_calls == setup.expected_publish_calls
+
+    def test_save(self, setup: Fixture):
+        setup.mock_save.assert_called_once_with(date=datetime(2021, 1, 1))
