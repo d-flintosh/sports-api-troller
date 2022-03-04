@@ -12,7 +12,7 @@ nhl_stat_list = [
 
 def get_nhl_historical_stats(school: str, player_stats: List) -> dict:
     gcs = Gcs(bucket=historical_stats_bucket)
-    full_path = f'nba/{school}/all_players/players.json'
+    full_path = f'nhl/{school}/all_players/players.json'
     original_school_players = gcs.read_as_dict(url=full_path)
     updated_school_players = deepcopy(original_school_players)
     player_name_key = 'full_name'
