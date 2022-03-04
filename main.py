@@ -48,4 +48,4 @@ def entrypoint_historical_significance_entrypoint(event, context):
     school = event.get('attributes', {}).get('school', None)
     if school is None:
         raise Exception(f'No school found in message with data: {data}')
-    check_for_historical_significance(data=data, school=school, send_message=False)
+    check_for_historical_significance(data=data, school=school, send_message=True)
