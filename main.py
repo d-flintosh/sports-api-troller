@@ -16,6 +16,7 @@ from src.extraction.BasketballLeague import BasketballLeague
 from src.extraction.FootballLeague import FootballLeague
 from src.extraction.GolfLeague import GolfLeague
 from src.extraction.HockeyLeague import HockeyLeague
+from src.extraction.HockeyReference import get_all_time_leaders
 from src.historical.significance import check_for_historical_significance
 from src.tweet_driver import tweet_driver
 
@@ -49,3 +50,4 @@ def entrypoint_historical_significance_entrypoint(event, context):
     if school is None:
         raise Exception(f'No school found in message with data: {data}')
     check_for_historical_significance(data=data, school=school, send_message=True)
+

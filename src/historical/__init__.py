@@ -1,0 +1,1 @@
+historical_stats_bucket = 'college-by-player-stats'

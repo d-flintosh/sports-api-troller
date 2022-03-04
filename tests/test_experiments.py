@@ -15,12 +15,13 @@ from src.api.wnba_sport_radar import WnbaSportRadar
 from src.college.write_players_to_gcs import write_to_file_readable_for_computers
 from src.extraction.BaseballLeague import BaseballLeague
 from src.extraction.BasketballLeague import BasketballLeague
-from src.extraction.FootballLeague import FootballLeague
 from src.extraction.HockeyLeague import HockeyLeague
-from src.gcp.gcs import Gcs
-from src.historical.significance import stat_list, get_top_3_players_by_stat
+from src.extraction.HockeyReference import get_all_time_leaders
+from src.historical.basketball_significance import basketball_stat_list
+from src.historical.nhl_significance import nhl_stat_list
+from src.historical.significance import get_top_3_players_by_stat
 from src.models.BasketballStatPlayer import BasketballStatPlayer
-from src.models.Schools import nba_api_college_names
+from src.models.Schools import nba_api_college_names, nhl_reference_college_names
 from src.models.SendTweetForSchool import SendTweetForSchool
 from src.tweet_driver import tweet_driver
 from src.universal import publish_message
@@ -107,21 +108,50 @@ def test_get_player_by_college_stats():
 
 
 @pytest.mark.skip(reason="only run this manually")
+def test_nhl_hockey_reference():
+    for team in nhl_reference_college_names:
+        get_all_time_leaders(team=team)
+
+
+@pytest.mark.skip(reason="only run this manually")
 def test_get_nba_career_stats():
     for college in nba_api_college_names:
-        for stat_key, stat_text in stat_list:
+        for stat_key, stat_text in basketball_stat_list:
             top_3 = get_top_3_players_by_stat(
                 school=college.get('in_the_pros'),
                 league_name='nba',
-                stat_key=stat_key
+                stat_key=stat_key,
+                dictionary_key='PlayerCareerByCollege',
+                player_name_key='PLAYER_NAME'
             )
-            header_text = f'All-Time Leaders in {stat_text}\n\n'
+            header_text = f'#NBA Leaders in {stat_text}\n\n'
             top_3_text = '\n'.join(top_3)
             publish_message(
                 message=header_text + top_3_text,
                 school=college.get('in_the_pros'),
                 topic='twitter-message-service-pubsub',
-                send_message=True
+                send_message=False
+            )
+
+
+@pytest.mark.skip(reason="only run this manually")
+def test_get_nhl_career_stats():
+    for college in nhl_reference_college_names:
+        for stat_key, stat_text in nhl_stat_list:
+            top_3 = get_top_3_players_by_stat(
+                school=college.get('in_the_pros'),
+                league_name='nhl',
+                stat_key=stat_key,
+                dictionary_key='player_stats',
+                player_name_key='full_name'
+            )
+            header_text = f'#NHL Leaders in {stat_text}\n\n'
+            top_3_text = '\n'.join(top_3)
+            publish_message(
+                message=header_text + top_3_text,
+                school=college.get('in_the_pros'),
+                topic='twitter-message-service-pubsub',
+                send_message=False
             )
 
 

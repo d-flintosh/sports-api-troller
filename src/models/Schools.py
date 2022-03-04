@@ -702,3 +702,11 @@ nba_api_college_names = [
         'in_the_pros': 'wisconsin'
     }
 ]
+
+
+nhl_reference_college_names = [
+    {
+        'nhl_reference': 'ose01',
+        'in_the_pros': 'ohiostate'
+    }
+]
