@@ -6,6 +6,7 @@ import humanize
 from src.gcp.gcs import Gcs
 from src.historical import historical_stats_bucket
 from src.historical.basketball_significance import get_basketball_historical_stats
+from src.historical.mlb_significance import get_mlb_historical_stats
 from src.historical.nhl_significance import get_nhl_historical_stats
 from src.universal import publish_message
 
@@ -19,6 +20,8 @@ def check_for_historical_significance(data: str, school: str, send_message: bool
         historical_significance = get_basketball_historical_stats(school=school, player_stats=player_stats)
     elif any(e for e in player_stats if e.get('league_name') == 'nhl'):
         historical_significance = get_nhl_historical_stats(school=school, player_stats=player_stats)
+    elif any(e for e in player_stats if e.get('league_name') == 'mlb'):
+        historical_significance = get_mlb_historical_stats(school=school, player_stats=player_stats)
 
     if historical_significance is not None:
         differences = []

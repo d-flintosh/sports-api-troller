@@ -1,22 +1,13 @@
-import dataclasses
-from dataclasses import dataclass
-
 import requests
 from bs4 import BeautifulSoup, Tag
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
 from src.gcp.gcs import Gcs
+from src.historical import historical_stats_bucket
 
 
-@dataclass
-class NhlReferencePlayer:
-    full_name: str
-    goals: int
-    assists: int
-
-
-def get_all_time_leaders(team: dict):
+def get_nhl_all_time_leaders(team: dict):
     team_id = team.get('nhl_reference')
     url = f'https://www.hockey-reference.com/amateurs/team.cgi?t={team_id}'
     retry_strategy = Retry(
@@ -46,7 +37,7 @@ def get_all_time_leaders(team: dict):
     }
     school = team.get('in_the_pros')
     full_path = f'nhl/{school}/all_players/players.json'
-    gcs = Gcs(bucket='college-by-player-stats')
+    gcs = Gcs(bucket=historical_stats_bucket)
     gcs.write(url=full_path, contents=player_stats)
 
 

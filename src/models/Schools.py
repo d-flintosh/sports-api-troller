@@ -710,3 +710,75 @@ nhl_reference_college_names = [
         'in_the_pros': 'ohiostate'
     }
 ]
+
+
+mlb_reference_college_names = [
+    {
+        'mlb_reference': '86c63769',
+        'in_the_pros': 'azst'
+    },
+    {
+        'mlb_reference': '9e4db33e',
+        'in_the_pros': 'connecticut'
+    },
+    {
+        'mlb_reference': 'ab7868a7',
+        'in_the_pros': 'duke'
+    },
+    {
+        'mlb_reference': 'e6258d6a',
+        'in_the_pros': 'florida'
+    },
+    {
+        'mlb_reference': '51704145',
+        'in_the_pros': 'fsu'
+    },
+    {
+        'mlb_reference': '26cf6020',
+        'in_the_pros': 'georgia'
+    },
+    {
+        'mlb_reference': 'b91ddaca',
+        'in_the_pros': 'illinois'
+    },
+    {
+        'mlb_reference': 'e7b2b810',
+        'in_the_pros': 'kansas'
+    },
+    {
+        'mlb_reference': 'f9e0befd',
+        'in_the_pros': 'lsu'
+    },
+    {
+        'mlb_reference': '609bab49',
+        'in_the_pros': 'miami'
+    },
+    {
+        'mlb_reference': '56a48083',
+        'in_the_pros': 'michigan'
+    },
+    {
+        'mlb_reference': '0750f410',
+        'in_the_pros': 'northcarolina'
+    },
+    {
+        'mlb_reference': '8bf456e6',
+        'in_the_pros': 'notredame'
+    },
+    {
+        'mlb_reference': 'dae50bcc',
+        'in_the_pros': 'ohiostate'
+    },
+    {
+        'mlb_reference': '0972a433',
+        'in_the_pros': 'texas'
+    },
+    {
+        'mlb_reference': 'bd7d8277',
+        'in_the_pros': 'virginia'
+    },
+    {
+        'mlb_reference': '84ed5d25',
+        'in_the_pros': 'wisconsin'
+    }
+]
