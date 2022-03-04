@@ -5,13 +5,13 @@ from src.gcp.gcs import Gcs
 from src.historical import historical_stats_bucket
 
 mlb_stat_list = [
-    ('home_runs', 'home_runs'),
+    ('home_runs', 'home runs'),
     ('rbis', 'rbis'),
     ('hits', 'hits'),
-    ('stolen_bases', 'stolen_bases'),
-    ('pitching_strikeouts', 'pitching_strikeouts'),
-    ('pitching_wins', 'pitching_wins'),
-    ('pitching_saves', 'pitching_saves')
+    ('stolen_bases', 'stolen bases'),
+    ('pitching_strikeouts', 'strikeouts'),
+    ('pitching_wins', 'wins'),
+    ('pitching_saves', 'saves')
 ]
 
 
