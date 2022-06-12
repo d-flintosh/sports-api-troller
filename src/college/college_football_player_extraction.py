@@ -2,7 +2,7 @@ import dataclasses
 from dataclasses import dataclass
 from functools import lru_cache
 from operator import itemgetter
-from typing import List, Optional
+from typing import List, Optional, Union
 
 import requests
 from bs4 import BeautifulSoup, ResultSet, Tag
@@ -59,6 +59,34 @@ def make_api_call(url: str) -> BeautifulSoup:
 
 
 BASE_URL = 'https://www.ourlads.com/ncaa-football-depth-charts/'
+
+position_translation_map = {
+    "HB": "RB",
+    "FB": "RB",
+    "WR-M": "WR",
+    "WR-H": "WR",
+    "TE-Y": "TE",
+    "QB": "QB",
+    "STAR": "RB",
+    "TE-H": "TE",
+    "TE-A": "TE",
+    "WR/RB": "WR/RB",
+    "TE": "TE",
+    "TE-F": "TE",
+    "WS": "RB",
+    "WR-Y": "WR",
+    "RB": "RB",
+    "WR-R": "WR",
+    "TB": "RB",
+    "WR-SL": "WR",
+    "WR-F": "WR",
+    "WR-X": "WR",
+    "WR-W": "WR",
+    "WR-Z": "WR",
+    "TE-U": "TE",
+    "WR-A": "WR",
+    "WR": "WR",
+}
 
 
 def get_all_depth_chart_urls() -> List[str]:
@@ -117,7 +145,10 @@ def do_things():
 
 
 def convert_fields_to_raw_player(fields: ResultSet, start_index: int) -> Optional[RawPlayerObject]:
-    position = fields[0].get_text().strip()
+    position = position_translation_map.get(fields[0].get_text().strip(), None)
+    if not position:
+        return None
+
     name = fields[start_index].get_text().strip()
     name_parts = name.split(',')
     if len(name_parts) == 0 or name_parts[0].strip() == '':
