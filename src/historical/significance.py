@@ -16,9 +16,8 @@ def check_for_historical_significance(data: str, school: str, send_message: bool
     player_stats = dict_data.get('player_stats')
     historical_significance = None
 
-    if any(e for e in player_stats if e.get('league_name') == 'nba'):
-        pass
-        # historical_significance = get_basketball_historical_stats(school=school, player_stats=player_stats)
+    if any(e for e in player_stats if e.get('league_name') == 'wnba'):
+        historical_significance = get_basketball_historical_stats(league_name='wnba', school=school, player_stats=player_stats)
     elif any(e for e in player_stats if e.get('league_name') == 'nhl'):
         historical_significance = get_nhl_historical_stats(school=school, player_stats=player_stats)
     elif any(e for e in player_stats if e.get('league_name') == 'mlb'):

@@ -153,7 +153,7 @@ class TestNflSportRadar:
     def test_get_games_for_date(self, setup: Fixture):
         setup.subject.get_daily_schedule(date=date(2021, 6, 1))
         setup.mock_api_client.make_request.assert_has_calls([
-            call(url=f'http://api.sportradar.us/{NFL_BASE_URL}games/2021/PST/schedule.json')
+            call(url=f'http://api.sportradar.us/{NFL_BASE_URL}games/2022/REG/schedule.json')
         ], any_order=True)
 
     def test_get_games_for_date_result(self, setup: Fixture):

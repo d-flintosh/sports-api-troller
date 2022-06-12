@@ -14,7 +14,7 @@ class NflSportRadar:
         self.api_client = api_client
 
     def get_daily_schedule(self, date: date):
-        SCHEUDLE_URL = f'games/2021/PST/schedule.json'
+        SCHEUDLE_URL = f'games/2022/REG/schedule.json'
         FULL_URL = BASE_URL + NFL_BASE_URL + SCHEUDLE_URL
 
         full_schedule = self.api_client.make_request(url=FULL_URL)

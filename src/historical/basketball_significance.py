@@ -14,9 +14,10 @@ basketball_stat_list = [
 ]
 
 
-def get_basketball_historical_stats(school: str, player_stats: List) -> dict:
+def get_basketball_historical_stats(league_name: str, school: str, player_stats: List) -> dict:
     gcs = Gcs(bucket=historical_stats_bucket)
-    full_path = f'nba/{school}/all_players/players.json'
+    print(f'HELP {gcs}')
+    full_path = f'{league_name}/{school}/all_players/players.json'
     original_school_players = gcs.read_as_dict(url=full_path)
     updated_school_players = deepcopy(original_school_players)
     player_name_key = 'PLAYER_NAME'

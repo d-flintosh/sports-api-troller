@@ -1,7 +1,7 @@
 from src.api.golf_sport_radar import GolfSportRadar
 from src.api.sport_radar import SportRadarApi
 
-LPGA_BASE_URL = 'golf/trial/lpga/v3/en/2021' # Do we want/need to hardcode season year?
+LPGA_BASE_URL = 'golf/trial/lpga/v3/en/2022' # Do we want/need to hardcode season year?
 
 
 class LpgaSportRadar(GolfSportRadar):

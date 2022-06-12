@@ -17,19 +17,21 @@ class TestCheckForHistoricalSignificance:
         mock_gcs: Mock
         mock_stat_diff: Mock
         mock_publish: Mock
+        mock_bk_stats: Mock
 
     @pytest.fixture(
-        ids=['nba'],
+        ids=['wnba'],
         params=[
             Params(
-                league_name='nba'
+                league_name='wnba'
             )
         ]
     )
+    @patch('src.historical.significance.get_basketball_historical_stats', autospec=True)
     @patch('src.historical.significance.publish_message', autospec=True)
     @patch('src.historical.significance.Gcs', autospec=True)
     @patch('src.historical.significance.derive_positive_differences_in_stats', autospec=True)
-    def setup(self, mock_stat_diff, mock_gcs, mock_publish, request):
+    def setup(self, mock_stat_diff, mock_gcs, mock_publish, mock_bk_stats, request):
         mock_school = 'fsu'
         mock_data = json.dumps({
             'player_stats': [
@@ -45,20 +47,22 @@ class TestCheckForHistoricalSignificance:
                 }
             ]
         })
+        mock_bk_stats.return_value = {'stat_list': [{}]}
         mock_stat_diff.return_value = ['some stuff']
         check_for_historical_significance(data=mock_data, school=mock_school, send_message=False)
 
         return TestCheckForHistoricalSignificance.Fixture(
                 mock_gcs=mock_gcs,
                 mock_stat_diff=mock_stat_diff,
-                mock_publish=mock_publish
+                mock_publish=mock_publish,
+                mock_bk_stats=mock_bk_stats
             )
 
     def test_gcs_constructor(self, setup: Fixture):
         setup.mock_gcs.assert_called_once_with(bucket='college-by-player-stats')
 
     def test_gcs_read(self, setup: Fixture):
-        setup.mock_gcs.return_value.read_as_dict.assert_called_once_with(url='nba/fsu/all_players/players.json')
+        setup.mock_gcs.return_value.read_as_dict.assert_called_once_with(url='wnba/fsu/all_players/players.json')
 
     def test_derive_differences(self, setup: Fixture):
         setup.mock_stat_diff.assert_has_calls([

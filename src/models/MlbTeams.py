@@ -2,7 +2,7 @@ mlb_team_map = {
     '27a59d3b-ff7c-48ea-b016-4798f560f5e1': {
         'id': '27a59d3b-ff7c-48ea-b016-4798f560f5e1',
         'teamCode': 'oak',
-        'twitterCode': '#RiseAndGrind'
+        'twitterCode': '#DrumTogether'
     },
     '481dfe7e-5dab-46ab-a49f-9dcc2b6e2cfd': {
         'id': '481dfe7e-5dab-46ab-a49f-9dcc2b6e2cfd',
@@ -12,7 +12,7 @@ mlb_team_map = {
     'd52d5339-cbdd-43f3-9dfa-a42fd588b9a3': {
         'id': 'd52d5339-cbdd-43f3-9dfa-a42fd588b9a3',
         'teamCode': 'sd',
-        'twitterCode': '#HungryForMore'
+        'twitterCode': '#TimeToShine'
     },
     '43a39081-52b4-4f93-ad29-da7f329ea960': {
         'id': '43a39081-52b4-4f93-ad29-da7f329ea960',
@@ -22,12 +22,12 @@ mlb_team_map = {
     'a7723160-10b7-4277-a309-d8dd95a8ae65': {
         'id': 'a7723160-10b7-4277-a309-d8dd95a8ae65',
         'teamCode': 'sf',
-        'twitterCode': '#ResilientSF'
+        'twitterCode': '#SFGameUp'
     },
     '44671792-dc02-4fdd-a5ad-f5f17edaa9d7': {
         'id': '44671792-dc02-4fdd-a5ad-f5f17edaa9d7',
         'teamCode': 'stl',
-        'twitterCode': '#STLFLY'
+        'twitterCode': '#STLCards'
     },
     'bdc11650-6f74-49c4-875e-778aeb7632d9': {
         'id': 'bdc11650-6f74-49c4-875e-778aeb7632d9',
@@ -42,7 +42,7 @@ mlb_team_map = {
     '1d678440-b4b1-4954-9b39-70afb3ebbcfa': {
         'id': '1d678440-b4b1-4954-9b39-70afb3ebbcfa',
         'teamCode': 'tor',
-        'twitterCode': '#WeAreBlueJays'
+        'twitterCode': '#NextLevel'
     },
     'aa34e0ed-f342-4ec6-b774-c79b47b60e2d': {
         'id': 'aa34e0ed-f342-4ec6-b774-c79b47b60e2d',
@@ -67,12 +67,12 @@ mlb_team_map = {
     '03556285-bdbb-4576-a06d-42f71f46ddc5': {
         'id': '03556285-bdbb-4576-a06d-42f71f46ddc5',
         'teamCode': 'mia',
-        'twitterCode': '#JuntosMiami'
+        'twitterCode': '#MakeItMiami'
     },
     'a09ec676-f887-43dc-bbb3-cf4bbaee9a18': {
         'id': 'a09ec676-f887-43dc-bbb3-cf4bbaee9a18',
         'teamCode': 'nyy',
-        'twitterCode': '#SquadUp'
+        'twitterCode': '#RepBX'
     },
     'dcfd5266-00ce-442c-bc09-264cd20cf455': {
         'id': 'dcfd5266-00ce-442c-bc09-264cd20cf455',
@@ -82,12 +82,12 @@ mlb_team_map = {
     '4f735188-37c8-473d-ae32-1f7e34ccf892': {
         'id': '4f735188-37c8-473d-ae32-1f7e34ccf892',
         'teamCode': 'ana',
-        'twitterCode': '#WeBelieve'
+        'twitterCode': '#GoHalos'
     },
     '25507be1-6a68-4267-bd82-e097d94b359b': {
         'id': '25507be1-6a68-4267-bd82-e097d94b359b',
         'teamCode': 'ari',
-        'twitterCode': '#RattleOn'
+        'twitterCode': '#Dbacks'
     },
     '75729d34-bca7-4a0f-b3df-6f26c6ad3719': {
         'id': '75729d34-bca7-4a0f-b3df-6f26c6ad3719',
@@ -102,7 +102,7 @@ mlb_team_map = {
     '55714da8-fcaf-4574-8443-59bfb511a524': {
         'id': '55714da8-fcaf-4574-8443-59bfb511a524',
         'teamCode': 'chc',
-        'twitterCode': '#CubTogether'
+        'twitterCode': '#ItsDifferentHere'
     },
     'c874a065-c115-4e7d-b0f0-235584fb0e6f': {
         'id': 'c874a065-c115-4e7d-b0f0-235584fb0e6f',
@@ -112,7 +112,7 @@ mlb_team_map = {
     '80715d0d-0d2a-450f-a970-1b9a3b18c7e7': {
         'id': '80715d0d-0d2a-450f-a970-1b9a3b18c7e7',
         'teamCode': 'cle',
-        'twitterCode': '#OurCLE'
+        'twitterCode': '#ForTheLand'
     },
     '29dd9a87-5bcc-4774-80c3-7f50d985068b': {
         'id': '29dd9a87-5bcc-4774-80c3-7f50d985068b',
@@ -127,7 +127,7 @@ mlb_team_map = {
     'eb21dadd-8f10-4095-8bf3-dfb3b779f107': {
         'id': 'eb21dadd-8f10-4095-8bf3-dfb3b779f107',
         'teamCode': 'hou',
-        'twitterCode': '#ForTheH'
+        'twitterCode': '#LevelUp'
     },
     '833a51a9-0d84-410f-bd77-da08c3e5e26e': {
         'id': '833a51a9-0d84-410f-bd77-da08c3e5e26e',
@@ -137,7 +137,7 @@ mlb_team_map = {
     'ef64da7f-cfaf-4300-87b0-9313386b977c': {
         'id': 'ef64da7f-cfaf-4300-87b0-9313386b977c',
         'teamCode': 'la',
-        'twitterCode': '#Dodgers'
+        'twitterCode': '#AlwaysLA'
     },
     'd89bed32-3aee-4407-99e3-4103641b999a': {
         'id': 'd89bed32-3aee-4407-99e3-4103641b999a',

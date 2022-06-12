@@ -125,21 +125,24 @@ def test_mlb_hockey_reference():
 def test_get_nba_career_stats():
     for college in nba_api_college_names:
         for stat_key, stat_text in basketball_stat_list:
-            top_3 = get_top_3_players_by_stat(
-                school=college.get('in_the_pros'),
-                league_name='nba',
-                stat_key=stat_key,
-                dictionary_key='PlayerCareerByCollege',
-                player_name_key='PLAYER_NAME'
-            )
-            header_text = f'#NBA Leaders in {stat_text}\n\n'
-            top_3_text = '\n'.join(top_3)
-            publish_message(
-                message=header_text + top_3_text,
-                school=college.get('in_the_pros'),
-                topic='twitter-message-service-pubsub',
-                send_message=False
-            )
+            try:
+                top_3 = get_top_3_players_by_stat(
+                    school=college.get('in_the_pros'),
+                    league_name='wnba',
+                    stat_key=stat_key,
+                    dictionary_key='PlayerCareerByCollege',
+                    player_name_key='PLAYER_NAME'
+                )
+                header_text = f'#WNBA Leaders in {stat_text}\n\n'
+                top_3_text = '\n'.join(top_3)
+                publish_message(
+                    message=header_text + top_3_text,
+                    school=college.get('in_the_pros'),
+                    topic='twitter-message-service-pubsub',
+                    send_message=True
+                )
+            except:
+                print(f'Failed {stat_key} and {college}')
 
 
 @pytest.mark.skip(reason="only run this manually")
